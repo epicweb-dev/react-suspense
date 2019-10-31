@@ -74,6 +74,8 @@ function ExtraCreditLinks({exerciseId}) {
 
 function ExerciseContainer({exerciseId}) {
   const {
+    exercise,
+    final,
     exercise: {Component: Exercise},
     final: {Component: Final},
   } = exerciseInfo[exerciseId]
@@ -90,12 +92,20 @@ function ExerciseContainer({exerciseId}) {
     >
       <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>{Final.title}</h1>
       <ComponentContainer
-        label={<Link to={`/${exerciseId}/exercise`}>Exercise</Link>}
+        label={
+          <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
+            Exercise
+          </a>
+        }
       >
         <Exercise />
       </ComponentContainer>
       <ComponentContainer
-        label={<Link to={`/${exerciseId}/final`}>Final Version</Link>}
+        label={
+          <a href={final.isolatedPath} onClick={handleAnchorClick}>
+            Final
+          </a>
+        }
       >
         <Final />
       </ComponentContainer>
@@ -150,51 +160,6 @@ function NavigationFooter({exerciseId, type}) {
   )
 }
 
-function FullPage({type, exerciseId}) {
-  const page = exerciseInfo[exerciseId]
-  const {Component, isolatedPath} = exerciseInfo[exerciseId][type]
-  return (
-    <div>
-      <div
-        style={{
-          marginLeft: 10,
-          marginRight: 10,
-          marginTop: 10,
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Link to={`/${exerciseId}`}>
-          <span role="img" aria-label="back">
-            👈
-          </span>
-          Exercise Page
-        </Link>
-        <a href={isolatedPath} onClick={handleAnchorClick}>
-          isolated
-        </a>
-      </div>
-      <div style={{textAlign: 'center'}}>
-        <h1>{page.title}</h1>
-      </div>
-      <div
-        style={{
-          flex: 1,
-          padding: 20,
-          margin: 20,
-          border: '1px solid',
-          display: 'grid',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Component />
-      </div>
-      <NavigationFooter exerciseId={exerciseId} type={type} />
-    </div>
-  )
-}
-
 function Home() {
   return (
     <div
@@ -207,19 +172,25 @@ function Home() {
     >
       <h1 style={{textAlign: 'center'}}>{title}</h1>
       <div>
-        {Object.entries(exerciseInfo).map(([filename, {title}]) => {
-          return (
-            <div key={filename} style={{margin: 10}}>
-              {filename}
-              {'. '}
-              <Link to={`/${filename}`}>{title}</Link>{' '}
-              <small>
-                <Link to={`/${filename}/exercise`}>(exercise)</Link>{' '}
-                <Link to={`/${filename}/final`}>(final)</Link>
-              </small>
-            </div>
-          )
-        })}
+        {Object.entries(exerciseInfo).map(
+          ([filename, {title, final, exercise}]) => {
+            return (
+              <div key={filename} style={{margin: 10}}>
+                {filename}
+                {'. '}
+                <Link to={`/${filename}`}>{title}</Link>{' '}
+                <small>
+                  <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
+                    (exercise)
+                  </a>{' '}
+                  <a href={final.isolatedPath} onClick={handleAnchorClick}>
+                    (final)
+                  </a>
+                </small>
+              </div>
+            )
+          },
+        )}
       </div>
     </div>
   )
@@ -251,8 +222,6 @@ function Routes() {
     <Router>
       <Home path="/" />
       <ExerciseContainer path="/:exerciseId" />
-      <FullPage path="/:exerciseId/exercise" type="exercise" />
-      <FullPage path="/:exerciseId/final" type="final" />
       <NotFound default />
     </Router>
   )
