@@ -1,4 +1,4 @@
-// TODO
+// Simple Data-fetching
 
 // http://localhost:3000/isolated/exercises/01
 

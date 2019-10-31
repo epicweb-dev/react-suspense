@@ -1,4 +1,4 @@
-// TODO
+// Fetch as you render
 
 // http://localhost:3000/isolated/exercises/02
 

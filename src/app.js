@@ -1,5 +1,11 @@
 import React from 'react'
-import {Router, Link} from '@reach/router'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from 'react-router-dom'
 import {createBrowserHistory} from 'history'
 import preval from 'preval.macro'
 import pkg from '../package.json'
@@ -72,13 +78,16 @@ function ExtraCreditLinks({exerciseId}) {
   )
 }
 
-function ExerciseContainer({exerciseId}) {
+function ExerciseContainer() {
+  let {exerciseId} = useParams()
   const {
+    title,
     exercise,
     final,
     exercise: {Component: Exercise},
     final: {Component: Final},
   } = exerciseInfo[exerciseId]
+  console.log(exerciseInfo[exerciseId])
   return (
     <div
       style={{
@@ -90,7 +99,7 @@ function ExerciseContainer({exerciseId}) {
         gridTemplateRows: '30px 1fr 30px',
       }}
     >
-      <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>{Final.title}</h1>
+      <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>{title}</h1>
       <ComponentContainer
         label={
           <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
@@ -220,9 +229,17 @@ function NotFound() {
 function Routes() {
   return (
     <Router>
-      <Home path="/" />
-      <ExerciseContainer path="/:exerciseId" />
-      <NotFound default />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/:exerciseId">
+          <ExerciseContainer />
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
     </Router>
   )
 }
