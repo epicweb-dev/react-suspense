@@ -9,6 +9,8 @@ import {ErrorBoundary} from '../utils'
 // if you want to make an actual network call for the pokemon
 // then uncomment the following line.
 // window.fetch.restoreOriginalFetch()
+// and you can adjust the fetch time with this:
+// window.FETCH_TIME = 3000
 
 function createResource(asyncFn) {
   let status = 'pending'
