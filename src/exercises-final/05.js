@@ -1,34 +1,15 @@
-// TODO
-// 💯 Final version
+// Suspense Fundamentals
 
-// http://localhost:3000/isolated/exercises-final/03-extra.4
+// http://localhost:3000/isolated/exercises-final/04
 
 import React from 'react'
-
-function useGeoPosition(options) {
-  const [position, setPosition] = React.useState(getInitialPosition(options))
-
-  const setError = useErrorBoundaryError()
-
-  React.useEffect(() => {
-    const watch = navigator.geolocation.watchPosition(
-      setPosition,
-      setError,
-      options,
-    )
-
-    return () => navigator.geolocation.clearWatch(watch)
-  }, [options, setError])
-
-  return position
-}
 
 // this initialPosition is the "cache". It's not at all sophisticated and
 // has all the normal problems with caching that you might expect.
 // but it hopefully gives you the right idea
 let initialPosition
 let initialPositionPromise
-function getInitialPosition(options) {
+function getGeoPosition(options) {
   if (!initialPosition) {
     if (!initialPositionPromise) {
       initialPositionPromise = new Promise((resolve, reject) => {
@@ -48,24 +29,6 @@ function getInitialPosition(options) {
   return initialPosition
 }
 
-// We want our error boundary to handle errors for our useGeoPosition hook.
-// Because we're watching the geolocation over time and we can provide
-// an error callback, we need to inform React of this error by throwing
-// the error during a regular React callstack. So we put the error inside
-// state, then throw it if it's ever set.
-function useErrorBoundaryError() {
-  const [error, setError] = React.useState(null)
-
-  if (error) {
-    // clear out the error
-    setError(null)
-    // let the error boundary catch this
-    throw error
-  }
-
-  return setError
-}
-
 function App() {
   return (
     <div>
@@ -76,8 +39,8 @@ function App() {
 
 function Position() {
   // retrieving the geoposition is asynchronous
-  // but useGeoPosition uses suspense to give you a sychronous API! 🤯
-  const position = useGeoPosition()
+  // but getGeoPosition uses suspense to give you a sychronous API! 🤯
+  const position = getGeoPosition()
   const {latitude, longitude} = position.coords
   return <pre>{JSON.stringify({latitude, longitude}, null, 2)}</pre>
 }

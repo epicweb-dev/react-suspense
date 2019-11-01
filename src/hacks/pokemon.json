@@ -3,6 +3,7 @@
     "id": "UG9rZW1vbjowMjU=",
     "number": "025",
     "name": "Pikachu",
+    "image": "/img/pokemon/pikachu.jpg",
     "attacks": {
       "special": [
         {
@@ -26,6 +27,7 @@
   "mew": {
     "id": "UG9rZW1vbjoxNTE=",
     "number": "151",
+    "image": "/img/pokemon/mew.jpg",
     "name": "Mew",
     "attacks": {
       "special": [
@@ -80,6 +82,7 @@
   "mewtwo": {
     "id": "UG9rZW1vbjoxNTA=",
     "number": "150",
+    "image": "/img/pokemon/mewtwo.jpg",
     "name": "Mewtwo",
     "attacks": {
       "special": [
@@ -104,6 +107,7 @@
   "ditto": {
     "id": "UG9rZW1vbjoxMzI=",
     "number": "132",
+    "image": "/img/pokemon/ditto.jpg",
     "name": "Ditto",
     "attacks": {
       "special": [
@@ -119,6 +123,7 @@
     "id": "UG9rZW1vbjowMDY=",
     "number": "006",
     "name": "Charizard",
+    "image": "/img/pokemon/charizard.jpg",
     "attacks": {
       "special": [
         {
@@ -143,6 +148,7 @@
     "id": "UG9rZW1vbjowMDE=",
     "number": "001",
     "name": "Bulbasaur",
+    "image": "/img/pokemon/bulbasaur.jpg",
     "attacks": {
       "special": [
         {

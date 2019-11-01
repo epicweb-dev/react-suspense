@@ -1,7 +1,6 @@
-// Fetch as you render
-// 💯 handle useTransition
+// useTransition for improved loading states
 
-// http://localhost:3000/isolated/exercises-final/02
+// http://localhost:3000/isolated/exercises-final/04
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -42,7 +41,36 @@ function createResource(asyncFn) {
 
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
-  return <pre>{JSON.stringify(pokemon, null, 2)}</pre>
+  return (
+    <div>
+      <section>
+        <h2 style={{fontWeight: 'bold'}}>
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
+        </h2>
+      </section>
+      <div>
+        <img
+          alt={pokemon.name}
+          src={pokemon.image}
+          style={{maxWidth: '100%'}}
+        />
+      </div>
+      <section>
+        <h3>Special Attacks</h3>
+        <ul>
+          {pokemon.attacks.special.map(attack => (
+            <li>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {attack.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  )
 }
 
 function InvisibleButton(props) {

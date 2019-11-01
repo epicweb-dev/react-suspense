@@ -37,7 +37,7 @@ function handleAnchorClick(event) {
 
 function ComponentContainer({label, ...props}) {
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div>
       <h2 style={{textAlign: 'center'}}>{label}</h2>
       <div
         style={{

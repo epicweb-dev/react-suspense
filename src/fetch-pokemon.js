@@ -5,6 +5,7 @@ function fetchPokemon(name) {
         id
         number
         name
+        image
         attacks {
           special {
             name

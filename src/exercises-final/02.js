@@ -11,18 +11,30 @@ import {ErrorBoundary} from '../utils'
 // window.fetch.restoreOriginalFetch()
 
 function createResource(asyncFn) {
+  let status = 'pending'
   let result
-  let error
-  let promise = asyncFn().then(r => (result = r), e => (error = e))
+  let promise = asyncFn().then(
+    r => {
+      status = 'success'
+      result = r
+    },
+    e => {
+      status = 'error'
+      result = e
+    },
+  )
   return {
     read() {
-      if (error) {
-        throw error
+      switch (status) {
+        case 'pending':
+          throw promise
+        case 'error':
+          throw result
+        case 'success':
+          return result
+        default:
+          throw new Error('Impossible state!')
       }
-      if (!result) {
-        throw promise
-      }
-      return result
     },
   }
 }
@@ -75,7 +87,7 @@ function App() {
   }
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div>
       <form
         onSubmit={handleSubmit}
         style={{
