@@ -7,8 +7,10 @@ import fetchPokemon from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
 // if you want to make an actual network call for the pokemon
-// the uncomment the following line.
+// then uncomment the following line.
 // window.fetch.restoreOriginalFetch()
+// and you can adjust the fetch time with this:
+// window.FETCH_TIME = 3000
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -41,7 +43,31 @@ function createResource(asyncFn) {
 
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
-  return <pre>{JSON.stringify(pokemon, null, 2)}</pre>
+  return (
+    <div>
+      <section>
+        <h2>
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
+        </h2>
+      </section>
+      <div className="pokemon-info__img-wrapper">
+        <img alt={pokemon.name} src={pokemon.image} />
+      </div>
+      <section>
+        <ul>
+          {pokemon.attacks.special.map(attack => (
+            <li key={attack.name}>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {attack.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  )
 }
 
 function InvisibleButton(props) {
@@ -122,16 +148,7 @@ function App() {
         </div>
       </form>
       <hr />
-      <div
-        style={{
-          height: 300,
-          width: 300,
-          overflow: 'scroll',
-          backgroundColor: '#eee',
-          borderRadius: 4,
-          padding: 10,
-        }}
-      >
+      <div className="pokemon-info">
         <ErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
             {pokemonResource ? (

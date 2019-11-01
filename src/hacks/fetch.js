@@ -9,7 +9,9 @@ window.thing = 2
 originalFetch.restoreOriginalFetch = () => (window.fetch = originalFetch)
 originalFetch.overrideFetch = () => (window.fetch = hackFetch)
 
-const sleep = (t = Math.random() * 2000 + 750) =>
+window.FETCH_TIME = 1500
+
+const sleep = (t = window.FETCH_TIME) =>
   new Promise(resolve => setTimeout(resolve, t))
 
 const fakeResponses = [

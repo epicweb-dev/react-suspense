@@ -87,7 +87,6 @@ function ExerciseContainer() {
     exercise: {Component: Exercise},
     final: {Component: Final},
   } = exerciseInfo[exerciseId]
-  console.log(exerciseInfo[exerciseId])
   return (
     <div
       style={{
@@ -287,7 +286,7 @@ function MainApp() {
         <div
           style={{
             padding: 30,
-            height: '100%',
+            height: '100vh',
             display: 'grid',
             alignItems: 'center',
             justifyContent: 'center',

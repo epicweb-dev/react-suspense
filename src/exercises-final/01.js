@@ -7,41 +7,58 @@ import fetchPokemon from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
 // if you want to make an actual network call for the pokemon
-// the uncomment the following line.
+// then uncomment the following line.
 // window.fetch.restoreOriginalFetch()
+// and you can adjust the fetch time with this:
+// window.FETCH_TIME = 3000
 
-let pikachu
-let pikachuError
-let pikachuPromise = fetchPokemon('pikachu').then(
-  p => (pikachu = p),
-  e => (pikachuError = e),
+let pokemon
+let pokemonError
+let pokemonPromise = fetchPokemon('pikachu').then(
+  p => (pokemon = p),
+  e => (pokemonError = e),
 )
 
-function Pikachu() {
-  if (pikachuError) {
-    throw pikachuError
+function PokemonInfo() {
+  if (pokemonError) {
+    throw pokemonError
   }
-  if (!pikachu) {
-    throw pikachuPromise
+  if (!pokemon) {
+    throw pokemonPromise
   }
-  return <pre>{JSON.stringify(pikachu, null, 2)}</pre>
+  return (
+    <div>
+      <section>
+        <h2>
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
+        </h2>
+      </section>
+      <div className="pokemon-info__img-wrapper">
+        <img alt={pokemon.name} src={pokemon.image} />
+      </div>
+      <section>
+        <ul>
+          {pokemon.attacks.special.map(attack => (
+            <li key={attack.name}>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {attack.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  )
 }
 
 function App() {
   return (
-    <div
-      style={{
-        height: 300,
-        width: 300,
-        overflow: 'scroll',
-        backgroundColor: '#eee',
-        borderRadius: 4,
-        padding: 10,
-      }}
-    >
+    <div className="pokemon-info">
       <ErrorBoundary>
-        <React.Suspense fallback={<div>Loading Pikachu...</div>}>
-          <Pikachu />
+        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+          <PokemonInfo />
         </React.Suspense>
       </ErrorBoundary>
     </div>
