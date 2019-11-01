@@ -6,18 +6,19 @@ import React from 'react'
 // In a regular app, I recommend using https://npm.im/react-error-boundary
 // and reporting errors to a monitoring service.
 class ErrorBoundary extends React.Component {
-  state = {hasError: false}
-  static getDerivedStateFromError() {
-    return {hasError: true}
+  state = {error: null}
+  static getDerivedStateFromError(error) {
+    return {error}
   }
   componentDidCatch() {
     // log the error to the server
   }
-  tryAgain = () => this.setState({hasError: false})
+  tryAgain = () => this.setState({error: null})
   render() {
-    return this.state.hasError ? (
+    return this.state.error ? (
       <div>
         There was an error. <button onClick={this.tryAgain}>try again</button>
+        <pre style={{whiteSpace: 'normal'}}>{this.state.error.message}</pre>
       </div>
     ) : (
       this.props.children

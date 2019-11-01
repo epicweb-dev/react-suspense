@@ -8,7 +8,7 @@ import {ErrorBoundary} from '../utils'
 
 // if you want to make an actual network call for the pokemon
 // then uncomment the following line.
-window.fetch.restoreOriginalFetch()
+// window.fetch.restoreOriginalFetch()
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -68,23 +68,6 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-function InvisibleButton(props) {
-  return (
-    <button
-      type="button"
-      style={{
-        border: 'none',
-        padding: 'inherit',
-        fontSize: 'inherit',
-        fontFamily: 'inherit',
-        cursor: 'pointer',
-        fontWeight: 'inherit',
-      }}
-      {...props}
-    />
-  )
-}
-
 function App() {
   const [startTransition, isPending] = React.useTransition({timeoutMs: 3000})
   const [{pokemonResource, pokemonName}, setState] = React.useReducer(
@@ -116,28 +99,33 @@ function App() {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+      <form onSubmit={handleSubmit} className="pokemon-form">
         <label htmlFor="pokemonName-input">Pokemon Name</label>
         <small>
           Try{' '}
-          <InvisibleButton onClick={() => handleSelect('pikachu')}>
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('pikachu')}
+          >
             "pikachu"
-          </InvisibleButton>
+          </button>
           {', '}
-          <InvisibleButton onClick={() => handleSelect('charizard')}>
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('charizard')}
+          >
             "charizard"
-          </InvisibleButton>
+          </button>
           {', or '}
-          <InvisibleButton onClick={() => handleSelect('mew')}>
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('mew')}
+          >
             "mew"
-          </InvisibleButton>
+          </button>
         </small>
         <div>
           <input
@@ -150,7 +138,7 @@ function App() {
         </div>
       </form>
       <hr />
-      <div className="pokemon-info" style={{opacity: isPending ? 0.6 : 1}}>
+      <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
         <ErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
             {pokemonResource ? (

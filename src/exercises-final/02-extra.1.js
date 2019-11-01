@@ -71,23 +71,6 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-function InvisibleButton(props) {
-  return (
-    <button
-      type="button"
-      style={{
-        border: 'none',
-        padding: 'inherit',
-        fontSize: 'inherit',
-        fontFamily: 'inherit',
-        cursor: 'pointer',
-        fontWeight: 'inherit',
-      }}
-      {...props}
-    />
-  )
-}
-
 function App() {
   const [startTransition, isPending] = React.useTransition({timeoutMs: 3000})
   const [{pokemonResource, pokemonName}, setState] = React.useReducer(
@@ -119,28 +102,33 @@ function App() {
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+      <form onSubmit={handleSubmit} className="pokemon-form">
         <label htmlFor="pokemonName-input">Pokemon Name</label>
         <small>
           Try{' '}
-          <InvisibleButton onClick={() => handleSelect('pikachu')}>
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('pikachu')}
+          >
             "pikachu"
-          </InvisibleButton>
+          </button>
           {', '}
-          <InvisibleButton onClick={() => handleSelect('charizard')}>
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('charizard')}
+          >
             "charizard"
-          </InvisibleButton>
+          </button>
           {', or '}
-          <InvisibleButton onClick={() => handleSelect('mew')}>
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('mew')}
+          >
             "mew"
-          </InvisibleButton>
+          </button>
         </small>
         <div>
           <input
