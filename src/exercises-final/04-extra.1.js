@@ -10,7 +10,7 @@ import {ErrorBoundary} from '../utils'
 // if you want to make an actual network call for the pokemon
 // then uncomment the following line.
 // NOTE: this one only works with supported local pokemon!
-window.fetch.restoreOriginalFetch()
+// window.fetch.restoreOriginalFetch()
 // and you can adjust the fetch time with this:
 // window.FETCH_TIME = 3000
 
@@ -29,16 +29,10 @@ function createResource(asyncFn) {
   )
   return {
     read() {
-      switch (status) {
-        case 'pending':
-          throw promise
-        case 'error':
-          throw result
-        case 'success':
-          return result
-        default:
-          throw new Error('Impossible state!')
-      }
+      if (status === 'pending') throw promise
+      if (status === 'error') throw result
+      if (status === 'success') return result
+      throw new Error('This should be impossible')
     },
   }
 }

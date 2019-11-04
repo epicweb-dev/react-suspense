@@ -28,16 +28,10 @@ function createResource(asyncFn) {
   )
   return {
     read() {
-      switch (status) {
-        case 'pending':
-          throw promise
-        case 'error':
-          throw result
-        case 'success':
-          return result
-        default:
-          throw new Error('Impossible state!')
-      }
+      if (status === 'pending') throw promise
+      if (status === 'error') throw result
+      if (status === 'success') return result
+      throw new Error('This should be impossible')
     },
   }
 }
