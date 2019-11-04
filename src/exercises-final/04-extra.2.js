@@ -1,8 +1,9 @@
-// useTransition for improved loading states
+// Suspense Image
 
-// http://localhost:3000/isolated/exercises-final/03
+// http://localhost:3000/isolated/exercises-final/04
 
 import React from 'react'
+import fallbackPokemonImg from '../fallback-pokemon.jpg'
 import fetchPokemon from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
@@ -41,12 +42,32 @@ function createResource(asyncFn) {
   }
 }
 
+const imgSrcResourceCache = {}
+
+function Img({src, ...props}) {
+  if (!imgSrcResourceCache[src]) {
+    imgSrcResourceCache[src] = createResource(
+      () =>
+        new Promise(resolve => {
+          const img = new Image()
+          img.src = src
+          img.onload = () => resolve(src)
+        }),
+    )
+  }
+  return <img src={imgSrcResourceCache[src].read()} {...props} />
+}
+
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <React.Suspense
+          fallback={<img src={fallbackPokemonImg} alt="pokemon loading..." />}
+        >
+          <Img src={pokemon.image} alt={pokemon.name} />
+        </React.Suspense>
       </div>
       <section>
         <h2>
@@ -165,3 +186,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/

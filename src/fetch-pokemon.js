@@ -26,7 +26,7 @@ function fetchPokemon(name) {
       },
       body: JSON.stringify({
         query: pokemonQuery,
-        variables: {name},
+        variables: {name: name.toLowerCase()},
       }),
     })
     .then(r => r.json())

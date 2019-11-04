@@ -1,10 +1,16 @@
-// useTransition for improved loading states
+// Suspense Image
+// 💯 fallback default
 
-// http://localhost:3000/isolated/exercises-final/03
+// http://localhost:3000/isolated/exercises-final/04-extra.3
 
 import React from 'react'
+import fallbackPokemonImgSrc from '../fallback-pokemon.jpg'
 import fetchPokemon from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
+
+// preload the fallbackPokemonImgSrc
+const fallbackPokemonImg = document.createElement('img')
+fallbackPokemonImg.src = fallbackPokemonImgSrc
 
 // if you want to make an actual network call for the pokemon
 // then uncomment the following line.
@@ -41,12 +47,39 @@ function createResource(asyncFn) {
   }
 }
 
+function Img({src, fallbackImg, ...props}) {
+  const hostRef = React.useRef()
+
+  function updateImgNode(newNode) {
+    // doing this hacky thing because even if you have the image in the cache
+    // it still may take a moment for the browser to display it once react
+    // creates the img element and adds the src to it.
+    // by working directly with IMG DOM nodes, we can have the image data loaded
+    // ahead of time and the image appears instantly.
+    hostRef.current.innerHTML = ''
+    hostRef.current.appendChild(newNode)
+  }
+
+  React.useLayoutEffect(() => {
+    updateImgNode(fallbackImg)
+    const realImg = document.createElement('img')
+    realImg.src = src
+    realImg.onload = () => updateImgNode(realImg)
+  }, [fallbackImg, src])
+
+  return <span ref={hostRef} />
+}
+
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <Img
+          fallbackImg={fallbackPokemonImg}
+          src={pokemon.image}
+          alt={pokemon.name}
+        />
       </div>
       <section>
         <h2>
@@ -165,3 +198,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/

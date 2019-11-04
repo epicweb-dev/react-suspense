@@ -1,16 +1,21 @@
-// useTransition for improved loading states
+// Suspense Image
+// 💯 avoid waterfall + SuspenseList
 
-// http://localhost:3000/isolated/exercises-final/03
+// HMMMM... TODO
+
+// http://localhost:3000/isolated/exercises-final/04-extra.4
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
+import fallbackPokemonImgSrc from '../fallback-pokemon.jpg'
 import {ErrorBoundary} from '../utils'
 
 // if you want to make an actual network call for the pokemon
 // then uncomment the following line.
+// NOTE: this one only works with supported local pokemon!
 // window.fetch.restoreOriginalFetch()
 // and you can adjust the fetch time with this:
-// window.FETCH_TIME = 3000
+window.FETCH_TIME = 100
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -41,13 +46,25 @@ function createResource(asyncFn) {
   }
 }
 
-function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.read()
+function createPokemonResource(pokemonName) {
+  const lowerName = pokemonName
+  const data = createResource(() => fetchPokemon(lowerName))
+  const image = createResource(
+    () =>
+      new Promise(resolve => {
+        const img = new Image()
+        const src = `/img/pokemon/${lowerName}.jpg`
+        img.src = src
+        img.onload = () => resolve(src)
+      }),
+  )
+  return {data, image}
+}
+
+function PokemonData({pokemonResource}) {
+  const pokemon = pokemonResource.data.read()
   return (
-    <div>
-      <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
-      </div>
+    <>
       <section>
         <h2>
           {pokemon.name}
@@ -66,6 +83,23 @@ function PokemonInfo({pokemonResource}) {
           ))}
         </ul>
       </section>
+    </>
+  )
+}
+
+function PokemonInfo({pokemonResource}) {
+  return (
+    <div>
+      <React.Suspense
+        fallback={<img src={fallbackPokemonImgSrc} alt="pokemon fallback" />}
+      >
+        <div className="pokemon-info__img-wrapper">
+          <img src={pokemonResource.image.read()} alt="Pokemon" />
+        </div>
+      </React.Suspense>
+      <React.Suspense fallback={<div>Loading pokemon data...</div>}>
+        <PokemonData pokemonResource={pokemonResource} />
+      </React.Suspense>
     </div>
   )
 }
@@ -83,14 +117,14 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
+    const pokemonResource = createPokemonResource(pokemonName)
     setState({pokemonResource})
   }
 
   function handleSelect(pokemonName) {
     setState({pokemonName})
     startTransition(() => {
-      const pokemonResource = createResource(() => fetchPokemon(pokemonName))
+      const pokemonResource = createPokemonResource(pokemonName)
       setState({pokemonResource})
     })
   }
@@ -165,3 +199,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/

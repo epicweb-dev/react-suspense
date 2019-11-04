@@ -40,9 +40,6 @@ following:
 - [ ] Watch
       [Setup and Logistics for KCD Workshops](https://egghead.io/lessons/egghead-setup-and-logistics-for-kcd-workshops)
       (~24 minutes). Please do NOT skip this step.
-- [ ] Watch [The Beginner's Guide to React](https://kcd.im/beginner-react)
-      (available free on Egghead.io), or have the equivalent experience (77
-      minutes)
 - [ ] Watch Dan Abramov's talk
       [Beyond React 16 | JSConf Iceland 2018](https://www.youtube.com/watch?v=nLF0n9SACd4)
       (33 minutes)

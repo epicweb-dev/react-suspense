@@ -21,7 +21,7 @@ const fakeResponses = [
       const body = JSON.parse(config.body)
       await sleep()
       const pokemonName = body.variables.name
-      const pokemon = allPokemon[pokemonName.toLowerCase()]
+      const pokemon = allPokemon[pokemonName]
       if (!pokemon) {
         throw new Error(
           `🚨 fetch calls are "hacked" so you can work this workshop offline, so we don't support the pokemon with the name "${pokemonName}." We only support: ${Object.keys(

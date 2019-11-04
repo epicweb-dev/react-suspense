@@ -34,15 +34,15 @@ function Pokemon() {
   const pokemon = getPokemon()
   return (
     <div>
+      <div className="pokemon-info__img-wrapper">
+        <img alt={pokemon.name} src={pokemon.image} />
+      </div>
       <section>
         <h2>
           {pokemon.name}
           <sup>{pokemon.number}</sup>
         </h2>
       </section>
-      <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
-      </div>
       <section>
         <ul>
           {pokemon.attacks.special.map(attack => (

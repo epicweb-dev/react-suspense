@@ -45,15 +45,15 @@ function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
+      <div className="pokemon-info__img-wrapper">
+        <img alt={pokemon.name} src={pokemon.image} />
+      </div>
       <section>
         <h2>
           {pokemon.name}
           <sup>{pokemon.number}</sup>
         </h2>
       </section>
-      <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
-      </div>
       <section>
         <ul>
           {pokemon.attacks.special.map(attack => (
@@ -82,16 +82,12 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() =>
-      fetchPokemon(pokemonName.toLowerCase()),
-    )
+    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
     setState({pokemonResource})
   }
 
   function handleSelect(pokemonName) {
-    const pokemonResource = createResource(() =>
-      fetchPokemon(pokemonName.toLowerCase()),
-    )
+    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
     setState({pokemonName, pokemonResource})
   }
 

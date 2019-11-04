@@ -1,80 +1,176 @@
-// Suspense Fundamentals
+// caching resources
 
 // http://localhost:3000/isolated/exercises-final/04
 
 import React from 'react'
+import fetchPokemon from '../fetch-pokemon'
+import {ErrorBoundary} from '../utils'
 
-// this initialPosition is the "cache". It's not at all sophisticated and
-// has all the normal problems with caching that you might expect.
-// but it hopefully gives you the right idea
-let initialPosition
-let initialPositionPromise
-function getGeoPosition(options) {
-  if (!initialPosition) {
-    if (!initialPositionPromise) {
-      initialPositionPromise = new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            initialPosition = position
-            resolve(position)
-          },
-          error => reject(error),
-          options,
-        )
-      })
-    }
-    // supsense magic...
-    throw initialPositionPromise
+// if you want to make an actual network call for the pokemon
+// then uncomment the following line.
+// window.fetch.restoreOriginalFetch()
+// and you can adjust the fetch time with this:
+// window.FETCH_TIME = 3000
+
+function createResource(asyncFn) {
+  let status = 'pending'
+  let result
+  let promise = asyncFn().then(
+    r => {
+      status = 'success'
+      result = r
+    },
+    e => {
+      status = 'error'
+      result = e
+    },
+  )
+  return {
+    read() {
+      switch (status) {
+        case 'pending':
+          throw promise
+        case 'error':
+          throw result
+        case 'success':
+          return result
+        default:
+          throw new Error('Impossible state!')
+      }
+    },
   }
-  return initialPosition
 }
 
-function App() {
+function PokemonInfo({pokemonResource}) {
+  const pokemon = pokemonResource.read()
   return (
     <div>
-      Your position is: <Position />
+      <div className="pokemon-info__img-wrapper">
+        <img alt={pokemon.name} src={pokemon.image} />
+      </div>
+      <section>
+        <h2>
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
+        </h2>
+      </section>
+      <section>
+        <ul>
+          {pokemon.attacks.special.map(attack => (
+            <li key={attack.name}>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {attack.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   )
 }
 
-function Position() {
-  // retrieving the geoposition is asynchronous
-  // but getGeoPosition uses suspense to give you a sychronous API! 🤯
-  const position = getGeoPosition()
-  const {latitude, longitude} = position.coords
-  return <pre>{JSON.stringify({latitude, longitude}, null, 2)}</pre>
-}
+const pokemonResourceCache = {}
 
-// this is just a hacky error boundary for handling any errors in the app
-// it just shows "there was an error" with a button to try and re-render
-// the whole app over again.
-// In a regular app, I recommend using https://npm.im/react-error-boundary
-// and reporting errors to a monitoring service.
-class ErrorBoundary extends React.Component {
-  state = {hasError: false}
-  componentDidCatch() {
-    this.setState({hasError: true})
-  }
-  tryAgain = () => this.setState({hasError: false})
-  render() {
-    return this.state.hasError ? (
-      <div>
-        There was an error. <button onClick={this.tryAgain}>try again</button>
-      </div>
-    ) : (
-      this.props.children
-    )
-  }
-}
+function App() {
+  const [startTransition, isPending] = React.useTransition({timeoutMs: 750})
+  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
+    (state, action) => ({...state, ...action}),
+    {pokemonResource: null, pokemonName: ''},
+  )
 
-function Usage() {
+  function setPokemonResource(name) {
+    const lowerName = name.toLowerCase()
+    if (pokemonResourceCache[lowerName]) {
+      setState({pokemonResource: pokemonResourceCache[lowerName]})
+    } else {
+      const resource = createResource(() => fetchPokemon(lowerName))
+      pokemonResourceCache[lowerName] = resource
+      startTransition(() => setState({pokemonResource: resource}))
+    }
+  }
+
+  function handleChange(e) {
+    setState({pokemonName: e.target.value})
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    setPokemonResource(pokemonName)
+  }
+
+  function handleSelect(pokemonName) {
+    setState({pokemonName})
+    setPokemonResource(pokemonName)
+  }
+
   return (
-    <ErrorBoundary>
-      <React.Suspense fallback={<div>loading position...</div>}>
-        <App />
-      </React.Suspense>
-    </ErrorBoundary>
+    <div>
+      <form onSubmit={handleSubmit} className="pokemon-form">
+        <label htmlFor="pokemonName-input">Pokemon Name</label>
+        <small>
+          Try{' '}
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('pikachu')}
+          >
+            "pikachu"
+          </button>
+          {', '}
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('charizard')}
+          >
+            "charizard"
+          </button>
+          {', or '}
+          <button
+            className="invisible-button"
+            type="button"
+            onClick={() => handleSelect('mew')}
+          >
+            "mew"
+          </button>
+        </small>
+        <div>
+          <input
+            id="pokemonName-input"
+            name="pokemonName"
+            value={pokemonName}
+            onChange={handleChange}
+          />
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <hr />
+      <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
+        <ErrorBoundary>
+          <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+            {pokemonResource ? (
+              <PokemonInfo pokemonResource={pokemonResource} />
+            ) : (
+              'Submit a pokemon'
+            )}
+          </React.Suspense>
+        </ErrorBoundary>
+      </div>
+    </div>
   )
 }
 
-export default Usage
+/*
+🦉 Elaboration & Feedback
+After the instruction, copy the URL below into your browser and fill out the form:
+http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
+*/
+
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
+
+export default App

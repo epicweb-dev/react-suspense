@@ -1,4 +1,4 @@
-// useTransition for improved loading states
+// Suspense Image
 
 // http://localhost:3000/isolated/exercises-final/04
 
@@ -41,19 +41,35 @@ function createResource(asyncFn) {
   }
 }
 
+const imgSrcResourceCache = {}
+
+function Img({src, ...props}) {
+  if (!imgSrcResourceCache[src]) {
+    imgSrcResourceCache[src] = createResource(
+      () =>
+        new Promise(resolve => {
+          const img = new Image()
+          img.src = src
+          img.onload = () => resolve(src)
+        }),
+    )
+  }
+  return <img src={imgSrcResourceCache[src].read()} {...props} />
+}
+
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
+      <div className="pokemon-info__img-wrapper">
+        <Img src={pokemon.image} alt={pokemon.name} />
+      </div>
       <section>
         <h2>
           {pokemon.name}
           <sup>{pokemon.number}</sup>
         </h2>
       </section>
-      <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
-      </div>
       <section>
         <ul>
           {pokemon.attacks.special.map(attack => (
@@ -83,18 +99,14 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() =>
-      fetchPokemon(pokemonName.toLowerCase()),
-    )
+    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
     setState({pokemonResource})
   }
 
   function handleSelect(pokemonName) {
     setState({pokemonName})
     startTransition(() => {
-      const pokemonResource = createResource(() =>
-        fetchPokemon(pokemonName.toLowerCase()),
-      )
+      const pokemonResource = createResource(() => fetchPokemon(pokemonName))
       setState({pokemonResource})
     })
   }
@@ -169,3 +181,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/
