@@ -1,4 +1,4 @@
-// Coordinate suspending components with SuspenseList
+// Coordinate Suspending components with SuspenseList
 
 // http://localhost:3000/isolated/exercises-final/07
 
@@ -6,11 +6,12 @@ import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
-const PokemonForm = React.lazy(() => import('../pokemon-form'))
+// preloads our fallback image
+document.createElement('img').src = '/img/pokemon/fallback-pokemon.jpg'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
-window.FETCH_TIME = 0
+// window.FETCH_TIME = 3000
 // If you want to make an actual network call for the pokemon
 // then uncomment the following line
 // window.fetch.restoreOriginalFetch()
@@ -41,9 +42,9 @@ function createResource(asyncFn) {
   }
 }
 
-function createPokemonResource(pokemonName) {
+function createPokemonResource(pokemonName, delay) {
   const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName))
+  const data = createResource(() => fetchPokemon(lowerName, delay))
   const image = createResource(
     () =>
       new Promise(resolve => {
@@ -59,99 +60,165 @@ function createPokemonResource(pokemonName) {
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
-    <div>
-      <div className="pokemon-info__img-wrapper">
-        <img src={pokemonResource.image.read()} alt={pokemon.name} />
+    <div className="pokemon-info__flex-container">
+      <div>
+        <div className="pokemon-info__img-wrapper">
+          <img src={pokemonResource.image.read()} alt={pokemon.name} />
+        </div>
+        <section>
+          <h2>
+            {pokemon.name}
+            <sup>{pokemon.number}</sup>
+          </h2>
+        </section>
+        <section>
+          <ul>
+            {pokemon.attacks.special.map(attack => (
+              <li key={attack.name}>
+                <label>{attack.name}</label>:{' '}
+                <span>
+                  {attack.damage} <small>({attack.type})</small>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
-      <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
+      <section className="pokemon-info__notes-container">
+        <h3>Notes:</h3>
+        <textarea placeholder="Take notes here..." />
       </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
     </div>
   )
 }
 
-const SUSPENSE_CONFIG = {
-  timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+// Try this:
+// const favoritePokemon = [
+//   {name: 'charizard', delay: 1000},
+//   {name: 'bulbasaur', delay: 500},
+// ]
+// Then switch between revealOrder of "together" "forwards" and "backwards"
+//
+// The try this:
+// const favoritePokemon = [
+//   {name: 'charizard', delay: 1000},
+//   {name: 'bulbasaur', delay: 500},
+//   {name: 'ditto', delay: 2000},
+// ]
+// and do the same there. Also try without revealOrder (default behavior as if you have no SuspenseList).
+
+// there's also a prop called "tail" which can be either "collapsed" or "hidden"
+// play around with that too.
+
+const favoritePokemon = [
+  {name: 'charizard', delay: 1000},
+  {name: 'bulbasaur', delay: 500},
+  {name: 'ditto', delay: 2000},
+  {name: 'mewtwo', delay: 500},
+  {name: 'mew', delay: 2500},
+  {name: 'pikachu', delay: 400},
+  // if you are using the graphql endpoint, then try these:
+  // {name: 'eevee', delay: 200},
+  // {name: 'snorlax', delay: 700},
+  // {name: 'charmander', delay: 400},
+  // {name: 'gengar', delay: 100},
+  // {name: 'squirtle', delay: 1500},
+  // {name: 'dragonite', delay: 4500},
+  // {name: 'jigglypuff', delay: 6000},
+  // {name: 'gyarados', delay: 500},
+  // {name: 'raichu', delay: 500},
+  // {name: 'psyduck', delay: 500},
+  // {name: 'vulpix', delay: 500},
+  // {name: 'ninetales', delay: 500},
+]
+
+function PlaceholderPokemon({name}) {
+  return (
+    <div className="pokemon-info__flex-container">
+      <div className="pokemon-info__img-wrapper">
+        <img src="/img/pokemon/fallback-pokemon.jpg" alt={name} />
+      </div>
+      <section>
+        <h2>
+          {name}
+          <sup>XXX</sup>
+        </h2>
+      </section>
+      <section>
+        <ul>
+          <li>
+            <label>Loading Attack</label>:{' '}
+            <span>
+              XX <small>(Type)</small>
+            </span>
+          </li>
+          <li>
+            <label>Loading Attack</label>:{' '}
+            <span>
+              XX <small>(Type)</small>
+            </span>
+          </li>
+        </ul>
+      </section>
+      <section className="pokemon-info__notes-container">
+        <h3>Notes:</h3>
+        <textarea disabled placeholder="Loading notes..." />
+      </section>
+      <small className="pokemon-info__fetch-time">loading...</small>
+    </div>
+  )
 }
-const pokemonResourceCache = {}
 
-function usePokemonResource(pokemonName) {
-  const [pokemonResource, setPokemonResource] = React.useState(null)
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
-  const lowerName = pokemonName.toLowerCase()
-
-  React.useLayoutEffect(() => {
-    if (!lowerName) {
-      return
-    }
-    let resource = pokemonResourceCache[lowerName]
-    if (!resource) {
-      resource = createPokemonResource(lowerName)
-      pokemonResourceCache[lowerName] = resource
-    }
-    startTransition(() => setPokemonResource(resource))
-
-    // ESLint wants me to add startTransition to the dependency list. I'm
-    // excluding it like we are because of a known bug which will be fixed
-    // before the stable release of Concurrent React:
-    // https://github.com/facebook/react/issues/17273
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lowerName])
-
-  return [pokemonResource, isPending]
-}
+const SUSPENSE_CONFIG = {timeoutMs: 1000}
 
 function App() {
-  const initialPokemonName = 'pikachu'
-  const [submittedPokemonName, setSubmittedPokemonName] = React.useState(
-    initialPokemonName,
-  )
+  const [
+    favoritePokemonResources,
+    setFavoritePokemonResources,
+  ] = React.useState([])
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
 
-  const [pokemonResource, isPending] = usePokemonResource(submittedPokemonName)
+  function handleGoClick() {
+    startTransition(() => {
+      const newResources = favoritePokemon.map(({name, delay}) => ({
+        name,
+        resource: createPokemonResource(name, delay),
+      }))
+
+      setFavoritePokemonResources(newResources)
+    })
+  }
 
   return (
     <div>
-      <React.SuspenseList revealOrder="together">
-        <ErrorBoundary>
-          <React.Suspense fallback={<div>Loading pokemon form...</div>}>
-            <PokemonForm
-              initialPokemonName={initialPokemonName}
-              onSubmit={newPokemonName =>
-                setSubmittedPokemonName(newPokemonName)
-              }
-            />
-          </React.Suspense>
-        </ErrorBoundary>
-        <hr />
-        <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
-          <ErrorBoundary>
-            <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-              {pokemonResource ? (
-                <PokemonInfo pokemonResource={pokemonResource} />
-              ) : (
-                'Submit a pokemon'
-              )}
-            </React.Suspense>
-          </ErrorBoundary>
-        </div>
-      </React.SuspenseList>
+      <div>
+        <button onClick={handleGoClick}>Go!</button>
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          opacity: isPending ? 0.6 : 1,
+        }}
+      >
+        <React.SuspenseList revealOrder="forwards">
+          {favoritePokemonResources.map(({name, resource}) => (
+            <div
+              key={name}
+              className="pokemon-info"
+              style={{margin: 20, height: 'auto'}}
+            >
+              <ErrorBoundary>
+                <React.Suspense fallback={<PlaceholderPokemon name={name} />}>
+                  <PokemonInfo pokemonResource={resource} />
+                </React.Suspense>
+              </ErrorBoundary>
+            </div>
+          ))}
+        </React.SuspenseList>
+      </div>
     </div>
   )
 }
@@ -170,8 +237,3 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
-
-/*
-eslint
-  jsx-a11y/alt-text: off
-*/

@@ -26,4 +26,41 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export {ErrorBoundary}
+function PlaceholderPokemon({name}) {
+  return (
+    <div className="pokemon-info__flex-container">
+      <div className="pokemon-info__img-wrapper">
+        <img src="/img/pokemon/fallback-pokemon.jpg" alt={name} />
+      </div>
+      <section>
+        <h2>
+          {name}
+          <sup>XXX</sup>
+        </h2>
+      </section>
+      <section>
+        <ul>
+          <li>
+            <label>Loading Attack</label>:{' '}
+            <span>
+              XX <small>(Type)</small>
+            </span>
+          </li>
+          <li>
+            <label>Loading Attack</label>:{' '}
+            <span>
+              XX <small>(Type)</small>
+            </span>
+          </li>
+        </ul>
+      </section>
+      <section className="pokemon-info__notes-container">
+        <h3>Notes:</h3>
+        <textarea disabled placeholder="Loading notes..." />
+      </section>
+      <small className="pokemon-info__fetch-time">loading...</small>
+    </div>
+  )
+}
+
+export {ErrorBoundary, PlaceholderPokemon}

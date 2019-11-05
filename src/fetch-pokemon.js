@@ -1,3 +1,8 @@
+const formatDate = date =>
+  `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(
+    date.getSeconds(),
+  ).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`
+
 // the delay argument is for faking things out a bit
 function fetchPokemon(name, delay) {
   const pokemonQuery = `
@@ -39,6 +44,7 @@ function fetchPokemon(name, delay) {
     .then(response => {
       const pokemon = response.data.pokemon
       if (pokemon) {
+        pokemon.fetchedAt = formatDate(new Date())
         return pokemon
       } else {
         return Promise.reject(new Error(`No pokemon with the name "${name}"`))
