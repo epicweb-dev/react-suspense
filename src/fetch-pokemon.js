@@ -1,4 +1,5 @@
-function fetchPokemon(name) {
+// the delay argument is for faking things out a bit
+function fetchPokemon(name, delay) {
   const pokemonQuery = `
     query ($name: String) {
       pokemon(name: $name) {
@@ -28,6 +29,11 @@ function fetchPokemon(name) {
         query: pokemonQuery,
         variables: {name: name.toLowerCase()},
       }),
+    })
+    .then(r => {
+      return new Promise(resolve => {
+        setTimeout(() => resolve(r), delay)
+      })
     })
     .then(r => r.json())
     .then(response => {
