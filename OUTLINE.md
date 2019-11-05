@@ -84,23 +84,14 @@ Please do ask! Interrupt me. If you have an unrelated question, please ask on
 - **Peter the Product Manager** 👨‍💼 "Story time"
 - **Alfred the Alert** 🚨 "Extra helpful in test errors"
 
-## Overview
+## Disclaimers
 
-The secret to performance is this: Less code.
-
-1. Load less code
-2. Run less code
-
-All of the performance optimization techniques that you learn in this workshop
-will be doing one of those two things.
-
-The tools we'll be using are to help you determine where these problems exist
-and what you can do to best optimize those things.
-
-> NOTE: I know that you're eager to get into the React DevTools profiler. It's
-> awesome. I promise we'll get to it, but the first few exercises we'll be using
-> the regular browser devtools. You'll use them both together, don't worry!
-> Patience is a virtue 😉
+1. React Concurrent Mode is experimental
+2. I've never shipped Concurrent Mode to production, and you shouldn't either
+   (yet)
+3. React Suspense is a particularly primitive API and we're still working out
+   good abstractions for it
+4. I will probably say "I don't know" as a response to your questions sometimes
 
 ## Workshop Feedback
 

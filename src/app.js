@@ -280,7 +280,11 @@ function MainApp() {
 
   return (
     <React.Suspense
-      fallback={<div className="totally-centered">Loading...</div>}
+      fallback={
+        <div style={{height: '100vh'}} className="totally-centered">
+          Loading...
+        </div>
+      }
     >
       {IsolatedComponent ? (
         <div

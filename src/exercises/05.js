@@ -1,6 +1,6 @@
-// Suspense Image
+// Cache resources
 
-// http://localhost:3000/isolated/exercises/04
+// http://localhost:3000/isolated/exercises/05
 
 import React from 'react'
 

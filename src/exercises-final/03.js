@@ -64,12 +64,21 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+const SUSPENSE_CONFIG = {timeoutMs: 4000}
+
 function App() {
-  const [startTransition, isPending] = React.useTransition({timeoutMs: 3000})
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [{pokemonResource, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
     {pokemonResource: null, pokemonName: ''},
   )
+
+  function setPokemonResource(name) {
+    startTransition(() => {
+      const pokemonResource = createResource(() => fetchPokemon(name))
+      setState({pokemonResource})
+    })
+  }
 
   function handleChange(e) {
     setState({pokemonName: e.target.value})
@@ -77,16 +86,12 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-    setState({pokemonResource})
+    setPokemonResource(pokemonName)
   }
 
-  function handleSelect(pokemonName) {
-    setState({pokemonName})
-    startTransition(() => {
-      const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-      setState({pokemonResource})
-    })
+  function handleSelect(newPokemonName) {
+    setState({pokemonName: newPokemonName})
+    setPokemonResource(newPokemonName)
   }
 
   return (
@@ -126,7 +131,9 @@ function App() {
             value={pokemonName}
             onChange={handleChange}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={!pokemonName.length}>
+            Submit
+          </button>
         </div>
       </form>
       <hr />

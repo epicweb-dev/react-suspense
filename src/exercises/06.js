@@ -1,6 +1,6 @@
-// Suspense Image
+// Suspense with a custom hook
 
-// http://localhost:3000/isolated/exercises/04
+// http://localhost:3000/isolated/exercises/06
 
 import React from 'react'
 

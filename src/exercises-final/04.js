@@ -1,4 +1,4 @@
-// caching resources
+// Suspense Image
 
 // http://localhost:3000/isolated/exercises-final/04
 
@@ -35,12 +35,28 @@ function createResource(asyncFn) {
   }
 }
 
+const imgSrcResourceCache = {}
+
+function Img({src, ...props}) {
+  if (!imgSrcResourceCache[src]) {
+    imgSrcResourceCache[src] = createResource(
+      () =>
+        new Promise(resolve => {
+          const img = new Image()
+          img.src = src
+          img.onload = () => resolve(src)
+        }),
+    )
+  }
+  return <img src={imgSrcResourceCache[src].read()} {...props} />
+}
+
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <Img src={pokemon.image} alt={pokemon.name} />
       </div>
       <section>
         <h2>
@@ -64,24 +80,20 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-const pokemonResourceCache = {}
+const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function App() {
-  const [startTransition, isPending] = React.useTransition({timeoutMs: 750})
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [{pokemonResource, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
     {pokemonResource: null, pokemonName: ''},
   )
 
   function setPokemonResource(name) {
-    const lowerName = name.toLowerCase()
-    if (pokemonResourceCache[lowerName]) {
-      setState({pokemonResource: pokemonResourceCache[lowerName]})
-    } else {
-      const resource = createResource(() => fetchPokemon(lowerName))
-      pokemonResourceCache[lowerName] = resource
-      startTransition(() => setState({pokemonResource: resource}))
-    }
+    startTransition(() => {
+      const pokemonResource = createResource(() => fetchPokemon(name))
+      setState({pokemonResource})
+    })
   }
 
   function handleChange(e) {
@@ -93,9 +105,9 @@ function App() {
     setPokemonResource(pokemonName)
   }
 
-  function handleSelect(pokemonName) {
-    setState({pokemonName})
-    setPokemonResource(pokemonName)
+  function handleSelect(newPokemonName) {
+    setState({pokemonName: newPokemonName})
+    setPokemonResource(newPokemonName)
   }
 
   return (
@@ -135,7 +147,9 @@ function App() {
             value={pokemonName}
             onChange={handleChange}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={!pokemonName.length}>
+            Submit
+          </button>
         </div>
       </form>
       <hr />
@@ -168,3 +182,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/

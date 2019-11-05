@@ -80,9 +80,9 @@ function App() {
     setState({pokemonResource})
   }
 
-  function handleSelect(pokemonName) {
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-    setState({pokemonName, pokemonResource})
+  function handleSelect(newPokemonName) {
+    const pokemonResource = createResource(() => fetchPokemon(newPokemonName))
+    setState({pokemonName: newPokemonName, pokemonResource})
   }
 
   return (
@@ -122,7 +122,9 @@ function App() {
             value={pokemonName}
             onChange={handleChange}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={!pokemonName.length}>
+            Submit
+          </button>
         </div>
       </form>
       <hr />

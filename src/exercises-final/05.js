@@ -1,10 +1,9 @@
-// Fetch as you render
-// 💯 handle useTransition
+// Cache resources
 
-// http://localhost:3000/isolated/exercises-final/02-extra.1
+// http://localhost:3000/isolated/exercises-final/05
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
+import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
 // if you want to make an actual network call for the pokemon
@@ -36,12 +35,27 @@ function createResource(asyncFn) {
   }
 }
 
+function createPokemonResource(pokemonName) {
+  const lowerName = pokemonName
+  const data = createResource(() => fetchPokemon(lowerName))
+  const image = createResource(
+    () =>
+      new Promise(resolve => {
+        const img = new Image()
+        const src = getImageUrlForPokemon(lowerName)
+        img.src = src
+        img.onload = () => resolve(src)
+      }),
+  )
+  return {data, image}
+}
+
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.read()
+  const pokemon = pokemonResource.data.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
       <section>
         <h2>
@@ -65,12 +79,27 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+const SUSPENSE_CONFIG = {timeoutMs: 4000}
+const pokemonResourceCache = {}
+
 function App() {
-  const [startTransition, isPending] = React.useTransition({timeoutMs: 4000})
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [{pokemonResource, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
     {pokemonResource: null, pokemonName: ''},
   )
+
+  function setPokemonResource(name) {
+    startTransition(() => {
+      const lowerName = name.toLowerCase()
+      let resource = pokemonResourceCache[lowerName]
+      if (!resource) {
+        resource = createPokemonResource(lowerName)
+        pokemonResourceCache[lowerName] = resource
+      }
+      setState({pokemonResource: resource})
+    })
+  }
 
   function handleChange(e) {
     setState({pokemonName: e.target.value})
@@ -78,16 +107,12 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-    setState({pokemonResource})
+    setPokemonResource(pokemonName)
   }
 
   function handleSelect(newPokemonName) {
     setState({pokemonName: newPokemonName})
-    startTransition(() => {
-      const pokemonResource = createResource(() => fetchPokemon(newPokemonName))
-      setState({pokemonResource})
-    })
+    setPokemonResource(newPokemonName)
   }
 
   return (
@@ -162,3 +187,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/

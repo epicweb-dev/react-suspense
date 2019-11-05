@@ -1,10 +1,9 @@
-// Fetch as you render
-// 💯 handle useTransition
+// Suspense with a custom hook
 
-// http://localhost:3000/isolated/exercises-final/02-extra.1
+// http://localhost:3000/isolated/exercises-final/06
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
+import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
 // if you want to make an actual network call for the pokemon
@@ -36,12 +35,27 @@ function createResource(asyncFn) {
   }
 }
 
+function createPokemonResource(pokemonName) {
+  const lowerName = pokemonName
+  const data = createResource(() => fetchPokemon(lowerName))
+  const image = createResource(
+    () =>
+      new Promise(resolve => {
+        const img = new Image()
+        const src = getImageUrlForPokemon(lowerName)
+        img.src = src
+        img.onload = () => resolve(src)
+      }),
+  )
+  return {data, image}
+}
+
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.read()
+  const pokemon = pokemonResource.data.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
       <section>
         <h2>
@@ -65,12 +79,42 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+const SUSPENSE_CONFIG = {timeoutMs: 4000}
+const pokemonResourceCache = {}
+
+function usePokemonResource(pokemonName) {
+  const [pokemonResource, setPokemonResource] = React.useState(null)
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const lowerName = pokemonName.toLowerCase()
+
+  React.useLayoutEffect(() => {
+    if (!lowerName) {
+      return
+    }
+    let resource = pokemonResourceCache[lowerName]
+    if (!resource) {
+      resource = createPokemonResource(lowerName)
+      pokemonResourceCache[lowerName] = resource
+    }
+    startTransition(() => setPokemonResource(resource))
+
+    // ESLint wants me to add startTransition to the dependency list. I'm
+    // excluding it like we are because of a known bug which will be fixed
+    // before the stable release of Concurrent React:
+    // https://github.com/facebook/react/issues/17273
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lowerName])
+
+  return [pokemonResource, isPending]
+}
+
 function App() {
-  const [startTransition, isPending] = React.useTransition({timeoutMs: 4000})
-  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
+  const [{submittedPokemonName, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
-    {pokemonResource: null, pokemonName: ''},
+    {submittedPokemonName: '', pokemonName: ''},
   )
+
+  const [pokemonResource, isPending] = usePokemonResource(submittedPokemonName)
 
   function handleChange(e) {
     setState({pokemonName: e.target.value})
@@ -78,15 +122,13 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-    setState({pokemonResource})
+    setState({submittedPokemonName: pokemonName})
   }
 
   function handleSelect(newPokemonName) {
-    setState({pokemonName: newPokemonName})
-    startTransition(() => {
-      const pokemonResource = createResource(() => fetchPokemon(newPokemonName))
-      setState({pokemonResource})
+    setState({
+      pokemonName: newPokemonName,
+      submittedPokemonName: newPokemonName,
     })
   }
 
@@ -162,3 +204,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  jsx-a11y/alt-text: off
+*/

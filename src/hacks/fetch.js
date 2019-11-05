@@ -3,16 +3,21 @@ import allPokemon from './pokemon.json'
 // this is here to make it easy for us to simulate making HTTP calls in this
 // little app that doesn't actually have any server element.
 const originalFetch = window.fetch
-window.thing = 2
 
 // Allows us to restore the original fetch
 originalFetch.restoreOriginalFetch = () => (window.fetch = originalFetch)
 originalFetch.overrideFetch = () => (window.fetch = hackFetch)
 
 window.FETCH_TIME = 1500
+window.MIN_FETCH_TIME = 500
+window.FETCH_TIME_RANDOM = false
 
-const sleep = (t = window.FETCH_TIME) =>
-  new Promise(resolve => setTimeout(resolve, t))
+function sleep(t = window.FETCH_TIME) {
+  if (window.FETCH_TIME_RANDOM) {
+    t = Math.random() * t + window.MIN_FETCH_TIME
+  }
+  return new Promise(resolve => setTimeout(resolve, t))
+}
 
 const fakeResponses = [
   {
@@ -87,6 +92,7 @@ async function hackFetch(...args) {
     return Promise.reject(rejection)
   }
 }
+hackFetch.isHacked = true
 Object.assign(hackFetch, window.fetch)
 
 // alright. Let's hack fetch!

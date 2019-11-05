@@ -1,6 +1,6 @@
-// Suspense Image
+// Coordinate Suspending components with SuspenseList
 
-// http://localhost:3000/isolated/exercises/04
+// http://localhost:3000/isolated/exercises/07
 
 import React from 'react'
 
