@@ -1,20 +1,17 @@
-// Cache resources
+// Suspense Image
+// 💯 Coordinate loading with SuspenseList
 
-// http://localhost:3000/isolated/exercises-final/05
+// http://localhost:3000/isolated/exercises-final/04-extra.2
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
 
-// By default, all fetches are mocked so we can control the time easily.
-// You can adjust the fetch time with this:
-// window.FETCH_TIME = 3000
-// If you want to make an actual network call for the pokemon
-// then uncomment the following line
+// if you want to make an actual network call for the pokemon
+// then uncomment the following line.
 // window.fetch.restoreOriginalFetch()
-// Note that by doing this, the FETCH_TIME will no longer be considered
-// and if you want to slow things down you should use the Network tab
-// in your developer tools to throttle your network to something like "Slow 3G"
+// and you can adjust the fetch time with this:
+// window.FETCH_TIME = 3000
 
 function createPokemonResource(pokemonName) {
   const lowerName = pokemonName
@@ -31,13 +28,18 @@ function createPokemonResource(pokemonName) {
   return {data, image}
 }
 
-function PokemonInfo({pokemonResource}) {
+function PokemonImage({pokemonResource}) {
+  return (
+    <div className="pokemon-info__img-wrapper">
+      <img src={pokemonResource.image.read()} />
+    </div>
+  )
+}
+
+function PokemonData({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
-    <div>
-      <div className="pokemon-info__img-wrapper">
-        <img src={pokemonResource.image.read()} alt={pokemon.name} />
-      </div>
+    <>
       <section>
         <h2>
           {pokemon.name}
@@ -56,17 +58,24 @@ function PokemonInfo({pokemonResource}) {
           ))}
         </ul>
       </section>
-      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+    </>
+  )
+}
+
+function PokemonInfo({pokemonResource}) {
+  return (
+    <div>
+      <PokemonImage pokemonResource={pokemonResource} />
+      <PokemonData pokemonResource={pokemonResource} />
     </div>
   )
 }
 
 const SUSPENSE_CONFIG = {
-  timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  timeoutMs: 3000,
+  busyDelayMs: 500, // Before we show the inline spinner
+  busyMinDurationMs: 100, // If we show it, force it to stick for a bit
 }
-const pokemonResourceCache = {}
 
 function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
@@ -75,30 +84,22 @@ function App() {
     {pokemonResource: null, pokemonName: ''},
   )
 
-  function setPokemonResource(name) {
-    startTransition(() => {
-      const lowerName = name.toLowerCase()
-      let resource = pokemonResourceCache[lowerName]
-      if (!resource) {
-        resource = createPokemonResource(lowerName)
-        pokemonResourceCache[lowerName] = resource
-      }
-      setState({pokemonResource: resource})
-    })
-  }
-
   function handleChange(e) {
     setState({pokemonName: e.target.value})
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    setPokemonResource(pokemonName)
+    const pokemonResource = createPokemonResource(pokemonName)
+    setState({pokemonResource})
   }
 
   function handleSelect(newPokemonName) {
     setState({pokemonName: newPokemonName})
-    setPokemonResource(newPokemonName)
+    startTransition(() => {
+      const pokemonResource = createPokemonResource(newPokemonName)
+      setState({pokemonResource})
+    })
   }
 
   return (

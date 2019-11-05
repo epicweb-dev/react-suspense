@@ -39,7 +39,7 @@ function Pokemon() {
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <section>
         <h2>
@@ -59,6 +59,7 @@ function Pokemon() {
           ))}
         </ul>
       </section>
+      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
     </div>
   )
 }

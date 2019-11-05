@@ -5,7 +5,7 @@
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
-import {ErrorBoundary} from '../utils'
+import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -17,36 +17,13 @@ import {ErrorBoundary} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function createResource(asyncFn) {
-  let status = 'pending'
-  let result
-  let promise = asyncFn().then(
-    r => {
-      status = 'success'
-      result = r
-    },
-    e => {
-      status = 'error'
-      result = e
-    },
-  )
-  return {
-    read() {
-      if (status === 'pending') throw promise
-      if (status === 'error') throw result
-      if (status === 'success') return result
-      throw new Error('This should be impossible')
-    },
-  }
-}
-
 function createPokemonResource(pokemonName) {
   const lowerName = pokemonName
   const data = createResource(() => fetchPokemon(lowerName))
   const image = createResource(
     () =>
       new Promise(resolve => {
-        const img = new Image()
+        const img = document.createElement('img')
         const src = getImageUrlForPokemon(lowerName)
         img.src = src
         img.onload = () => resolve(src)
@@ -80,6 +57,7 @@ function PokemonInfo({pokemonResource}) {
           ))}
         </ul>
       </section>
+      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
     </div>
   )
 }
@@ -89,7 +67,7 @@ function PokemonInfoContainer({pokemonName}) {
   return (
     <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
       <ErrorBoundary>
-        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+        <React.Suspense fallback={<PokemonInfoFallback name={pokemonName} />}>
           {pokemonResource ? (
             <PokemonInfo pokemonResource={pokemonResource} />
           ) : (

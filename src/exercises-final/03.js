@@ -4,7 +4,7 @@
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
-import {ErrorBoundary} from '../utils'
+import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -16,35 +16,12 @@ import {ErrorBoundary} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function createResource(asyncFn) {
-  let status = 'pending'
-  let result
-  let promise = asyncFn().then(
-    r => {
-      status = 'success'
-      result = r
-    },
-    e => {
-      status = 'error'
-      result = e
-    },
-  )
-  return {
-    read() {
-      if (status === 'pending') throw promise
-      if (status === 'error') throw result
-      if (status === 'success') return result
-      throw new Error('This should be impossible')
-    },
-  }
-}
-
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img alt={pokemon.name} src={pokemon.image} />
+        <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <section>
         <h2>
@@ -64,6 +41,7 @@ function PokemonInfo({pokemonResource}) {
           ))}
         </ul>
       </section>
+      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
     </div>
   )
 }
@@ -158,7 +136,7 @@ function App() {
       <hr />
       <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
         <ErrorBoundary>
-          <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+          <React.Suspense fallback={<PokemonInfoFallback name={pokemonName} />}>
             {pokemonResource ? (
               <PokemonInfo pokemonResource={pokemonResource} />
             ) : (

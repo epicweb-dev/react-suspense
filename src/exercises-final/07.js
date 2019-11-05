@@ -4,10 +4,7 @@
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
-import {ErrorBoundary} from '../utils'
-
-// preloads our fallback image
-document.createElement('img').src = '/img/pokemon/fallback-pokemon.jpg'
+import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -19,36 +16,13 @@ document.createElement('img').src = '/img/pokemon/fallback-pokemon.jpg'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function createResource(asyncFn) {
-  let status = 'pending'
-  let result
-  let promise = asyncFn().then(
-    r => {
-      status = 'success'
-      result = r
-    },
-    e => {
-      status = 'error'
-      result = e
-    },
-  )
-  return {
-    read() {
-      if (status === 'pending') throw promise
-      if (status === 'error') throw result
-      if (status === 'success') return result
-      throw new Error('This should be impossible')
-    },
-  }
-}
-
 function createPokemonResource(pokemonName, delay) {
   const lowerName = pokemonName
   const data = createResource(() => fetchPokemon(lowerName, delay))
   const image = createResource(
     () =>
       new Promise(resolve => {
-        const img = new Image()
+        const img = document.createElement('img')
         const src = getImageUrlForPokemon(lowerName)
         img.src = src
         img.onload = () => resolve(src)
@@ -60,33 +34,27 @@ function createPokemonResource(pokemonName, delay) {
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
-    <div className="pokemon-info__flex-container">
-      <div>
-        <div className="pokemon-info__img-wrapper">
-          <img src={pokemonResource.image.read()} alt={pokemon.name} />
-        </div>
-        <section>
-          <h2>
-            {pokemon.name}
-            <sup>{pokemon.number}</sup>
-          </h2>
-        </section>
-        <section>
-          <ul>
-            {pokemon.attacks.special.map(attack => (
-              <li key={attack.name}>
-                <label>{attack.name}</label>:{' '}
-                <span>
-                  {attack.damage} <small>({attack.type})</small>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
+    <div>
+      <div className="pokemon-info__img-wrapper">
+        <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
-      <section className="pokemon-info__notes-container">
-        <h3>Notes:</h3>
-        <textarea placeholder="Take notes here..." />
+      <section>
+        <h2>
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
+        </h2>
+      </section>
+      <section>
+        <ul>
+          {pokemon.attacks.special.map(attack => (
+            <li key={attack.name}>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {attack.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
       <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
     </div>
@@ -133,44 +101,11 @@ const favoritePokemon = [
   // {name: 'ninetales', delay: 500},
 ]
 
-function PlaceholderPokemon({name}) {
-  return (
-    <div className="pokemon-info__flex-container">
-      <div className="pokemon-info__img-wrapper">
-        <img src="/img/pokemon/fallback-pokemon.jpg" alt={name} />
-      </div>
-      <section>
-        <h2>
-          {name}
-          <sup>XXX</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          <li>
-            <label>Loading Attack</label>:{' '}
-            <span>
-              XX <small>(Type)</small>
-            </span>
-          </li>
-          <li>
-            <label>Loading Attack</label>:{' '}
-            <span>
-              XX <small>(Type)</small>
-            </span>
-          </li>
-        </ul>
-      </section>
-      <section className="pokemon-info__notes-container">
-        <h3>Notes:</h3>
-        <textarea disabled placeholder="Loading notes..." />
-      </section>
-      <small className="pokemon-info__fetch-time">loading...</small>
-    </div>
-  )
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000, // play around with this number as well..
+  busyDelayMs: 300, // this time is the same as our css transition delay
+  busyMinDurationMs: 500,
 }
-
-const SUSPENSE_CONFIG = {timeoutMs: 1000}
 
 function App() {
   const [
@@ -211,7 +146,7 @@ function App() {
               style={{margin: 20, height: 'auto'}}
             >
               <ErrorBoundary>
-                <React.Suspense fallback={<PlaceholderPokemon name={name} />}>
+                <React.Suspense fallback={<PokemonInfoFallback name={name} />}>
                   <PokemonInfo pokemonResource={resource} />
                 </React.Suspense>
               </ErrorBoundary>

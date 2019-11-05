@@ -1,5 +1,8 @@
 import React from 'react'
 
+// preloads our fallback image
+document.createElement('img').src = '/img/pokemon/fallback-pokemon.jpg'
+
 // this is just a hacky error boundary for handling any errors in the app
 // it just shows "there was an error" with a button to try and re-render
 // the whole app over again.
@@ -26,15 +29,16 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-function PlaceholderPokemon({name}) {
+function PokemonInfoFallback({name}) {
+  const initialName = React.useRef(name).current
   return (
-    <div className="pokemon-info__flex-container">
+    <div>
       <div className="pokemon-info__img-wrapper">
-        <img src="/img/pokemon/fallback-pokemon.jpg" alt={name} />
+        <img src="/img/pokemon/fallback-pokemon.jpg" alt={initialName} />
       </div>
       <section>
         <h2>
-          {name}
+          {initialName}
           <sup>XXX</sup>
         </h2>
       </section>
@@ -54,13 +58,32 @@ function PlaceholderPokemon({name}) {
           </li>
         </ul>
       </section>
-      <section className="pokemon-info__notes-container">
-        <h3>Notes:</h3>
-        <textarea disabled placeholder="Loading notes..." />
-      </section>
       <small className="pokemon-info__fetch-time">loading...</small>
     </div>
   )
 }
 
-export {ErrorBoundary, PlaceholderPokemon}
+function createResource(asyncFn) {
+  let status = 'pending'
+  let result
+  let promise = asyncFn().then(
+    r => {
+      status = 'success'
+      result = r
+    },
+    e => {
+      status = 'error'
+      result = e
+    },
+  )
+  return {
+    read() {
+      if (status === 'pending') throw promise
+      if (status === 'error') throw result
+      if (status === 'success') return result
+      throw new Error('This should be impossible')
+    },
+  }
+}
+
+export {ErrorBoundary, PokemonInfoFallback, createResource}
