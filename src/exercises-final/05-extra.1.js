@@ -1,6 +1,5 @@
 // Cache resources
 // 💯 Cache in Context
-// This one's really experimental and doesn't work right now. I think it's probably a bad idea.
 
 // http://localhost:3000/isolated/exercises-final/05-extra.1
 
@@ -56,8 +55,7 @@ function createPokemonResource(pokemonName) {
   return {data, image}
 }
 
-function PokemonInfo({pokemonName}) {
-  const pokemonResource = usePokemonResource(pokemonName)
+function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
     <div>
@@ -86,22 +84,54 @@ function PokemonInfo({pokemonName}) {
   )
 }
 
+function PokemonInfoContainer({pokemonName}) {
+  const [pokemonResource, isPending] = usePokemonResource(pokemonName)
+  return (
+    <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
+      <ErrorBoundary>
+        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+          {pokemonResource ? (
+            <PokemonInfo pokemonResource={pokemonResource} />
+          ) : (
+            'Submit a pokemon'
+          )}
+        </React.Suspense>
+      </ErrorBoundary>
+    </div>
+  )
+}
+
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
   busyDelayMs: 300, // this time is the same as our css transition delay
   busyMinDurationMs: 500,
 }
+const pokemonResourceCache = {}
+
+const PokemonResourceContext = React.createContext()
+
+function usePokemonResource() {
+  return React.useContext(PokemonResourceContext)
+}
 
 function App() {
-  const [addPokemonResource, isPending] = useAddPokemonResource()
-  const [{submittedPokemonName, pokemonName}, setState] = React.useReducer(
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
-    {submittedPokemonName: '', pokemonName: ''},
+    {pokemonResource: null, pokemonName: ''},
   )
 
-  React.useEffect(() => {
-    addPokemonResource(submittedPokemonName)
-  }, [addPokemonResource, submittedPokemonName])
+  function setPokemonResource(name) {
+    startTransition(() => {
+      const lowerName = name.toLowerCase()
+      let resource = pokemonResourceCache[lowerName]
+      if (!resource) {
+        resource = createPokemonResource(lowerName)
+        pokemonResourceCache[lowerName] = resource
+      }
+      setState({pokemonResource: resource})
+    })
+  }
 
   function handleChange(e) {
     setState({pokemonName: e.target.value})
@@ -109,14 +139,12 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    setState({submittedPokemonName: pokemonName})
+    setPokemonResource(pokemonName)
   }
 
   function handleSelect(newPokemonName) {
-    setState({
-      submittedPokemonName: newPokemonName,
-      pokemonName: newPokemonName,
-    })
+    setState({pokemonName: newPokemonName})
+    setPokemonResource(newPokemonName)
   }
 
   return (
@@ -162,90 +190,10 @@ function App() {
         </div>
       </form>
       <hr />
-      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
-        <ErrorBoundary>
-          <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-            {submittedPokemonName ? (
-              <PokemonInfo pokemonName={submittedPokemonName} />
-            ) : (
-              'Submit a pokemon'
-            )}
-          </React.Suspense>
-        </ErrorBoundary>
-      </div>
+      <PokemonResourceContext.Provider value={[pokemonResource, isPending]}>
+        <PokemonInfoContainer />
+      </PokemonResourceContext.Provider>
     </div>
-  )
-}
-
-const PokemonResourcesContext = React.createContext()
-const AddPokemonResourceContext = React.createContext()
-
-function PokemonProvider({children}) {
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
-  const [resources, setResources] = React.useState({})
-
-  const addResource = React.useCallback(name => {
-    if (!name) {
-      return
-    }
-    startTransition(() => {
-      setResources(currentResources => {
-        const lowerName = name.toLowerCase()
-        if (currentResources[lowerName]) {
-          return currentResources
-        } else {
-          return {
-            ...currentResources,
-            [lowerName]: createPokemonResource(lowerName),
-          }
-        }
-      })
-    })
-    // ESLint wants me to add startTransition to the dependency list. I'm
-    // excluding it like we are because of a known bug which will be fixed
-    // before the stable release of Concurrent React:
-    // https://github.com/facebook/react/issues/17273
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const addResourceContextValue = React.useMemo(
-    () => [addResource, isPending],
-    [addResource, isPending],
-  )
-  return (
-    <PokemonResourcesContext.Provider value={resources}>
-      <AddPokemonResourceContext.Provider value={addResourceContextValue}>
-        {children}
-      </AddPokemonResourceContext.Provider>
-    </PokemonResourcesContext.Provider>
-  )
-}
-
-function usePokemonResource(pokemonName) {
-  const resources = React.useContext(PokemonResourcesContext)
-  if (!resources) {
-    throw new Error(
-      'usePokemonResource must be used within the <PokemonProvider />',
-    )
-  }
-  return resources[pokemonName]
-}
-
-function useAddPokemonResource() {
-  const addResourceContextValue = React.useContext(AddPokemonResourceContext)
-  if (!addResourceContextValue) {
-    throw new Error(
-      'useAddPokemonResource must be used within the <PokemonProvider />',
-    )
-  }
-  return addResourceContextValue
-}
-
-function AppWithProviders() {
-  return (
-    <PokemonProvider>
-      <App />
-    </PokemonProvider>
   )
 }
 
@@ -262,7 +210,7 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 //                                                                //
 ////////////////////////////////////////////////////////////////////
 
-export default AppWithProviders
+export default App
 
 /*
 eslint
