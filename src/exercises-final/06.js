@@ -66,56 +66,59 @@ const SUSPENSE_CONFIG = {
   busyDelayMs: 300, // this time is the same as our css transition delay
   busyMinDurationMs: 500,
 }
+
 const pokemonResourceCache = {}
+
+function getPokemonResource(name) {
+  const lowerName = name.toLowerCase()
+  let resource = pokemonResourceCache[lowerName]
+  if (!resource) {
+    resource = createPokemonResource(lowerName)
+    pokemonResourceCache[lowerName] = resource
+  }
+  return resource
+}
 
 function usePokemonResource(pokemonName) {
   const [pokemonResource, setPokemonResource] = React.useState(null)
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
-  const lowerName = pokemonName.toLowerCase()
 
   React.useLayoutEffect(() => {
-    if (!lowerName) {
+    if (!pokemonName) {
       return
     }
-    let resource = pokemonResourceCache[lowerName]
-    if (!resource) {
-      resource = createPokemonResource(lowerName)
-      pokemonResourceCache[lowerName] = resource
-    }
-    startTransition(() => setPokemonResource(resource))
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(pokemonName))
+    })
 
     // ESLint wants me to add startTransition to the dependency list. I'm
     // excluding it like we are because of a known bug which will be fixed
     // before the stable release of Concurrent React:
     // https://github.com/facebook/react/issues/17273
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lowerName])
+  }, [pokemonName])
 
   return [pokemonResource, isPending]
 }
 
 function App() {
-  const [{submittedPokemonName, pokemonName}, setState] = React.useReducer(
-    (state, action) => ({...state, ...action}),
-    {submittedPokemonName: '', pokemonName: ''},
-  )
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [submittedPokemonName, setSubmittedPokemonName] = React.useState(null)
 
   const [pokemonResource, isPending] = usePokemonResource(submittedPokemonName)
 
   function handleChange(e) {
-    setState({pokemonName: e.target.value})
+    setPokemonName(e.target.value)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    setState({submittedPokemonName: pokemonName})
+    setSubmittedPokemonName(pokemonName)
   }
 
   function handleSelect(newPokemonName) {
-    setState({
-      pokemonName: newPokemonName,
-      submittedPokemonName: newPokemonName,
-    })
+    setSubmittedPokemonName(newPokemonName)
+    setPokemonName(newPokemonName)
   }
 
   return (

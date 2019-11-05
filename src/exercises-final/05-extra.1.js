@@ -84,6 +84,7 @@ const SUSPENSE_CONFIG = {
   busyDelayMs: 300, // this time is the same as our css transition delay
   busyMinDurationMs: 500,
 }
+
 const pokemonResourceCache = {}
 
 const PokemonResourceContext = React.createContext()
@@ -92,37 +93,37 @@ function usePokemonResource() {
   return React.useContext(PokemonResourceContext)
 }
 
+function getPokemonResource(name) {
+  const lowerName = name.toLowerCase()
+  let resource = pokemonResourceCache[lowerName]
+  if (!resource) {
+    resource = createPokemonResource(lowerName)
+    pokemonResourceCache[lowerName] = resource
+  }
+  return resource
+}
+
 function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
-  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
-    (state, action) => ({...state, ...action}),
-    {pokemonResource: null, pokemonName: ''},
-  )
-
-  function setPokemonResource(name) {
-    startTransition(() => {
-      const lowerName = name.toLowerCase()
-      let resource = pokemonResourceCache[lowerName]
-      if (!resource) {
-        resource = createPokemonResource(lowerName)
-        pokemonResourceCache[lowerName] = resource
-      }
-      setState({pokemonResource: resource})
-    })
-  }
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleChange(e) {
-    setState({pokemonName: e.target.value})
+    setPokemonName(e.target.value)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    setPokemonResource(pokemonName)
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(pokemonName))
+    })
   }
 
   function handleSelect(newPokemonName) {
-    setState({pokemonName: newPokemonName})
-    setPokemonResource(newPokemonName)
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(newPokemonName))
+    })
+    setPokemonName(newPokemonName)
   }
 
   return (

@@ -47,24 +47,21 @@ function PokemonInfo({pokemonResource}) {
 }
 
 function App() {
-  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
-    (state, action) => ({...state, ...action}),
-    {pokemonResource: null, pokemonName: ''},
-  )
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleChange(e) {
-    setState({pokemonName: e.target.value})
+    setPokemonName(e.target.value)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-    setState({pokemonResource})
+    setPokemonResource(createResource(() => fetchPokemon(pokemonName)))
   }
 
   function handleSelect(newPokemonName) {
-    const pokemonResource = createResource(() => fetchPokemon(newPokemonName))
-    setState({pokemonName: newPokemonName, pokemonResource})
+    setPokemonResource(createResource(() => fetchPokemon(newPokemonName)))
+    setPokemonName(newPokemonName)
   }
 
   return (

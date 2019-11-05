@@ -73,27 +73,25 @@ const SUSPENSE_CONFIG = {
 
 function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
-  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
-    (state, action) => ({...state, ...action}),
-    {pokemonResource: null, pokemonName: ''},
-  )
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleChange(e) {
-    setState({pokemonName: e.target.value})
+    setPokemonName(e.target.value)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createPokemonResource(pokemonName)
-    setState({pokemonResource})
+    startTransition(() => {
+      setPokemonResource(createPokemonResource(pokemonName))
+    })
   }
 
   function handleSelect(newPokemonName) {
-    setState({pokemonName: newPokemonName})
     startTransition(() => {
-      const pokemonResource = createPokemonResource(newPokemonName)
-      setState({pokemonResource})
+      setPokemonResource(createPokemonResource(newPokemonName))
     })
+    setPokemonName(newPokemonName)
   }
 
   return (
