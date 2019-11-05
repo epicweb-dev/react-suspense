@@ -21,6 +21,13 @@
   padding: 10px;
 }
 
+.pokemon-info.pokemon-loading {
+  opacity: 0.6;
+  transition: opacity 0s;
+  /* note: the transition delay is the same as the busyDelayMs config */
+  transition-delay: 0.3s;
+}
+
 .pokemon-info h2 {
   font-weight: bold;
   text-align: center;

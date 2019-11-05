@@ -22,6 +22,16 @@ you can use to improve your app's user experience (most notably the concept of
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
 
+## ⚠️ Warning ⚠️
+
+This workshop material deals with **EXPERIMENTAL** features in React. Please do
+not copy/paste any of the code you find here into a production application and
+expect it to work. Even when the features are released they may not work the
+same as demonstrated in this workshop material.
+
+That said, the concepts in this workshop will very likely be applicable when
+these features are stable, so enjoy the workshop!
+
 ## Pre-Workshop Instructions/Requirements
 
 In order for us to maximize our efforts during the workshop, please do the

@@ -1,17 +1,21 @@
-// Fetch as you render
-// 💯 handle useTransition
+// useTransition for improved loading states
+// 💯 handle faster connections
 
-// http://localhost:3000/isolated/exercises-final/02-extra.1
+// http://localhost:3000/isolated/exercises-final/03-extra.1
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
-// if you want to make an actual network call for the pokemon
-// then uncomment the following line.
-// window.fetch.restoreOriginalFetch()
-// and you can adjust the fetch time with this:
+// By default, all fetches are mocked so we can control the time easily.
+// You can adjust the fetch time with this:
 // window.FETCH_TIME = 3000
+// If you want to make an actual network call for the pokemon
+// then uncomment the following line
+// window.fetch.restoreOriginalFetch()
+// Note that by doing this, the FETCH_TIME will no longer be considered
+// and if you want to slow things down you should use the Network tab
+// in your developer tools to throttle your network to something like "Slow 3G"
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -65,12 +69,34 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+// shows busy indicator, and it stays for 500ms
+window.FETCH_TIME = 450
+
+// shows busy indicator, then suspense fallback
+// window.FETCH_TIME = 5000
+
+// never shows busy indicator
+// window.FETCH_TIME = 200
+
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is the same as our css transition delay
+  busyMinDurationMs: 500,
+}
+
 function App() {
-  const [startTransition, isPending] = React.useTransition({timeoutMs: 4000})
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [{pokemonResource, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
     {pokemonResource: null, pokemonName: ''},
   )
+
+  function setPokemonResource(name) {
+    startTransition(() => {
+      const pokemonResource = createResource(() => fetchPokemon(name))
+      setState({pokemonResource})
+    })
+  }
 
   function handleChange(e) {
     setState({pokemonName: e.target.value})
@@ -78,16 +104,12 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    const pokemonResource = createResource(() => fetchPokemon(pokemonName))
-    setState({pokemonResource})
+    setPokemonResource(pokemonName)
   }
 
   function handleSelect(newPokemonName) {
     setState({pokemonName: newPokemonName})
-    startTransition(() => {
-      const pokemonResource = createResource(() => fetchPokemon(newPokemonName))
-      setState({pokemonResource})
-    })
+    setPokemonResource(newPokemonName)
   }
 
   return (
@@ -133,7 +155,7 @@ function App() {
         </div>
       </form>
       <hr />
-      <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         <ErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
             {pokemonResource ? (

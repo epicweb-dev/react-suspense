@@ -1,17 +1,22 @@
 // Cache resources
 // 💯 Cache in Context
+// This one's really experimental and doesn't work right now. I think it's probably a bad idea.
 
-// http://localhost:3000/isolated/exercises-final/05
+// http://localhost:3000/isolated/exercises-final/05-extra.1
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {ErrorBoundary} from '../utils'
 
-// if you want to make an actual network call for the pokemon
-// then uncomment the following line.
-// window.fetch.restoreOriginalFetch()
-// and you can adjust the fetch time with this:
+// By default, all fetches are mocked so we can control the time easily.
+// You can adjust the fetch time with this:
 // window.FETCH_TIME = 3000
+// If you want to make an actual network call for the pokemon
+// then uncomment the following line
+// window.fetch.restoreOriginalFetch()
+// Note that by doing this, the FETCH_TIME will no longer be considered
+// and if you want to slow things down you should use the Network tab
+// in your developer tools to throttle your network to something like "Slow 3G"
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -51,7 +56,8 @@ function createPokemonResource(pokemonName) {
   return {data, image}
 }
 
-function PokemonInfo({pokemonResource}) {
+function PokemonInfo({pokemonName}) {
+  const pokemonResource = usePokemonResource(pokemonName)
   const pokemon = pokemonResource.data.read()
   return (
     <div>
@@ -80,27 +86,22 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-const SUSPENSE_CONFIG = {timeoutMs: 4000}
-const pokemonResourceCache = {}
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is the same as our css transition delay
+  busyMinDurationMs: 500,
+}
 
 function App() {
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
-  const [{pokemonResource, pokemonName}, setState] = React.useReducer(
+  const [addPokemonResource, isPending] = useAddPokemonResource()
+  const [{submittedPokemonName, pokemonName}, setState] = React.useReducer(
     (state, action) => ({...state, ...action}),
-    {pokemonResource: null, pokemonName: ''},
+    {submittedPokemonName: '', pokemonName: ''},
   )
 
-  function setPokemonResource(name) {
-    startTransition(() => {
-      const lowerName = name.toLowerCase()
-      let resource = pokemonResourceCache[lowerName]
-      if (!resource) {
-        resource = createPokemonResource(lowerName)
-        pokemonResourceCache[lowerName] = resource
-      }
-      setState({pokemonResource: resource})
-    })
-  }
+  React.useEffect(() => {
+    addPokemonResource(submittedPokemonName)
+  }, [addPokemonResource, submittedPokemonName])
 
   function handleChange(e) {
     setState({pokemonName: e.target.value})
@@ -108,12 +109,14 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    setPokemonResource(pokemonName)
+    setState({submittedPokemonName: pokemonName})
   }
 
   function handleSelect(newPokemonName) {
-    setState({pokemonName: newPokemonName})
-    setPokemonResource(newPokemonName)
+    setState({
+      submittedPokemonName: newPokemonName,
+      pokemonName: newPokemonName,
+    })
   }
 
   return (
@@ -159,11 +162,11 @@ function App() {
         </div>
       </form>
       <hr />
-      <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         <ErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-            {pokemonResource ? (
-              <PokemonInfo pokemonResource={pokemonResource} />
+            {submittedPokemonName ? (
+              <PokemonInfo pokemonName={submittedPokemonName} />
             ) : (
               'Submit a pokemon'
             )}
@@ -174,26 +177,69 @@ function App() {
   )
 }
 
-const PokemonCacheStateContext = React.createContext()
-const PokemonCacheDispatchContext = React.createContext()
+const PokemonResourcesContext = React.createContext()
+const AddPokemonResourceContext = React.createContext()
 
 function PokemonProvider({children}) {
-  const [cache, dispatch] = React.useReducer((state, action) => {
-    return {
-      ...state,
-      [action.name]: action.resource,
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const [resources, setResources] = React.useState({})
+
+  const addResource = React.useCallback(name => {
+    if (!name) {
+      return
     }
-  })
+    startTransition(() => {
+      setResources(currentResources => {
+        const lowerName = name.toLowerCase()
+        if (currentResources[lowerName]) {
+          return currentResources
+        } else {
+          return {
+            ...currentResources,
+            [lowerName]: createPokemonResource(lowerName),
+          }
+        }
+      })
+    })
+    // ESLint wants me to add startTransition to the dependency list. I'm
+    // excluding it like we are because of a known bug which will be fixed
+    // before the stable release of Concurrent React:
+    // https://github.com/facebook/react/issues/17273
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const addResourceContextValue = React.useMemo(
+    () => [addResource, isPending],
+    [addResource, isPending],
+  )
   return (
-    <PokemonCacheStateContext value={cache}>
-      <PokemonCacheDispatchContext value={dispatch}>
+    <PokemonResourcesContext.Provider value={resources}>
+      <AddPokemonResourceContext.Provider value={addResourceContextValue}>
         {children}
-      </PokemonCacheDispatchContext>
-    </PokemonCacheStateContext>
+      </AddPokemonResourceContext.Provider>
+    </PokemonResourcesContext.Provider>
   )
 }
 
-// function usePokemonResource(pokemonName) {}
+function usePokemonResource(pokemonName) {
+  const resources = React.useContext(PokemonResourcesContext)
+  if (!resources) {
+    throw new Error(
+      'usePokemonResource must be used within the <PokemonProvider />',
+    )
+  }
+  return resources[pokemonName]
+}
+
+function useAddPokemonResource() {
+  const addResourceContextValue = React.useContext(AddPokemonResourceContext)
+  if (!addResourceContextValue) {
+    throw new Error(
+      'useAddPokemonResource must be used within the <PokemonProvider />',
+    )
+  }
+  return addResourceContextValue
+}
 
 function AppWithProviders() {
   return (

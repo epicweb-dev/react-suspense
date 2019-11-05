@@ -11,7 +11,7 @@ import {ErrorBoundary} from '../utils'
 // then uncomment the following line.
 // window.fetch.restoreOriginalFetch()
 // and you can adjust the fetch time with this:
-// window.FETCH_TIME = 3000
+window.FETCH_TIME = 3000
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -80,7 +80,11 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-const SUSPENSE_CONFIG = {timeoutMs: 4000}
+const SUSPENSE_CONFIG = {
+  timeoutMs: 3000,
+  busyDelayMs: 500, // Before we show the inline spinner
+  busyMinDurationMs: 100, // If we show it, force it to stick for a bit
+}
 
 function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
@@ -150,7 +154,7 @@ function App() {
         </div>
       </form>
       <hr />
-      <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         <ErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
             {pokemonResource ? (
