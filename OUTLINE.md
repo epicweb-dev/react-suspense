@@ -21,29 +21,29 @@
 
 # What this workshop is
 
-- Lots of exercises
+1. Exercises to prepare your brain to learn
+2. Instruction for you to ask questions
 
 # What this workshop is not
 
 - Solo
 - Lecture
+- One day (do it all again next week)
 
 # Logistics
 
 ## Schedule
 
 - 😴 Logistics
-- 🏋 Code splitting
+- 🏋 Simple Data-fetching
 - 😴 10 Minutes
-- 🏋 useMemo for expensive calculations
-- 🏋 React.memo for reducing unnecessary re-renders
+- 🏋 Fetch as you render
 - 😴 30 Minutes
-- 🏋 Window large lists with react-window
+- 🏋 useTransition for improved loading states
 - 😴 10 Minutes
-- 🏋 Fix "perf death by a thousand cuts"
-- 🏋 Optimize context value
+- 🏋 Suspense Image
 - 😴 10 Minutes
-- 🏋 Production performance monitoring
+- 🏋 Cache resources
 - ❓ Q&A
 
 ## Scripts
@@ -91,7 +91,9 @@ Please do ask! Interrupt me. If you have an unrelated question, please ask on
    (yet)
 3. React Suspense is a particularly primitive API and we're still working out
    good abstractions for it
-4. I will probably say "I don't know" as a response to your questions sometimes
+4. I've been informed that the API for suspending _will change_ before the
+   stable release (don't worry though, the concepts are solid)
+5. I will probably say "I don't know" as a response to your questions sometimes
 
 ## Workshop Feedback
 

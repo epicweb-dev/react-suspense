@@ -1,5 +1,4 @@
-// Simple Data-fetching
-// 💯 make more generic createResource
+// Coordinate Suspending components with SuspenseList
 
 // http://localhost:3000/isolated/exercises-final/07
 
@@ -14,9 +13,9 @@ document.createElement('img').src = '/img/pokemon/fallback-pokemon.jpg'
 // then uncomment the following line.
 // window.fetch.restoreOriginalFetch()
 // and you can adjust the fetch time with this:
-window.FETCH_TIME = 12000
+window.FETCH_TIME = 5000
 window.FETCH_TIME_RANDOM = true
-window.MIN_FETCH_TIME = 5000
+window.MIN_FETCH_TIME = 1000
 
 function createResource(asyncFn) {
   let status = 'pending'
@@ -59,27 +58,40 @@ function createPokemonResource(pokemonName) {
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
-    <div>
-      <div className="pokemon-info__img-wrapper">
-        <img src={pokemonResource.image.read()} alt={pokemon.name} />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        justifyContent: 'space-between',
+      }}
+    >
+      <div>
+        <div className="pokemon-info__img-wrapper">
+          <img src={pokemonResource.image.read()} alt={pokemon.name} />
+        </div>
+        <section>
+          <h2>
+            {pokemon.name}
+            <sup>{pokemon.number}</sup>
+          </h2>
+        </section>
+        <section>
+          <ul>
+            {pokemon.attacks.special.map(attack => (
+              <li key={attack.name}>
+                <label>{attack.name}</label>:{' '}
+                <span>
+                  {attack.damage} <small>({attack.type})</small>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
       <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
+        <h3>Notes:</h3>
+        <textarea placeholder="Take notes here..." />
       </section>
     </div>
   )
@@ -118,8 +130,6 @@ function shuffle(array) {
   return newArray
 }
 
-const SUSPENSE_CONFIG = {timeoutMs: 500}
-
 function PlaceholderPokemon({name}) {
   return (
     <div>
@@ -132,9 +142,15 @@ function PlaceholderPokemon({name}) {
           <sup>loading...</sup>
         </h2>
       </section>
+      <section>
+        <h3>Notes:</h3>
+        <textarea disabled placeholder="Loading notes..." />
+      </section>
     </div>
   )
 }
+
+const SUSPENSE_CONFIG = {timeoutMs: 5000}
 
 function App() {
   const [
