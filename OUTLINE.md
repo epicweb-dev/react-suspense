@@ -50,7 +50,7 @@
 ## Scripts
 
 - `npm run start`
-- `npm run test`
+- `npm run test` (not ready yet).
 
 ## Asking Questions
 
