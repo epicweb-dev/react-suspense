@@ -2,7 +2,7 @@ import React from 'react'
 import {PokemonDataView} from '../utils'
 
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.data.read()
+  const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
