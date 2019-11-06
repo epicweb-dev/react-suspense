@@ -10,9 +10,9 @@ import {createBrowserHistory} from 'history'
 import preval from 'preval.macro'
 import pkg from '../package.json'
 
-const {title} = pkg
+const {title: projectTitle} = pkg
 
-if (!title) {
+if (!projectTitle) {
   throw new Error('The package.json must have a title!')
 }
 
@@ -178,7 +178,7 @@ function Home() {
         paddingTop: 30,
       }}
     >
-      <h1 style={{textAlign: 'center'}}>{title}</h1>
+      <h1 style={{textAlign: 'center'}}>{projectTitle}</h1>
       <div>
         {Object.entries(exerciseInfo).map(
           ([filename, {title, final, exercise}]) => {
@@ -268,6 +268,23 @@ function useIsolatedComponent({pathname}) {
   return moduleName ? IsolatedComponent : null
 }
 
+function useExerciseTitle({pathname}) {
+  const isFinal = pathname.includes('/exercises-final/')
+  const isExercise = pathname.includes('/exercises/')
+  const exerciseName = pathname.split('/').slice(-1)[0]
+
+  React.useEffect(() => {
+    document.title = [
+      projectTitle,
+      exerciseName,
+      isExercise ? 'Exercise' : null,
+      isFinal ? 'Final' : null,
+    ]
+      .filter(Boolean)
+      .join(' | ')
+  }, [exerciseName, isExercise, isFinal])
+}
+
 // The reason we don't put the Isolated components as regular routes
 // and do all this complex stuff instead is so the React DevTools component
 // tree is as small as possible to make it easier for people to figure
@@ -275,6 +292,7 @@ function useIsolatedComponent({pathname}) {
 function MainApp() {
   const [location, setLocation] = React.useState(history.location)
   React.useEffect(() => history.listen(l => setLocation(l)), [])
+  useExerciseTitle(location)
 
   const IsolatedComponent = useIsolatedComponent(location)
 
