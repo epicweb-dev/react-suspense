@@ -102,7 +102,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Refactor%20from%20useEffect&em=
 */
 
 ////////////////////////////////////////////////////////////////////

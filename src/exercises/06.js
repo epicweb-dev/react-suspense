@@ -1,6 +1,6 @@
 // Suspense with a custom hook
 
-// http://localhost:3000/isolated/exercises-final/06
+// http://localhost:3000/isolated/exercises/06
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
@@ -116,7 +116,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Suspense%20with%20a%20custom%20hook&em=
 */
 
 ////////////////////////////////////////////////////////////////////
