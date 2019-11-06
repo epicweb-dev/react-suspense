@@ -92,8 +92,8 @@ function getPokemonResource(name) {
 }
 
 function App() {
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonName, setPokemonName] = React.useState('')
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
@@ -130,8 +130,3 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
-
-/*
-eslint
-  jsx-a11y/alt-text: off
-*/

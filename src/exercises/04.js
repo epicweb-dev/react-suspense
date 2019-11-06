@@ -74,8 +74,8 @@ function createPokemonResource(pokemonName) {
 }
 
 function App() {
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonName, setPokemonName] = React.useState('')
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {

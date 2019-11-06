@@ -27,7 +27,7 @@ import {
 
 const imgSrcResourceCache = {}
 
-function Img({src, ...props}) {
+function Img({src, alt, ...props}) {
   let imgSrcResource = imgSrcResourceCache[src]
   if (!imgSrcResource) {
     imgSrcResource = createResource(
@@ -40,7 +40,7 @@ function Img({src, ...props}) {
     )
     imgSrcResourceCache[src] = imgSrcResource
   }
-  return <img src={imgSrcResource.read()} {...props} />
+  return <img src={imgSrcResource.read()} alt={alt} {...props} />
 }
 
 function PokemonInfo({pokemonResource}) {
@@ -66,8 +66,8 @@ function createPokemonResource(pokemonName) {
 }
 
 function App() {
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonName, setPokemonName] = React.useState('')
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
@@ -112,8 +112,3 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
-
-/*
-eslint
-  jsx-a11y/alt-text: off
-*/

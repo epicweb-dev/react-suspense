@@ -54,8 +54,8 @@ function createPokemonResource(pokemonName) {
 }
 
 function App() {
-  // 🐨 add a useTransition hook here
   const [pokemonName, setPokemonName] = React.useState(null)
+  // 🐨 add a useTransition hook here
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {

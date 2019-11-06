@@ -133,8 +133,3 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
-
-/*
-eslint
-  jsx-a11y/alt-text: off
-*/
