@@ -86,10 +86,6 @@ function App() {
     })
     // 💰 tip: in your effect callback, if pokemonName is an empty string,
     //    return early.
-    // 💰 another tip: ESLint will bug you about adding `startTransition` to
-    //    your dependency array. Don't. There's an open React bug:
-    //    https://github.com/facebook/react/issues/17273
-    //    this is what you get for using experimental software! 😉
   }
 
   return (
