@@ -4,7 +4,12 @@
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
-import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
+import {
+  ErrorBoundary,
+  createResource,
+  PokemonInfoFallback,
+  PokemonDataView,
+} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -16,21 +21,6 @@ import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function createPokemonResource(pokemonName, delay) {
-  const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName, delay))
-  const image = createResource(
-    () =>
-      new Promise(resolve => {
-        const img = document.createElement('img')
-        const src = getImageUrlForPokemon(lowerName)
-        img.src = src
-        img.onload = () => resolve(src)
-      }),
-  )
-  return {data, image}
-}
-
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
@@ -38,25 +28,7 @@ function PokemonInfo({pokemonResource}) {
       <div className="pokemon-info__img-wrapper">
         <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
-      <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+      <PokemonDataView pokemon={pokemon} />
     </div>
   )
 }
@@ -105,6 +77,21 @@ const SUSPENSE_CONFIG = {
   timeoutMs: 4000, // play around with this number as well..
   busyDelayMs: 300, // this time is the same as our css transition delay
   busyMinDurationMs: 500,
+}
+
+function createPokemonResource(pokemonName, delay) {
+  const lowerName = pokemonName
+  const data = createResource(() => fetchPokemon(lowerName, delay))
+  const image = createResource(
+    () =>
+      new Promise(resolve => {
+        const img = document.createElement('img')
+        const src = getImageUrlForPokemon(lowerName)
+        img.src = src
+        img.onload = () => resolve(src)
+      }),
+  )
+  return {data, image}
 }
 
 function App() {

@@ -1,6 +1,7 @@
 // Fetch as you render
+// 💯 make a createPokemonResource
 
-// http://localhost:3000/isolated/exercises-final/02
+// http://localhost:3000/isolated/exercises-final/02-extra.1
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -34,13 +35,17 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+function createPokemonResource(pokemonName) {
+  return createResource(() => fetchPokemon(pokemonName))
+}
+
 function App() {
   const [pokemonName, setPokemonName] = React.useState(null)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    setPokemonResource(createResource(() => fetchPokemon(newPokemonName)))
+    setPokemonResource(createPokemonResource(newPokemonName))
   }
 
   return (

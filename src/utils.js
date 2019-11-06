@@ -31,35 +31,50 @@ class ErrorBoundary extends React.Component {
 
 function PokemonInfoFallback({name}) {
   const initialName = React.useRef(name).current
+  const fallbackPokemonData = {
+    name: initialName,
+    number: 'XXX',
+    attacks: {
+      special: [
+        {name: 'Loading Attack 1', type: 'Type', damage: 'XX'},
+        {name: 'Loading Attack 2', type: 'Type', damage: 'XX'},
+      ],
+    },
+    fetchedAt: 'loading...',
+  }
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
         <img src="/img/pokemon/fallback-pokemon.jpg" alt={initialName} />
       </div>
+      <PokemonDataView pokemon={fallbackPokemonData} />
+    </div>
+  )
+}
+
+function PokemonDataView({pokemon}) {
+  return (
+    <>
       <section>
         <h2>
-          {initialName}
-          <sup>XXX</sup>
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
         </h2>
       </section>
       <section>
         <ul>
-          <li>
-            <label>Loading Attack</label>:{' '}
-            <span>
-              XX <small>(Type)</small>
-            </span>
-          </li>
-          <li>
-            <label>Loading Attack</label>:{' '}
-            <span>
-              XX <small>(Type)</small>
-            </span>
-          </li>
+          {pokemon.attacks.special.map(attack => (
+            <li key={attack.name}>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {attack.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
         </ul>
       </section>
-      <small className="pokemon-info__fetch-time">loading...</small>
-    </div>
+      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+    </>
   )
 }
 
@@ -86,4 +101,71 @@ function createResource(asyncFn) {
   }
 }
 
-export {ErrorBoundary, PokemonInfoFallback, createResource}
+function PokemonForm({initialPokemonName = '', onSubmit}) {
+  const [pokemonName, setPokemonName] = React.useState(initialPokemonName)
+
+  function handleChange(e) {
+    setPokemonName(e.target.value)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    onSubmit(pokemonName)
+  }
+
+  function handleSelect(newPokemonName) {
+    setPokemonName(newPokemonName)
+    onSubmit(newPokemonName)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="pokemon-form">
+      <label htmlFor="pokemonName-input">Pokemon Name</label>
+      <small>
+        Try{' '}
+        <button
+          className="invisible-button"
+          type="button"
+          onClick={() => handleSelect('pikachu')}
+        >
+          "pikachu"
+        </button>
+        {', '}
+        <button
+          className="invisible-button"
+          type="button"
+          onClick={() => handleSelect('charizard')}
+        >
+          "charizard"
+        </button>
+        {', or '}
+        <button
+          className="invisible-button"
+          type="button"
+          onClick={() => handleSelect('mew')}
+        >
+          "mew"
+        </button>
+      </small>
+      <div>
+        <input
+          id="pokemonName-input"
+          name="pokemonName"
+          value={pokemonName}
+          onChange={handleChange}
+        />
+        <button type="submit" disabled={!pokemonName.length}>
+          Submit
+        </button>
+      </div>
+    </form>
+  )
+}
+
+export {
+  ErrorBoundary,
+  PokemonInfoFallback,
+  createResource,
+  PokemonForm,
+  PokemonDataView,
+}

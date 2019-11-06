@@ -5,7 +5,13 @@
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
-import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
+import {
+  ErrorBoundary,
+  createResource,
+  PokemonInfoFallback,
+  PokemonForm,
+  PokemonDataView,
+} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -39,31 +45,13 @@ function PokemonInfo({pokemonResource}) {
       <div className="pokemon-info__img-wrapper">
         <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
-      <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+      <PokemonDataView pokemon={pokemon} />
     </div>
   )
 }
 
-function PokemonInfoContainer({pokemonName}) {
-  const [pokemonResource, isPending] = usePokemonResource(pokemonName)
+function PokemonInfoContainer() {
+  const {pokemonResource, isPending, pokemonName} = usePokemonResource()
   return (
     <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
       <ErrorBoundary>
@@ -108,18 +96,7 @@ function App() {
   const [pokemonName, setPokemonName] = React.useState('')
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
-  function handleChange(e) {
-    setPokemonName(e.target.value)
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    startTransition(() => {
-      setPokemonResource(getPokemonResource(pokemonName))
-    })
-  }
-
-  function handleSelect(newPokemonName) {
+  function handleSubmit(newPokemonName) {
     startTransition(() => {
       setPokemonResource(getPokemonResource(newPokemonName))
     })
@@ -128,48 +105,11 @@ function App() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="pokemon-form">
-        <label htmlFor="pokemonName-input">Pokemon Name</label>
-        <small>
-          Try{' '}
-          <button
-            className="invisible-button"
-            type="button"
-            onClick={() => handleSelect('pikachu')}
-          >
-            "pikachu"
-          </button>
-          {', '}
-          <button
-            className="invisible-button"
-            type="button"
-            onClick={() => handleSelect('charizard')}
-          >
-            "charizard"
-          </button>
-          {', or '}
-          <button
-            className="invisible-button"
-            type="button"
-            onClick={() => handleSelect('mew')}
-          >
-            "mew"
-          </button>
-        </small>
-        <div>
-          <input
-            id="pokemonName-input"
-            name="pokemonName"
-            value={pokemonName}
-            onChange={handleChange}
-          />
-          <button type="submit" disabled={!pokemonName.length}>
-            Submit
-          </button>
-        </div>
-      </form>
+      <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <PokemonResourceContext.Provider value={[pokemonResource, isPending]}>
+      <PokemonResourceContext.Provider
+        value={{pokemonResource, isPending, pokemonName}}
+      >
         <PokemonInfoContainer />
       </PokemonResourceContext.Provider>
     </div>

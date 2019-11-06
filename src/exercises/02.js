@@ -4,7 +4,16 @@
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
-import {ErrorBoundary, createResource, PokemonInfoFallback} from '../utils'
+// 💰 I moved the createResource function to the utils directory.
+// feel free to check it out if you like, but it's the same one that
+// we built earlier.
+import {
+  ErrorBoundary,
+  createResource,
+  PokemonInfoFallback,
+  PokemonForm,
+  PokemonDataView,
+} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -23,89 +32,28 @@ function PokemonInfo({pokemonResource}) {
       <div className="pokemon-info__img-wrapper">
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
-      <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+      <PokemonDataView pokemon={pokemon} />
     </div>
   )
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState('')
-  const [pokemonResource, setPokemonResource] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState(null)
+  // 🐨 swap this variable for a useState to track the pokemonResource
+  const pokemonResource = null
 
-  function handleChange(e) {
-    setPokemonName(e.target.value)
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    setPokemonResource(createResource(() => fetchPokemon(pokemonName)))
-  }
-
-  function handleSelect(newPokemonName) {
-    setPokemonResource(createResource(() => fetchPokemon(newPokemonName)))
+  function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
+    // 💣 you can remove this if you want to
+    console.log('submitted', newPokemonName)
+    // 🐨 using the createResource function, create a new resource
+    // by passing a callback that calls fetchPokemon with the pokemonName
+    // 🐨 update the pokemonResource to be that new one you just made
   }
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="pokemon-form">
-        <label htmlFor="pokemonName-input">Pokemon Name</label>
-        <small>
-          Try{' '}
-          <button
-            className="invisible-button"
-            type="button"
-            onClick={() => handleSelect('pikachu')}
-          >
-            "pikachu"
-          </button>
-          {', '}
-          <button
-            className="invisible-button"
-            type="button"
-            onClick={() => handleSelect('charizard')}
-          >
-            "charizard"
-          </button>
-          {', or '}
-          <button
-            className="invisible-button"
-            type="button"
-            onClick={() => handleSelect('mew')}
-          >
-            "mew"
-          </button>
-        </small>
-        <div>
-          <input
-            id="pokemonName-input"
-            name="pokemonName"
-            value={pokemonName}
-            onChange={handleChange}
-          />
-          <button type="submit" disabled={!pokemonName.length}>
-            Submit
-          </button>
-        </div>
-      </form>
+      <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
         <ErrorBoundary>
@@ -125,7 +73,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Fetch%20as%20you%20render&em=
 */
 
 ////////////////////////////////////////////////////////////////////
@@ -136,3 +84,8 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=TODO&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
+
+/*
+eslint
+  no-unused-vars: off
+*/

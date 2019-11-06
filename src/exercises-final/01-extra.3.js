@@ -1,11 +1,16 @@
 // Simple Data-fetching
-// 💯 Use a better fallback and createResource util
+// 💯 Use utils
 
 // http://localhost:3000/isolated/exercises-final/01-extra.3
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
-import {ErrorBoundary, PokemonInfoFallback, createResource} from '../utils'
+import {
+  ErrorBoundary,
+  PokemonInfoFallback,
+  createResource,
+  PokemonDataView,
+} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -26,25 +31,7 @@ function Pokemon() {
       <div className="pokemon-info__img-wrapper">
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
-      <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+      <PokemonDataView pokemon={pokemon} />
     </div>
   )
 }

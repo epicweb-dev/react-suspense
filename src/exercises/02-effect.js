@@ -1,4 +1,5 @@
 // Fetch as you render
+// 💯 Refactor from useEffect TODO
 
 // http://localhost:3000/isolated/exercises-final/02
 

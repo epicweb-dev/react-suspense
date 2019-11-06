@@ -3,11 +3,16 @@
 // http://localhost:3000/isolated/exercises/01
 
 import React from 'react'
+import {PokemonDataView} from '../utils'
 // 🐨 you'll need to import the fetchPokemon function
 // 💰 here you go:
 // import fetchPokemon from '../fetch-pokemon'
 // 💰 use it like this: fetchPokemon(pokemonName).then(handleSuccess, handleFailure)
-import {ErrorBoundary} from '../utils'
+
+// you'll also need the ErrorBoundary component from utils
+// 💰 here you go:
+// import {ErrorBoundary} from '../utils'
+// 💰 use it like this: <ErrorBoundary><SomeOtherComponents /></ErrorBoundary>
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -41,25 +46,7 @@ function PokemonInfo() {
       <div className="pokemon-info__img-wrapper">
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
-      <section>
-        <h2>
-          {pokemon.name}
-          <sup>{pokemon.number}</sup>
-        </h2>
-      </section>
-      <section>
-        <ul>
-          {pokemon.attacks.special.map(attack => (
-            <li key={attack.name}>
-              <label>{attack.name}</label>:{' '}
-              <span>
-                {attack.damage} <small>({attack.type})</small>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <small className="pokemon-info__fetch-time">{pokemon.fetchedAt}</small>
+      <PokemonDataView pokemon={pokemon} />
     </div>
   )
 }
@@ -67,11 +54,12 @@ function PokemonInfo() {
 function App() {
   return (
     <div className="pokemon-info">
-      <ErrorBoundary>
-        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-          <PokemonInfo />
-        </React.Suspense>
-      </ErrorBoundary>
+      {/*
+        🐨 Wrap the PokemonInfo component with a React.Suspense component with a fallback
+        🐨 Then wrap all that with an <ErrorBoundary /> to catch errors
+        💰 I wrote the ErrorBoundary for you. You can take a look at it in the utils file if you want
+      */}
+      <PokemonInfo />
     </div>
   )
 }
