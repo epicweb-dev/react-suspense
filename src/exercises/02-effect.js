@@ -1,4 +1,4 @@
-// Fetch as you render
+// Render as you fetch
 // 💯 Refactor from useEffect
 
 // http://localhost:3000/isolated/exercises/02-effect

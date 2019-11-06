@@ -1,4 +1,4 @@
-// Fetch as you render
+// Render as you fetch
 
 // http://localhost:3000/isolated/exercises/02
 
@@ -75,7 +75,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=Fetch%20as%20you%20render&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Render%20as%20you%20fetch&em=
 */
 
 ////////////////////////////////////////////////////////////////////

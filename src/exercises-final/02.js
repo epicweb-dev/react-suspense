@@ -1,4 +1,4 @@
-// Fetch as you render
+// Render as you fetch
 
 // http://localhost:3000/isolated/exercises-final/02
 

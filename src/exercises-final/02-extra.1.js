@@ -1,4 +1,4 @@
-// Fetch as you render
+// Render as you fetch
 // 💯 lazy load pokemon-info-fetch-on-render
 
 // http://localhost:3000/isolated/exercises-final/02-extra.1

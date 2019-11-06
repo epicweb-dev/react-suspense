@@ -37,7 +37,7 @@
 - 😴 Logistics
 - 🏋 Simple Data-fetching
 - 😴 10 Minutes
-- 🏋 Fetch as you render
+- 🏋 Render as you fetch
 - 🏋 useTransition for improved loading states
 - 😴 30 Minutes
 - 🏋 Suspense Image
