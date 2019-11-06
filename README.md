@@ -74,7 +74,6 @@ Here are the concepts we'll be covering:
 - The fundamentals of "suspending"
 - Structuring `<React.Suspense />` components with fallbacks
 - Using `useTransition`
-- Using `useDeferredValue`
 - Refactor an existing async interaction to suspense
 - The difference between the three data-fetching approaches:
   - Fetch-on-Render (not using Suspense)
