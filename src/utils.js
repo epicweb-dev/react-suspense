@@ -78,6 +78,10 @@ function PokemonDataView({pokemon}) {
   )
 }
 
+// 🚨 This should NOT be copy/pasted for production code and is only here
+// for experimentation purposes. The API for suspense (currently throwing a
+// promise) is likely to change before suspense is officially released.
+// This was strongly inspired by work done in the React Docs by Dan Abramov
 function createResource(asyncFn) {
   let status = 'pending'
   let result
