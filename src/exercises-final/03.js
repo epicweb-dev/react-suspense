@@ -39,7 +39,7 @@ function PokemonInfo({pokemonResource}) {
 // window.FETCH_TIME = 450
 
 // shows busy indicator, then suspense fallback
-// window.FETCH_TIME = 5000
+window.FETCH_TIME = 5000
 
 // shows busy indicator for a split second
 // 💯 this is what the extra credit improves
@@ -72,15 +72,17 @@ function App() {
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
-        <ErrorBoundary>
-          <React.Suspense fallback={<PokemonInfoFallback name={pokemonName} />}>
-            {pokemonResource ? (
+        {pokemonResource ? (
+          <ErrorBoundary>
+            <React.Suspense
+              fallback={<PokemonInfoFallback name={pokemonName} />}
+            >
               <PokemonInfo pokemonResource={pokemonResource} />
-            ) : (
-              'Submit a pokemon'
-            )}
-          </React.Suspense>
-        </ErrorBoundary>
+            </React.Suspense>
+          </ErrorBoundary>
+        ) : (
+          'Submit a pokemon'
+        )}
       </div>
     </div>
   )
