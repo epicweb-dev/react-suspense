@@ -105,6 +105,14 @@ function createResource(asyncFn) {
   }
 }
 
+function preloadImage(src) {
+  return new Promise(resolve => {
+    const img = document.createElement('img')
+    img.src = src
+    img.onload = () => resolve(src)
+  })
+}
+
 function PokemonForm({initialPokemonName = '', onSubmit}) {
   const [pokemonName, setPokemonName] = React.useState(initialPokemonName)
 
@@ -170,6 +178,7 @@ export {
   ErrorBoundary,
   PokemonInfoFallback,
   createResource,
+  preloadImage,
   PokemonForm,
   PokemonDataView,
 }

@@ -26,6 +26,14 @@ import {
 // 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
 // We're relying on that cache for this approach to work!
 
+function preloadImage(src) {
+  return new Promise(resolve => {
+    const img = document.createElement('img')
+    img.src = src
+    img.onload = () => resolve(src)
+  })
+}
+
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
@@ -47,14 +55,8 @@ const SUSPENSE_CONFIG = {
 function createPokemonResource(pokemonName) {
   const lowerName = pokemonName
   const data = createResource(() => fetchPokemon(lowerName))
-  const image = createResource(
-    () =>
-      new Promise(resolve => {
-        const img = document.createElement('img')
-        const src = getImageUrlForPokemon(lowerName)
-        img.src = src
-        img.onload = () => resolve(src)
-      }),
+  const image = createResource(() =>
+    preloadImage(getImageUrlForPokemon(lowerName)),
   )
   return {data, image}
 }
