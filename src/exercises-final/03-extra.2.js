@@ -1,6 +1,7 @@
 // useTransition for improved loading states
+// 💯 avoid flash of loading content
 
-// http://localhost:3000/isolated/exercises-final/03
+// http://localhost:3000/isolated/exercises-final/03-extra.1
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -34,25 +35,27 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-// try a few of these fetch times:
-// shows busy indicator
+// shows busy indicator, and it stays for 500ms
 // window.FETCH_TIME = 450
 
 // shows busy indicator, then suspense fallback
 // window.FETCH_TIME = 5000
 
-// shows busy indicator for a split second
-// 💯 this is what the extra credit improves
+// never shows busy indicator
 // window.FETCH_TIME = 200
 
-const SUSPENSE_CONFIG = {timeoutMs: 4000}
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is the same as our css transition delay
+  busyMinDurationMs: 500,
+}
 
 function createPokemonResource(pokemonName) {
   return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
@@ -67,7 +70,7 @@ function App() {
     <div>
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
           <ErrorBoundary>
             <React.Suspense

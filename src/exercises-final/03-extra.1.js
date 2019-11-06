@@ -1,5 +1,5 @@
 // useTransition for improved loading states
-// 💯 handle faster connections
+// 💯 use css transitions
 
 // http://localhost:3000/isolated/exercises-final/03-extra.1
 
@@ -44,11 +44,7 @@ function PokemonInfo({pokemonResource}) {
 // never shows busy indicator
 // window.FETCH_TIME = 200
 
-const SUSPENSE_CONFIG = {
-  timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
-}
+const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function createPokemonResource(pokemonName) {
   return createResource(() => fetchPokemon(pokemonName))
