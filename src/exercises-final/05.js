@@ -73,10 +73,10 @@ function App() {
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
+    setPokemonName(newPokemonName)
     startTransition(() => {
       setPokemonResource(getPokemonResource(newPokemonName))
     })
-    setPokemonName(newPokemonName)
   }
 
   return (

@@ -39,9 +39,9 @@ function PokemonInfo({pokemonResource}) {
 }
 
 const SUSPENSE_CONFIG = {
-  timeoutMs: 3000,
-  busyDelayMs: 500, // Before we show the inline spinner
-  busyMinDurationMs: 100, // If we show it, force it to stick for a bit
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is the same as our css transition delay
+  busyMinDurationMs: 500,
 }
 
 function createPokemonResource(pokemonName) {
