@@ -41,9 +41,9 @@
 - 🏋 useTransition for improved loading states
 - 😴 30 Minutes
 - 🏋 Suspense Image
-- 😴 10 Minutes
 - 🏋 Cache resources
 - 😴 10 Minutes
+- 🏋 Suspense with a custom hook
 - 🏋 Coordinate Suspending components with SuspenseList
 - ❓ Q&A
 
