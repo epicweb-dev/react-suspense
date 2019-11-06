@@ -28,8 +28,9 @@ import {
 const imgSrcResourceCache = {}
 
 function Img({src, ...props}) {
-  if (!imgSrcResourceCache[src]) {
-    imgSrcResourceCache[src] = createResource(
+  let imgSrcResource = imgSrcResourceCache[src]
+  if (!imgSrcResource) {
+    imgSrcResource = createResource(
       () =>
         new Promise(resolve => {
           const img = document.createElement('img')
@@ -37,8 +38,9 @@ function Img({src, ...props}) {
           img.onload = () => resolve(src)
         }),
     )
+    imgSrcResourceCache[src] = imgSrcResource
   }
-  return <img src={imgSrcResourceCache[src].read()} {...props} />
+  return <img src={imgSrcResource.read()} {...props} />
 }
 
 function PokemonInfo({pokemonResource}) {
