@@ -1,17 +1,15 @@
 // Fetch as you render
-// 💯 Refactor from useEffect
+// 💯 lazy load pokemon-info-render-as-you-fetch
 
-// http://localhost:3000/isolated/exercises/02-effect
+// http://localhost:3000/isolated/exercises-final/02-extra.2
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
-import {
-  // ErrorBoundary,
-  // createResource,
-  PokemonInfoFallback,
-  PokemonForm,
-  PokemonDataView,
-} from '../utils'
+import {ErrorBoundary, PokemonInfoFallback, PokemonForm} from '../utils'
+import createPokemonInfoResource from '../lazy/pokemon-info-render-as-you-fetch-02.data'
+
+const PokemonInfo = React.lazy(() =>
+  import('../lazy/pokemon-info-render-as-you-fetch-02'),
+)
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -23,61 +21,13 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function PokemonInfo({pokemonName}) {
-  const [state, setState] = React.useReducer((s, a) => ({...s, ...a}), {
-    pokemon: null,
-    error: null,
-    status: 'pending',
-  })
-
-  const {pokemon, error, status} = state
-
-  React.useEffect(() => {
-    let current = true
-    setState({status: 'pending'})
-    fetchPokemon(pokemonName).then(
-      p => {
-        if (current) setState({pokemon: p, status: 'success'})
-      },
-      e => {
-        if (current) setState({error: e, status: 'error'})
-      },
-    )
-    return () => (current = false)
-  }, [pokemonName])
-
-  if (status === 'pending') {
-    return <PokemonInfoFallback name={pokemonName} />
-  }
-
-  if (status === 'error') {
-    return (
-      <div>
-        There was an error.
-        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
-      </div>
-    )
-  }
-
-  if (status === 'success') {
-    return (
-      <div>
-        <div className="pokemon-info__img-wrapper">
-          <img src={pokemon.image} alt={pokemon.name} />
-        </div>
-        <PokemonDataView pokemon={pokemon} />
-      </div>
-    )
-  }
-
-  throw new Error('this should never happen!')
-}
-
 function App() {
   const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
+    setPokemonResource(createPokemonInfoResource(newPokemonName))
   }
 
   return (
@@ -85,8 +35,14 @@ function App() {
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        {pokemonName ? (
-          <PokemonInfo pokemonName={pokemonName} />
+        {pokemonResource ? (
+          <ErrorBoundary>
+            <React.Suspense
+              fallback={<PokemonInfoFallback name={pokemonName} />}
+            >
+              <PokemonInfo pokemonResource={pokemonResource} />
+            </React.Suspense>
+          </ErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}
