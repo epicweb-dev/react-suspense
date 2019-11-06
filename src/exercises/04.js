@@ -27,28 +27,15 @@ import {
 
 // we need to make a place to store the resources outside of render so
 // 🐨 create "cache" object here.
-// 💰 I called it imgSrcResourceCache (it's just a regular {} object)
 
 // 🐨 create an Img component that renders a regular <img /> and accepts a src
 // prop and forwards on any remaining props.
 // 🐨 The first thing you do in this component is check wither your
 // imgSrcResourceCache already has a resource for the given src prop. If it does
-// not, then you need to create one (💰 using createResource... I'll show you how below).
+// not, then you need to create one (💰 using createResource).
 // 🐨 Once you have the resource, then render the <img />.
-
-// 💰 was that confusing? Yeah, here, let me help you out a bit.
-// This is what you'll pass to createResource:
-// () => new Promise(resolve => {
-//   const img = document.createElement('img')
-//   img.src = src
-//   img.onload = () => resolve(src)
-// })
-// This creates an image element in memory and forces the browser to load the
-// image at the src. Once the browser has finished loading it, it'll call our
-// onload function which we use to resolve the promise.
-// 💰 And here's what rendering the <img /> should look like:
+// 💰 Here's what rendering the <img /> should look like:
 // <img src={imgSrcResource.read()} {...props} />
-// 💰 good luck making the Img component!
 
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
