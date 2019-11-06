@@ -36,7 +36,7 @@ function PokemonInfo({pokemonResource}) {
 }
 
 // shows busy indicator, and it stays for 500ms
-window.FETCH_TIME = 450
+// window.FETCH_TIME = 450
 
 // shows busy indicator, then suspense fallback
 // window.FETCH_TIME = 5000

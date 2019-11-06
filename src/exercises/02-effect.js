@@ -23,6 +23,10 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
+// 🐨 Your goal is to refactor this traditional useEffect-style async
+// interaction to suspense with resources. Enjoy!
+// 💰 When you're done, it should look like `src/exercises-final/02.js`
+
 function PokemonInfo({pokemonName}) {
   const [state, setState] = React.useReducer((s, a) => ({...s, ...a}), {
     pokemon: null,
