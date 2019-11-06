@@ -38,12 +38,13 @@
 - 🏋 Simple Data-fetching
 - 😴 10 Minutes
 - 🏋 Fetch as you render
-- 😴 30 Minutes
 - 🏋 useTransition for improved loading states
-- 😴 10 Minutes
+- 😴 30 Minutes
 - 🏋 Suspense Image
 - 😴 10 Minutes
 - 🏋 Cache resources
+- 😴 10 Minutes
+- 🏋 Coordinate Suspending components with SuspenseList
 - ❓ Q&A
 
 ## Scripts
