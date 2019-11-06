@@ -104,9 +104,8 @@ variable and how to fix it here for [windows][win-path] or
 
 For many of my workshops, you should be able to run them
 [entirely in the browser](https://codesandbox.io/s/github/kentcdodds/concurrent-react).
-However for this one, most of the exercises require you run scripts and do some
-performance analysis that doesn't work well in that environment. So I recommend
-you work through the workshop on your own computer.
+However for this one, I recommend you work through the workshop on your own
+computer.
 
 To do so, please follow these instructions.
 
