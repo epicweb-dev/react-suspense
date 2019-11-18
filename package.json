@@ -13,26 +13,26 @@
     "yarn": ">=1"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.0",
-    "@testing-library/react": "^9.2.0",
-    "chalk": "^2.4.2",
-    "glob": "^7.1.5",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "chalk": "^3.0.0",
+    "glob": "^7.1.6",
     "history": "^4.10.1",
     "preval.macro": "^3.0.0",
-    "react": "0.0.0-experimental-f6b8d31a7",
-    "react-dom": "0.0.0-experimental-f6b8d31a7",
+    "react": "0.0.0-experimental-b53ea6ca0",
+    "react-dom": "0.0.0-experimental-b53ea6ca0",
     "react-error-boundary": "^1.2.5",
     "react-router-dom": "^5.1.2",
-    "stop-runaway-react-effects": "^1.2.0"
+    "stop-runaway-react-effects": "^1.2.1"
   },
   "devDependencies": {
     "cross-spawn": "^7.0.1",
     "eslint": "^6.6.0",
-    "husky": "^3.0.9",
+    "husky": "^3.1.0",
     "inquirer": "^7.0.0",
     "is-ci": "^2.0.0",
-    "npm-run-all": "^4.1.3",
-    "prettier": "^1.17.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
     "react-scripts": "^3.2.0",
     "replace-in-file": "^4.2.0",
     "serve": "^11.2.0"
