@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Concurrent React Workshop",
   "keywords": [],
-  "homepage": "http://learn-concurrent-react.netlify.com/",
+  "homepage": "https://learn-concurrent-react.netlify.com/",
   "license": "GPL-3.0-only",
   "main": "src/index.js",
   "engines": {

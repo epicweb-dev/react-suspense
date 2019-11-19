@@ -1,6 +1,6 @@
 // Cache resources
 
-// http://localhost:3000/isolated/exercises/05
+// http://localhost:3000/isolated/exercises/04
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'

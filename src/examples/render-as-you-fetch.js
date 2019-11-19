@@ -1,28 +1,16 @@
-// Suspense Image
-// 💯 Render as you Fetch
+// Render as you Fetch
 
-// http://localhost:3000/isolated/exercises-final/05-extra.2
+// http://localhost:3000/isolated/examples/render-as-you-fetch
 
 import React from 'react'
 import {ErrorBoundary, PokemonInfoFallback, PokemonForm} from '../utils'
-import createPokemonInfoResource from '../lazy/pokemon-info-render-as-you-fetch-05.data'
+import createPokemonInfoResource from './lazy/pokemon-info-render-as-you-fetch.data'
 
 const PokemonInfo = React.lazy(() =>
-  import('../lazy/pokemon-info-render-as-you-fetch-05'),
+  import('./lazy/pokemon-info-render-as-you-fetch'),
 )
 
-// By default, all fetches are mocked so we can control the time easily.
-// You can adjust the fetch time with this:
-// window.FETCH_TIME = 3000
-// If you want to make an actual network call for the pokemon
-// then uncomment the following line
-// window.fetch.restoreOriginalFetch()
-// Note that by doing this, the FETCH_TIME will no longer be considered
-// and if you want to slow things down you should use the Network tab
-// in your developer tools to throttle your network to something like "Slow 3G"
-
-// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
-// We're relying on that cache for this approach to work!
+window.fetch.restoreOriginalFetch()
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,

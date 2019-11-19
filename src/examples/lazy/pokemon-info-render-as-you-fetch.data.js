@@ -1,5 +1,5 @@
-import {createResource, preloadImage} from '../utils'
-import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
+import {createResource, preloadImage} from '../../utils'
+import fetchPokemon, {getImageUrlForPokemon} from '../../fetch-pokemon'
 
 function createPokemonResource(pokemonName) {
   const lowerName = pokemonName
