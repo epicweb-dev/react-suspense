@@ -5,6 +5,7 @@ const formatDate = date =>
 
 // the delay argument is for faking things out a bit
 function fetchPokemon(name, delay) {
+  const endTime = Date.now() + delay
   const pokemonQuery = `
     query ($name: String) {
       pokemon(name: $name) {
@@ -35,12 +36,12 @@ function fetchPokemon(name, delay) {
         variables: {name: name.toLowerCase()},
       }),
     })
+    .then(r => r.json())
     .then(r => {
       return new Promise(resolve => {
-        setTimeout(() => resolve(r), delay)
+        setTimeout(() => resolve(r), endTime - Date.now())
       })
     })
-    .then(r => r.json())
     .then(response => {
       const pokemon = response.data.pokemon
       if (pokemon) {

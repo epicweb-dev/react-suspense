@@ -1,4 +1,4 @@
-// Suspense Image
+// Cache resources
 
 // http://localhost:3000/isolated/exercises-final/04
 
@@ -22,34 +22,12 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
-// We're relying on that cache for this approach to work!
-
-function preloadImage(src) {
-  return new Promise(resolve => {
-    const img = document.createElement('img')
-    img.src = src
-    img.onload = () => resolve(src)
-  })
-}
-
-const imgSrcResourceCache = {}
-
-function Img({src, alt, ...props}) {
-  let imgSrcResource = imgSrcResourceCache[src]
-  if (!imgSrcResource) {
-    imgSrcResource = createResource(() => preloadImage(src))
-    imgSrcResourceCache[src] = imgSrcResource
-  }
-  return <img src={imgSrcResource.read()} alt={alt} {...props} />
-}
-
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <Img src={pokemon.image} alt={pokemon.name} />
+        <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
     </div>
@@ -58,8 +36,20 @@ function PokemonInfo({pokemonResource}) {
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
+}
+
+const pokemonResourceCache = {}
+
+function getPokemonResource(name) {
+  const lowerName = name.toLowerCase()
+  let resource = pokemonResourceCache[lowerName]
+  if (!resource) {
+    resource = createPokemonResource(lowerName)
+    pokemonResourceCache[lowerName] = resource
+  }
+  return resource
 }
 
 function createPokemonResource(pokemonName) {
@@ -74,7 +64,7 @@ function App() {
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
     startTransition(() => {
-      setPokemonResource(createPokemonResource(newPokemonName))
+      setPokemonResource(getPokemonResource(newPokemonName))
     })
   }
 

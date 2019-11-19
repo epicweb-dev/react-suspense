@@ -1,6 +1,6 @@
-// Suspense Image
+// Cache resources
 
-// http://localhost:3000/isolated/exercises/04
+// http://localhost:3000/isolated/exercises/05
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -22,27 +22,11 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
-// We're relying on that cache for this approach to work!
-
-// we need to make a place to store the resources outside of render so
-// 🐨 create "cache" object here.
-
-// 🐨 create an Img component that renders a regular <img /> and accepts a src
-// prop and forwards on any remaining props.
-// 🐨 The first thing you do in this component is check wither your
-// imgSrcResourceCache already has a resource for the given src prop. If it does
-// not, then you need to create one (💰 using createResource).
-// 🐨 Once you have the resource, then render the <img />.
-// 💰 Here's what rendering the <img /> should look like:
-// <img src={imgSrcResource.read()} {...props} />
-
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        {/* 🐨 swap this img for your new Img component */}
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
@@ -52,9 +36,16 @@ function PokemonInfo({pokemonResource}) {
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
 }
+
+// 🐨 create a pokemonResourceCache object
+
+// 🐨 create a getPokemonResource function which accepts a name checks the cache
+// for an existing resource. If there is none, then it creates a resource
+// and inserts it into the cache. Finally the function should return the
+// resource.
 
 function createPokemonResource(pokemonName) {
   return createResource(() => fetchPokemon(pokemonName))
@@ -68,6 +59,7 @@ function App() {
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
     startTransition(() => {
+      // 🐨 change this to getPokemonResource instead
       setPokemonResource(createPokemonResource(newPokemonName))
     })
   }
@@ -96,7 +88,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=Suspense%20Image&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Cache%20resources&em=
 */
 
 ////////////////////////////////////////////////////////////////////

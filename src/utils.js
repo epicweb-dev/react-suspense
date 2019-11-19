@@ -1,7 +1,14 @@
 import React from 'react'
 
+// You really only get the benefit of pre-loading an image when the cache-control
+// is set to cache the image for some period of time. We can't do that with our
+// local server, but we are hosting the images on netlify so we can use those
+//
+const fallbackImgUrl = 'https://kcd-img.netlify.com/fallback-pokemon.jpg'
+// const fallbackImgUrl = '/img/pokemon/fallback-pokemon.jpg'
+
 // preloads our fallback image
-document.createElement('img').src = '/img/pokemon/fallback-pokemon.jpg'
+document.createElement('img').src = fallbackImgUrl
 
 // this is just a hacky error boundary for handling any errors in the app
 // it just shows "there was an error" with a button to try and re-render
@@ -45,7 +52,10 @@ function PokemonInfoFallback({name}) {
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img src="/img/pokemon/fallback-pokemon.jpg" alt={initialName} />
+        <img
+          src="https://kcd-img.netlify.com/fallback-pokemon.jpg"
+          alt={initialName}
+        />
       </div>
       <PokemonDataView pokemon={fallbackPokemonData} />
     </div>

@@ -1,13 +1,12 @@
-// Cache resources
+// Suspense Image
 
 // http://localhost:3000/isolated/exercises-final/05
 
 import React from 'react'
-import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
+import fetchPokemon from '../fetch-pokemon'
 import {
   ErrorBoundary,
   createResource,
-  preloadImage,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
@@ -23,12 +22,34 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
+// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
+// We're relying on that cache for this approach to work!
+
+function preloadImage(src) {
+  return new Promise(resolve => {
+    const img = document.createElement('img')
+    img.src = src
+    img.onload = () => resolve(src)
+  })
+}
+
+const imgSrcResourceCache = {}
+
+function Img({src, alt, ...props}) {
+  let imgSrcResource = imgSrcResourceCache[src]
+  if (!imgSrcResource) {
+    imgSrcResource = createResource(() => preloadImage(src))
+    imgSrcResourceCache[src] = imgSrcResource
+  }
+  return <img src={imgSrcResource.read()} alt={alt} {...props} />
+}
+
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.data.read()
+  const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img src={pokemonResource.image.read()} alt={pokemon.name} />
+        <Img src={pokemon.image} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
     </div>
@@ -37,8 +58,8 @@ function PokemonInfo({pokemonResource}) {
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
 }
 
 const pokemonResourceCache = {}
@@ -54,12 +75,7 @@ function getPokemonResource(name) {
 }
 
 function createPokemonResource(pokemonName) {
-  const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName))
-  const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(lowerName)),
-  )
-  return {data, image}
+  return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {

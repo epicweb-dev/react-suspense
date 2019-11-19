@@ -4,12 +4,9 @@
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
-// 💰 I moved the createResource function to the utils directory.
-// feel free to check it out if you like, but it's the same one that
-// we built earlier.
 import {
-  ErrorBoundary,
-  createResource,
+  // ErrorBoundary,
+  // createResource,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
@@ -25,30 +22,74 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.read()
-  return (
-    <div>
-      <div className="pokemon-info__img-wrapper">
-        <img src={pokemon.image} alt={pokemon.name} />
+// 🐨 Your goal is to refactor this traditional useEffect-style async
+// interaction to suspense with resources. Enjoy!
+
+function PokemonInfo({pokemonName}) {
+  // 💣 you're pretty much going to delete all this stuff except for the one
+  // place where 🐨 appears
+  const [state, setState] = React.useReducer((s, a) => ({...s, ...a}), {
+    pokemon: null,
+    error: null,
+    status: 'pending',
+  })
+
+  const {pokemon, error, status} = state
+
+  React.useEffect(() => {
+    let current = true
+    setState({status: 'pending'})
+    fetchPokemon(pokemonName).then(
+      p => {
+        if (current) setState({pokemon: p, status: 'success'})
+      },
+      e => {
+        if (current) setState({error: e, status: 'error'})
+      },
+    )
+    return () => (current = false)
+  }, [pokemonName])
+
+  // 💰 This will be the fallback prop of <React.Suspense />
+  if (status === 'pending') {
+    return <PokemonInfoFallback name={pokemonName} />
+  }
+
+  // 💰 This is the same thing the ErrorBoundary renders
+  if (status === 'error') {
+    return (
+      <div>
+        There was an error.
+        <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
       </div>
-      <PokemonDataView pokemon={pokemon} />
-    </div>
-  )
+    )
+  }
+
+  // 💰 this is the part that will suspend
+  if (status === 'success') {
+    // 🐨 instead of accpeting the pokemonName as a prop to this component
+    // you'll accept a pokemonResource.
+    // 💰 you'll get the pokemon from: pokemonResource.read()
+    // 🐨 This will be the return value of this component. You wont need it
+    // to be in this if statement anymore thought!
+    return (
+      <div>
+        <div className="pokemon-info__img-wrapper">
+          <img src={pokemon.image} alt={pokemon.name} />
+        </div>
+        <PokemonDataView pokemon={pokemon} />
+      </div>
+    )
+  }
 }
 
 function App() {
   const [pokemonName, setPokemonName] = React.useState(null)
-  // 🐨 swap this variable for a useState to track the pokemonResource
-  const pokemonResource = null
+  // 🐨 add a useState here to keep track of the current pokemonResource
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    // 💣 you can remove this if you want to
-    console.log('submitted', newPokemonName)
-    // 🐨 using the createResource function, create a new resource
-    // by passing a callback that calls fetchPokemon with the pokemonName
-    // 🐨 update the pokemonResource to be that new one you just made
+    // 🐨 set the pokemon resource right here
   }
 
   return (
@@ -56,14 +97,11 @@ function App() {
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
-        {pokemonResource ? (
-          <ErrorBoundary>
-            <React.Suspense
-              fallback={<PokemonInfoFallback name={pokemonName} />}
-            >
-              <PokemonInfo pokemonResource={pokemonResource} />
-            </React.Suspense>
-          </ErrorBoundary>
+        {pokemonName ? ( // 🐨 instead of pokemonName, use pokemonResource here
+          // 🐨 wrap PokemonInfo in an ErrorBoundary and React.Suspense component
+          // to manage the error and loading states that PokemonInfo was managing
+          // before your changes.
+          <PokemonInfo pokemonName={pokemonName} />
         ) : (
           'Submit a pokemon'
         )}
@@ -75,7 +113,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=Render%20as%20you%20fetch&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Refactor%20from%20useEffect&em=
 */
 
 ////////////////////////////////////////////////////////////////////
@@ -86,8 +124,3 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=Render%20as%20you%20fetch&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
-
-/*
-eslint
-  no-unused-vars: off
-*/

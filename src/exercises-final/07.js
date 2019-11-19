@@ -76,8 +76,8 @@ const favoritePokemon = [
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000, // play around with this number as well..
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
 }
 
 function createPokemonResource(pokemonName) {

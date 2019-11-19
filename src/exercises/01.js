@@ -27,6 +27,16 @@ import {PokemonDataView} from '../utils'
 // 🐨 create the following mutable variable references (using let):
 // pokemon, pokemonError, pokemonPromise
 
+// 💣 delete this now...
+const pokemon = {
+  name: 'TODO',
+  number: 'TODO',
+  attacks: {
+    special: [{name: 'TODO', type: 'TODO', damage: 'TODO'}],
+  },
+  fetchedAt: 'TODO',
+}
+
 // We don't need the app to be mounted to know that we want to fetch the pokemon
 // named "pikachu" so we can go ahead and do that right here.
 // 🐨 assign the pokemonPromise variable to a call to fetchPokemon('pikachu')
@@ -78,8 +88,3 @@ http://ws.kcd.im/?ws=Concurrent%20React&e=Simple%20Data-fetching&em=
 ////////////////////////////////////////////////////////////////////
 
 export default App
-
-/*
-eslint
-  no-undef: off
-*/

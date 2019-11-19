@@ -1,5 +1,5 @@
-// Cache resources
-// 💯 Cache in Context
+// Suspense Image
+// 💯 avoid waterfall
 
 // http://localhost:3000/isolated/exercises-final/05-extra.1
 
@@ -8,7 +8,6 @@ import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {
   ErrorBoundary,
   createResource,
-  preloadImage,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
@@ -24,13 +23,15 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-function createPokemonResource(pokemonName) {
-  const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName))
-  const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(lowerName)),
-  )
-  return {data, image}
+// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
+// We're relying on that cache for this approach to work!
+
+function preloadImage(src) {
+  return new Promise(resolve => {
+    const img = document.createElement('img')
+    img.src = src
+    img.onload = () => resolve(src)
+  })
 }
 
 function PokemonInfo({pokemonResource}) {
@@ -45,36 +46,13 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-function PokemonInfoContainer() {
-  const {pokemonResource, isPending, pokemonName} = usePokemonResource()
-  return (
-    <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
-      <ErrorBoundary>
-        <React.Suspense fallback={<PokemonInfoFallback name={pokemonName} />}>
-          {pokemonResource ? (
-            <PokemonInfo pokemonResource={pokemonResource} />
-          ) : (
-            'Submit a pokemon'
-          )}
-        </React.Suspense>
-      </ErrorBoundary>
-    </div>
-  )
-}
-
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
 }
 
 const pokemonResourceCache = {}
-
-const PokemonResourceContext = React.createContext()
-
-function usePokemonResource() {
-  return React.useContext(PokemonResourceContext)
-}
 
 function getPokemonResource(name) {
   const lowerName = name.toLowerCase()
@@ -84,6 +62,15 @@ function getPokemonResource(name) {
     pokemonResourceCache[lowerName] = resource
   }
   return resource
+}
+
+function createPokemonResource(pokemonName) {
+  const lowerName = pokemonName
+  const data = createResource(() => fetchPokemon(lowerName))
+  const image = createResource(() =>
+    preloadImage(getImageUrlForPokemon(lowerName)),
+  )
+  return {data, image}
 }
 
 function App() {
@@ -102,11 +89,19 @@ function App() {
     <div>
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <PokemonResourceContext.Provider
-        value={{pokemonResource, isPending, pokemonName}}
-      >
-        <PokemonInfoContainer />
-      </PokemonResourceContext.Provider>
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
+        {pokemonResource ? (
+          <ErrorBoundary>
+            <React.Suspense
+              fallback={<PokemonInfoFallback name={pokemonName} />}
+            >
+              <PokemonInfo pokemonResource={pokemonResource} />
+            </React.Suspense>
+          </ErrorBoundary>
+        ) : (
+          'Submit a pokemon'
+        )}
+      </div>
     </div>
   )
 }

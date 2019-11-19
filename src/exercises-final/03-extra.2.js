@@ -1,7 +1,7 @@
 // useTransition for improved loading states
 // 💯 avoid flash of loading content
 
-// http://localhost:3000/isolated/exercises-final/03-extra.1
+// http://localhost:3000/isolated/exercises-final/03-extra.2
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -35,22 +35,18 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-// shows busy indicator, and it stays for 500ms
-// window.FETCH_TIME = 450
-
-// shows busy indicator, then suspense fallback
-// window.FETCH_TIME = 5000
-
-// never shows busy indicator
-// window.FETCH_TIME = 200
-
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is the same as our css transition delay
-  busyMinDurationMs: 500,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
 }
 
 function createPokemonResource(pokemonName) {
+  // fetchPokemon takes an optional second argument called "delay" which
+  // allows you to arbitrarily delay the fetch request by a given number
+  // of milliseconds. For example:
+  // fetchPokemon(pokemonName, 400)
+  // would delay it to at least take 400 milliseconds
   return createResource(() => fetchPokemon(pokemonName))
 }
 
