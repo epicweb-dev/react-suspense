@@ -1,10 +1,13 @@
 import React from 'react'
+import pkg from '../package.json'
 
 // You really only get the benefit of pre-loading an image when the cache-control
 // is set to cache the image for some period of time. We can't do that with our
 // local server, but we are hosting the images on netlify so we can use those
-//
-const fallbackImgUrl = 'https://kcd-img.netlify.com/fallback-pokemon.jpg'
+// instead. Note our public/_headers file that forces these to cache.
+const fallbackImgUrl = `${pkg.homepage}img/pokemon/fallback-pokemon.jpg`
+// if you need this to work locally then you can use this URL and that'll work
+// just know that it wont quite work the same because we can't fix the cache-control
 // const fallbackImgUrl = '/img/pokemon/fallback-pokemon.jpg'
 
 // preloads our fallback image
