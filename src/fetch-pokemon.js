@@ -1,3 +1,7 @@
+import pkg from '../package.json'
+// if you need this to work locally then comment out the import above and comment in the next line
+// const pkg = {homepage: '/'}
+
 const formatDate = date =>
   `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(
     date.getSeconds(),
@@ -55,7 +59,7 @@ function fetchPokemon(name, delay) {
 
 function getImageUrlForPokemon(pokemonName) {
   if (fetch.isHacked) {
-    return `/img/pokemon/${pokemonName.toLowerCase()}.jpg`
+    return `${pkg.homepage}img/pokemon/${pokemonName.toLowerCase()}.jpg`
   } else {
     return `https://img.pokemondb.net/artwork/${pokemonName.toLowerCase()}.jpg`
   }

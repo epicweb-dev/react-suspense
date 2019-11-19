@@ -1,14 +1,13 @@
 import React from 'react'
 import pkg from '../package.json'
+// if you need this to work locally then comment out the import above and comment in the next line
+// const pkg = {homepage: '/'}
 
 // You really only get the benefit of pre-loading an image when the cache-control
 // is set to cache the image for some period of time. We can't do that with our
 // local server, but we are hosting the images on netlify so we can use those
 // instead. Note our public/_headers file that forces these to cache.
 const fallbackImgUrl = `${pkg.homepage}img/pokemon/fallback-pokemon.jpg`
-// if you need this to work locally then you can use this URL and that'll work
-// just know that it wont quite work the same because we can't fix the cache-control
-// const fallbackImgUrl = '/img/pokemon/fallback-pokemon.jpg'
 
 // preloads our fallback image
 document.createElement('img').src = fallbackImgUrl
@@ -55,10 +54,7 @@ function PokemonInfoFallback({name}) {
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img
-          src="https://kcd-img.netlify.com/fallback-pokemon.jpg"
-          alt={initialName}
-        />
+        <img src={fallbackImgUrl} alt={initialName} />
       </div>
       <PokemonDataView pokemon={fallbackPokemonData} />
     </div>
