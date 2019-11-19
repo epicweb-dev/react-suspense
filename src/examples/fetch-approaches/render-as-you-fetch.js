@@ -1,9 +1,9 @@
 // Render as you Fetch
 
-// http://localhost:3000/isolated/examples/render-as-you-fetch
+// http://localhost:3000/isolated/examples/fetch-approaches/render-as-you-fetch
 
 import React from 'react'
-import {ErrorBoundary, PokemonInfoFallback, PokemonForm} from '../utils'
+import {ErrorBoundary, PokemonInfoFallback, PokemonForm} from '../../utils'
 import createPokemonInfoResource from './lazy/pokemon-info-render-as-you-fetch.data'
 
 const PokemonInfo = React.lazy(() =>

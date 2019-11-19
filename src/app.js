@@ -251,7 +251,9 @@ function useIsolatedComponent({pathname}) {
   const isFinal = pathname.includes('/exercises-final/')
   const isExercise = pathname.includes('/exercises/')
   const isExample = pathname.includes('/examples/')
-  const moduleName = isIsolated ? pathname.split('/').slice(-1)[0] : null
+  const moduleName = isIsolated
+    ? pathname.split(/\/isolated\/.*?\//).slice(-1)[0]
+    : null
   const IsolatedComponent = React.useMemo(() => {
     if (!moduleName) {
       return null

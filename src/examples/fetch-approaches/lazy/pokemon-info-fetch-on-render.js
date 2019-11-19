@@ -1,6 +1,6 @@
 import React from 'react'
-import fetchPokemon from '../../fetch-pokemon'
-import {PokemonInfoFallback, PokemonDataView} from '../../utils'
+import fetchPokemon from '../../../fetch-pokemon'
+import {PokemonInfoFallback, PokemonDataView} from '../../../utils'
 
 function PokemonInfo({pokemonName}) {
   const [state, setState] = React.useReducer((s, a) => ({...s, ...a}), {

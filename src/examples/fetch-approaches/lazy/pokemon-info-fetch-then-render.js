@@ -1,5 +1,5 @@
 import React from 'react'
-import {PokemonDataView} from '../../utils'
+import {PokemonDataView} from '../../../utils'
 
 function PokemonInfo({pokemon}) {
   return (
