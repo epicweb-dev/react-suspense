@@ -1,5 +1,5 @@
 import React from 'react'
-import {createResource} from '../../utils'
+import {createResource} from '../utils'
 
 function preloadImage(src) {
   return new Promise(resolve => {

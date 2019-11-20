@@ -6,50 +6,50 @@ const transactions = [
   {
     id: '4P812765GHI029827',
     recipient: 'mew',
-    amount: '₽ 5530.34',
+    amount: '$ 55.34',
     message: 'Thanks for the salad 🥗',
   },
   {
     id: '90X21040KL118401T',
     recipient: 'charizard',
-    amount: '₽ 2000.00',
+    amount: '$ 20.00',
     message:
       'Thanks for the tip about Gyarados 🌊. I never would have won otherwise 😈',
   },
   {
     id: '0A6FJI65K8173802P',
     recipient: 'ditto',
-    amount: '₽ 12.21',
+    amount: '$ 12.21',
     message: 'blub.',
   },
   {
     id: '9CF911038X034441W',
     recipient: 'mewtwo',
-    amount: '₽ 3500.00',
+    amount: '$ 35.00',
     message: `Still can't 🔥 Charizard 🔥 won. That's the last time I bet against him.`,
   },
   {
     id: '48L3561JH8132451D',
     recipient: 'pikachu',
-    amount: '₽ 9129.10',
+    amount: '$ 91.10',
     message: 'That was ELECTRIC ⚡',
   },
   {
     id: '6CG59877V61376422',
     recipient: 'ditto',
-    amount: '₽ 98.89',
+    amount: '$ 98.89',
     message: 'blub.',
   },
   {
     id: '8XS08JI93J918102S',
     recipient: 'charizard',
-    amount: '₽ 4503.14',
+    amount: '$ 45.14',
     message: 'Lunch was delicious, thank you!',
   },
   {
     id: '21CWW205ND917964J',
     recipient: 'mew',
-    amount: '₽ 1262.87',
+    amount: '$ 12.87',
     message: 'Thanks again for the ride 🍃',
   },
 ]

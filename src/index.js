@@ -11,6 +11,3 @@ root.render(<MainApp />)
 
 // to enable sync mode, comment out the above stuff and comment this in.
 // ReactDOM.render(<App />, rootEl)
-
-// ignore this... It's just a fancy thing for the workshop app to work
-window.reactRoot = root

@@ -16,7 +16,7 @@ function NavBar() {
     <div className={cn.root}>
       <div className={cn.logoAndSearch}>
         <label htmlFor="search">
-          <Img src="/img/pokebank.png" alt="pokebank" />
+          <Img src="/img/pokeball.png" alt="pokebank" />
         </label>
         <input id="search" type="search" placeholder="Search Pokébank" />
       </div>

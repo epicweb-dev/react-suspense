@@ -17,7 +17,6 @@
 }
 
 .spinnerContainer {
-  width: 100%;
-  margin: auto;
+  flex: 1;
   padding-top: 10px;
 }

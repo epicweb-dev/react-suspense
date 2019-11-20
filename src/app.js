@@ -276,9 +276,12 @@ function useIsolatedComponent({pathname}) {
 }
 
 function useExerciseTitle({pathname}) {
+  const isIsolated = pathname.startsWith('/isolated')
   const isFinal = pathname.includes('/exercises-final/')
   const isExercise = pathname.includes('/exercises/')
-  const exerciseName = pathname.split('/').slice(-1)[0]
+  const exerciseName = isIsolated
+    ? pathname.split(/\/isolated\/.*?\//).slice(-1)[0]
+    : pathname.split('/').slice(-1)[0]
 
   React.useEffect(() => {
     document.title = [
@@ -292,6 +295,14 @@ function useExerciseTitle({pathname}) {
   }, [exerciseName, isExercise, isFinal])
 }
 
+function useLocationBodyClassName({pathname}) {
+  const className = pathname.replace(/\//g, '_')
+  React.useEffect(() => {
+    document.body.classList.add(className)
+    return () => document.body.classList.remove(className)
+  }, [className])
+}
+
 // The reason we don't put the Isolated components as regular routes
 // and do all this complex stuff instead is so the React DevTools component
 // tree is as small as possible to make it easier for people to figure
@@ -300,6 +311,7 @@ function MainApp() {
   const [location, setLocation] = React.useState(history.location)
   React.useEffect(() => history.listen(l => setLocation(l)), [])
   useExerciseTitle(location)
+  useLocationBodyClassName(location)
 
   const IsolatedComponent = useIsolatedComponent(location)
 
@@ -312,16 +324,8 @@ function MainApp() {
       }
     >
       {IsolatedComponent ? (
-        <div
-          style={{
-            padding: 30,
-            height: '100vh',
-            display: 'grid',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <div>
+        <div className="isolated-top-container">
+          <div className="isolated-div-wrapper">
             <IsolatedComponent />
           </div>
         </div>
