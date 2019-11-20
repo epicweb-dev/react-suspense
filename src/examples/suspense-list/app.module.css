@@ -15,3 +15,9 @@
 .mainContentArea > *:not(:first-child) {
   margin-left: 20px;
 }
+
+.spinnerContainer {
+  width: 100%;
+  margin: auto;
+  padding-top: 10px;
+}

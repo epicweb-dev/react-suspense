@@ -1,4 +1,5 @@
 import React from 'react'
+import Img from './img'
 import * as cn from './nav-bar.module.css'
 import {
   IoIosHome,
@@ -15,7 +16,7 @@ function NavBar() {
     <div className={cn.root}>
       <div className={cn.logoAndSearch}>
         <label htmlFor="search">
-          <img src="/img/pokebank.png" alt="pokebank" />
+          <Img src="/img/pokebank.png" alt="pokebank" />
         </label>
         <input id="search" type="search" placeholder="Search Pokébank" />
       </div>
@@ -30,7 +31,7 @@ function NavBar() {
           <IoIosFiling />
         </button>
         <button onClick={() => alert('You clicked your profile image')}>
-          <img
+          <Img
             className={cn.profilePhoto}
             src="/img/pokemon/bulbasaur.jpg"
             alt="user profile"

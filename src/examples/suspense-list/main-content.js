@@ -1,5 +1,5 @@
 import React from 'react'
-import {getImageUrlForPokemon} from '../../fetch-pokemon'
+import Img from './img'
 import * as cn from './main-content.module.css'
 
 const transactions = [
@@ -62,13 +62,13 @@ function MainContent() {
           <div>
             <div className={cn.quickLookTitle}>Watch out for Go players!</div>
             <div>
-              <img src="/img/pokemongo.jpg" alt="pokemon go" />
+              <Img src="/img/pokemongo.jpg" alt="pokemon go" />
             </div>
           </div>
           <div>
             <div className={cn.quickLookTitle}>Collector's Squirtle Toy</div>
             <div>
-              <img src="/img/squirtle-toy.jpg" alt="squirtle figurine" />
+              <Img src="/img/squirtle-toy.jpg" alt="squirtle figurine" />
             </div>
           </div>
         </div>
@@ -100,9 +100,9 @@ function Transaction({id, recipient, amount, message}) {
     <div className={cn.transaction}>
       <div className={cn.transactionId}>{id}</div>
       <div>
-        <img
+        <Img
           className={cn.transactionImage}
-          src={getImageUrlForPokemon(recipient)}
+          src={`/img/pokemon/${recipient}.jpg`}
           alt={recipient}
         />
       </div>

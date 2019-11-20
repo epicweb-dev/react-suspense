@@ -1,4 +1,5 @@
 import React from 'react'
+import Img from './img'
 import * as cn from './right-nav.module.css'
 
 const friends = ['Charizard', 'Ditto', 'Mew', 'Mewtwo', 'Pikachu']
@@ -10,7 +11,7 @@ function RightNav() {
         <div className={cn.checkSplitTitle}>Check Split</div>
         <div>Go out to eat with your friends and split the check.</div>
         <div className={cn.cafeContainer}>
-          <img src="/img/pokemon-cafe.jpg" alt="pokemon cafe" />
+          <Img src="/img/pokemon-cafe.jpg" alt="pokemon cafe" />
         </div>
       </div>
       <div>
@@ -31,7 +32,7 @@ function Friend({name}) {
   return (
     <a href="#" className={cn.friendLink}>
       <div className={cn.friendPhotoContainer}>
-        <img
+        <Img
           src={`/img/pokemon/${name.toLowerCase()}.jpg`}
           alt={name}
           className={cn.friendPhoto}

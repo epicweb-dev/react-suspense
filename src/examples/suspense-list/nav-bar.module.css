@@ -57,6 +57,7 @@
 
 .centerButtons {
   display: flex;
+  justify-content: center;
 }
 
 .centerButtons > * {
