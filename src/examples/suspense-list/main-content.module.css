@@ -62,6 +62,16 @@
   display: block;
 }
 
+.newTransactionSubmitButton button {
+  font-size: 1.15rem;
+  height: 57px;
+}
+
+.createNewTransaction input {
+  font-size: 1.15rem;
+  line-height: 3;
+}
+
 .transaction {
   position: relative;
   display: flex;

@@ -7,3 +7,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+.mainContentArea > *:not(:last-child) {
+  margin-right: 20px;
+}
+
+.mainContentArea > *:not(:first-child) {
+  margin-left: 20px;
+}

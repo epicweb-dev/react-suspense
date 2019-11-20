@@ -18,6 +18,7 @@
     "chalk": "^3.0.0",
     "glob": "^7.1.6",
     "history": "^4.10.1",
+    "normalize.css": "^8.0.1",
     "preval.macro": "^3.0.0",
     "react": "0.0.0-experimental-b53ea6ca0",
     "react-dom": "0.0.0-experimental-b53ea6ca0",

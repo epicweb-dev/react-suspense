@@ -1,0 +1,55 @@
+.root {
+  min-width: 200px;
+  padding-right: 30px;
+}
+
+.checkSplitTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.cafeContainer {
+  max-width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.cafeContainer img {
+  border-radius: 4px;
+  max-width: 260px;
+}
+
+.friendTitle {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+.friendList {
+  list-style: none;
+  padding: 0;
+}
+
+.friendList li {
+  margin-bottom: 20px;
+}
+.friendLink {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+.friendLink:hover,
+.friendLink:active,
+.friendLink:focus {
+  opacity: 0.8;
+}
+.friendPhotoContainer {
+  display: inline-block;
+  margin-right: 20px;
+}
+.friendPhoto {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}

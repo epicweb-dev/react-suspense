@@ -65,9 +65,7 @@ function MainContent() {
               <input id="amount" placeholder="$0.00" />
             </div>
             <div className={cn.newTransactionSubmitButton}>
-              <button type="submit" disabled>
-                Submit
-              </button>
+              <button type="submit">Submit</button>
             </div>
           </form>
         </div>
