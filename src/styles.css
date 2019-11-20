@@ -1,3 +1,13 @@
+a {
+  color: #cc0000;
+}
+
+a:focus,
+a:hover,
+a:active {
+  color: #8a0000;
+}
+
 input {
   line-height: 2;
   font-size: 16px;

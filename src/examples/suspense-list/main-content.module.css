@@ -15,6 +15,10 @@
   margin-bottom: 30px;
 }
 
+.quickLook > * {
+  text-align: center;
+}
+
 .quickLook > *:not(:last-child) {
   margin-right: 16px;
 }
@@ -25,13 +29,12 @@
 
 .quickLookTitle {
   margin-bottom: 10px;
-  text-align: center;
   font-weight: bold;
   font-size: 1.25rem;
 }
 
 .quickLook img {
-  height: 200px;
+  height: 160px;
 }
 
 .createNewTransaction {
