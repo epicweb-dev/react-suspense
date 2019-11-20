@@ -6,7 +6,7 @@ const transactions = [
   {
     id: '4P812765GHI029827',
     recipient: 'mew',
-    amount: '$ 55.34',
+    amount: '$ 15.34',
     message: 'Thanks for the salad 🥗',
   },
   {
@@ -26,7 +26,7 @@ const transactions = [
     id: '9CF911038X034441W',
     recipient: 'mewtwo',
     amount: '$ 35.00',
-    message: `Still can't 🔥 Charizard 🔥 won. That's the last time I bet against him.`,
+    message: `Still can't believe 🔥 Charizard 🔥 won. That's the last time I bet against him.`,
   },
   {
     id: '48L3561JH8132451D',
