@@ -13,4 +13,5 @@ function fakeLazy(dynamicImport, delay) {
   })
 }
 
-export default fakeLazy
+export default React.lazy
+// export default fakeLazy

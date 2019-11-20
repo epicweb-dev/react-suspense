@@ -9,9 +9,6 @@ import pkg from '../package.json'
 // instead. Note our public/_headers file that forces these to cache.
 const fallbackImgUrl = `${pkg.homepage}img/pokemon/fallback-pokemon.jpg`
 
-// preloads our fallback image
-document.createElement('img').src = fallbackImgUrl
-
 // this is just a hacky error boundary for handling any errors in the app
 // it just shows "there was an error" with a button to try and re-render
 // the whole app over again.
@@ -170,8 +167,10 @@ function PokemonForm({initialPokemonName = '', onSubmit}) {
       </small>
       <div>
         <input
+          className="pokemonName-input"
           id="pokemonName-input"
           name="pokemonName"
+          placeholder="Pokemon Name..."
           value={pokemonName}
           onChange={handleChange}
         />

@@ -22,6 +22,7 @@
     "react": "0.0.0-experimental-b53ea6ca0",
     "react-dom": "0.0.0-experimental-b53ea6ca0",
     "react-error-boundary": "^1.2.5",
+    "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "stop-runaway-react-effects": "^1.2.1"
   },

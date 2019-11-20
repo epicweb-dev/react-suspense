@@ -1,4 +1,6 @@
+import './style-overrides.css'
 import React from 'react'
+import * as cn from './app.module.css'
 import fakeLazy from './fake-lazy'
 
 const NavBar = fakeLazy(() => import('./nav-bar'), 2000)
@@ -10,12 +12,12 @@ const RightNav = fakeLazy(() => import('./right-nav'), 500)
 
 function App() {
   return (
-    <div>
+    <div className={cn.root}>
       <React.SuspenseList>
         <React.Suspense fallback="loading NavBar">
           <NavBar />
         </React.Suspense>
-        <div>
+        <div className={cn.mainContentArea}>
           <React.Suspense fallback="loading LeftNav">
             <LeftNav />
           </React.Suspense>

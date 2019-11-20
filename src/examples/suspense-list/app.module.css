@@ -1,0 +1,9 @@
+.root {
+  background-color: #eee;
+  min-height: 100%;
+}
+
+.mainContentArea {
+  display: flex;
+  justify-content: space-between;
+}
