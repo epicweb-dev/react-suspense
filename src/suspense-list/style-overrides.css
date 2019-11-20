@@ -2,6 +2,17 @@
   height: 100vh;
 }
 
+body #⚛ .isolated-top-container {
+  padding: 0;
+  display: unset;
+  align-items: unset;
+  justify-content: unset;
+}
+
+body #⚛ .isolated-div-wrapper {
+  height: 100vh;
+}
+
 input {
   background-color: white;
 }

@@ -24,12 +24,17 @@ const fallback = (
   </div>
 )
 
+const SUSPENSE_CONFIG = {timeoutMs: 4000}
+
 function App() {
+  const [startTransition] = React.useTransition(SUSPENSE_CONFIG)
   const [loggedIn, setLoggedIn] = React.useState(false)
   if (!loggedIn) {
     return (
       <div className="totally-centered" style={{height: '100vh'}}>
-        <button onClick={() => setLoggedIn(true)}>Login</button>
+        <button onClick={() => startTransition(() => setLoggedIn(true))}>
+          Login
+        </button>
       </div>
     )
   }

@@ -4,6 +4,7 @@ import React from 'react'
 // imports take at least a certain amount of time.
 function fakeLazy(dynamicImport, delay) {
   return React.lazy(() => {
+    console.log(Date.now(), dynamicImport.toString())
     const endTime = Date.now() + delay
     return dynamicImport().then(r => {
       return new Promise(resolve => {

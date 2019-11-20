@@ -51,19 +51,6 @@ button:focus:not(:disabled) {
   justify-content: center;
 }
 
-body._isolated_exercises-final_07 .isolated-top-container,
-body._isolated_exercises_07 .isolated-top-container {
-  padding: 0;
-  display: unset;
-  align-items: unset;
-  justify-content: unset;
-}
-
-body._isolated_exercises-final_07 .isolated-div-wrapper,
-body._isolated_exercises_07 .isolated-div-wrapper {
-  height: 100vh;
-}
-
 .totally-centered {
   width: 100%;
   height: 100%;
