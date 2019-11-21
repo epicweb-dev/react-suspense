@@ -82,10 +82,14 @@ async function fetchUser(pokemonName, delay = 0) {
   }
   return {
     transactions: pokemonTransactions,
+    friends: Object.keys(users)
+      .filter(u => lowerName !== u)
+      .map(n => upperName(n)),
     ...user,
-    name: `${lowerName.slice(0, 1).toUpperCase()}${lowerName.slice(1)}`,
+    name: upperName(lowerName),
   }
 }
+const upperName = name => `${name.slice(0, 1).toUpperCase()}${name.slice(1)}`
 
 export default fetchPokemon
 export {getImageUrlForPokemon, fetchUser}

@@ -68,7 +68,7 @@ function App() {
                   <MainContent pokemonResource={pokemonResource} />
                 </React.Suspense>
                 <React.Suspense fallback={fallback}>
-                  <RightNav />
+                  <RightNav pokemonResource={pokemonResource} />
                 </React.Suspense>
               </React.SuspenseList>
             </React.SuspenseList>

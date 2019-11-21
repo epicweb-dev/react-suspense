@@ -2,9 +2,8 @@ import React from 'react'
 import Img from './img'
 import * as cn from './right-nav.module.css'
 
-const friends = ['Charizard', 'Ditto', 'Mew', 'Mewtwo', 'Pikachu']
-
-function RightNav() {
+function RightNav({pokemonResource}) {
+  const pokemon = pokemonResource.read()
   return (
     <div className={cn.root}>
       <div>
@@ -17,7 +16,7 @@ function RightNav() {
       <div>
         <div className={cn.friendTitle}>Friends</div>
         <ul className={cn.friendList}>
-          {friends.map(friend => (
+          {pokemon.friends.map(friend => (
             <li key={friend}>
               <Friend name={friend} />
             </li>
