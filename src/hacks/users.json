@@ -1,0 +1,26 @@
+{
+  "pikachu": {
+    "name": "Pikachu",
+    "color": "#EDD37E"
+  },
+  "mew": {
+    "name": "Mew",
+    "color": "#ECC4D0"
+  },
+  "mewtwo": {
+    "name": "Mewtwo",
+    "color": "#BAABBA"
+  },
+  "ditto": {
+    "name": "Ditto",
+    "color": "#BDAED1"
+  },
+  "charizard": {
+    "name": "Charizard",
+    "color": "#EAC492"
+  },
+  "bulbasaur": {
+    "name": "Bulbasaur",
+    "color": "#7DAD96"
+  }
+}

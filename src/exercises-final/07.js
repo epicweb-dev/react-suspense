@@ -7,6 +7,8 @@ import '../suspense-list/style-overrides.css'
 import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'
 import fakeLazy from '../suspense-list/fake-lazy'
+import {createResource, ErrorBoundary, PokemonForm} from '../utils'
+import {fetchUser} from '../fetch-pokemon'
 
 // fakeLazy is just like React.lazy, except it accepts a second argument called
 // "delay" which allows us to simulate the module taking some extra time to load
@@ -28,38 +30,46 @@ const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function App() {
   const [startTransition] = React.useTransition(SUSPENSE_CONFIG)
-  const [loggedIn, setLoggedIn] = React.useState(false)
-  if (!loggedIn) {
+  const [pokemonResource, setPokemonResource] = React.useState(null)
+
+  function handleSubmit(pokemonName) {
+    startTransition(() => {
+      setPokemonResource(createResource(() => fetchUser(pokemonName)))
+    })
+  }
+
+  if (!pokemonResource) {
     return (
-      <div className="totally-centered" style={{height: '100vh'}}>
-        <button onClick={() => startTransition(() => setLoggedIn(true))}>
-          Login
-        </button>
+      <div className={`${cn.root} totally-centered`} style={{height: '100vh'}}>
+        <PokemonForm onSubmit={handleSubmit} />
       </div>
     )
   }
+
   return (
     <div className={cn.root}>
-      <React.SuspenseList revealOrder="forwards" tail="collapsed">
-        <React.Suspense fallback={fallback}>
-          <NavBar />
-        </React.Suspense>
-        <div className={cn.mainContentArea}>
-          <React.SuspenseList revealOrder="forwards">
-            <React.Suspense fallback={fallback}>
-              <LeftNav />
-            </React.Suspense>
-            <React.SuspenseList revealOrder="together">
+      <ErrorBoundary>
+        <React.SuspenseList revealOrder="forwards" tail="collapsed">
+          <React.Suspense fallback={fallback}>
+            <NavBar pokemonResource={pokemonResource} />
+          </React.Suspense>
+          <div className={cn.mainContentArea}>
+            <React.SuspenseList revealOrder="forwards">
               <React.Suspense fallback={fallback}>
-                <MainContent />
+                <LeftNav />
               </React.Suspense>
-              <React.Suspense fallback={fallback}>
-                <RightNav />
-              </React.Suspense>
+              <React.SuspenseList revealOrder="together">
+                <React.Suspense fallback={fallback}>
+                  <MainContent pokemonResource={pokemonResource} />
+                </React.Suspense>
+                <React.Suspense fallback={fallback}>
+                  <RightNav />
+                </React.Suspense>
+              </React.SuspenseList>
             </React.SuspenseList>
-          </React.SuspenseList>
-        </div>
-      </React.SuspenseList>
+          </div>
+        </React.SuspenseList>
+      </ErrorBoundary>
     </div>
   )
 }

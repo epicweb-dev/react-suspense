@@ -1,6 +1,10 @@
+import transactions from './hacks/transactions'
+import users from './hacks/users'
 import pkg from '../package.json'
 // if you need this to work locally then comment out the import above and comment in the next line
 // const pkg = {homepage: '/'}
+
+const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
 const formatDate = date =>
   `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(
@@ -40,11 +44,10 @@ function fetchPokemon(name, delay) {
         variables: {name: name.toLowerCase()},
       }),
     })
-    .then(r => r.json())
-    .then(r => {
-      return new Promise(resolve => {
-        setTimeout(() => resolve(r), endTime - Date.now())
-      })
+    .then(response => response.json())
+    .then(async response => {
+      await sleep(endTime - Date.now())
+      return response
     })
     .then(response => {
       const pokemon = response.data.pokemon
@@ -65,5 +68,24 @@ function getImageUrlForPokemon(pokemonName) {
   }
 }
 
+async function fetchUser(pokemonName, delay = 0) {
+  await sleep(delay)
+  const lowerName = pokemonName.toLowerCase()
+  const pokemonTransactions = transactions.filter(
+    t => t.recipient !== lowerName,
+  )
+  const user = users[lowerName]
+  if (!user) {
+    throw new Error(
+      `${pokemonName} is not a user. Try ${Object.keys(users).join(', ')}`,
+    )
+  }
+  return {
+    transactions: pokemonTransactions,
+    ...user,
+    name: `${lowerName.slice(0, 1).toUpperCase()}${lowerName.slice(1)}`,
+  }
+}
+
 export default fetchPokemon
-export {getImageUrlForPokemon}
+export {getImageUrlForPokemon, fetchUser}

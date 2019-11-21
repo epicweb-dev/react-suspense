@@ -11,7 +11,8 @@ import {
   IoIosCog,
 } from 'react-icons/io'
 
-function NavBar() {
+function NavBar({pokemonResource}) {
+  const pokemon = pokemonResource.read()
   return (
     <div className={cn.root}>
       <div className={cn.logoAndSearch}>
@@ -21,34 +22,58 @@ function NavBar() {
         <input id="search" type="search" placeholder="Search Pokébank" />
       </div>
       <div className={cn.centerButtons}>
-        <button onClick={() => alert('You clicked the Home button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the Home button')}
+        >
           <IoIosHome />
         </button>
-        <button onClick={() => alert('You clicked the Notifications button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the Notifications button')}
+        >
           <IoIosNotifications />
         </button>
-        <button onClick={() => alert('You clicked the Filing button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the Filing button')}
+        >
           <IoIosFiling />
         </button>
-        <button onClick={() => alert('You clicked your profile image')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked your profile image')}
+        >
           <Img
             className={cn.profilePhoto}
-            src="/img/pokemon/bulbasaur.jpg"
+            src={`/img/pokemon/${pokemon.name.toLowerCase()}.jpg`}
             alt="user profile"
           />
         </button>
-        <button onClick={() => alert('You clicked the List button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the List button')}
+        >
           <IoIosList />
         </button>
-        <button onClick={() => alert('You clicked the Sync button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the Sync button')}
+        >
           <IoIosSync />
         </button>
-        <button onClick={() => alert('You clicked the Copy button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the Copy button')}
+        >
           <IoIosCopy />
         </button>
       </div>
       <div>
-        <button onClick={() => alert('You clicked the Cog button')}>
+        <button
+          style={{color: pokemon.color}}
+          onClick={() => alert('You clicked the Cog button')}
+        >
           <IoIosCog />
         </button>
       </div>
