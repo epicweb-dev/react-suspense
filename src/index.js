@@ -10,4 +10,4 @@ const root = ReactDOM.createRoot(rootEl)
 root.render(<MainApp />)
 
 // to enable sync mode, comment out the above stuff and comment this in.
-// ReactDOM.render(<App />, rootEl)
+// ReactDOM.render(<MainApp />, rootEl)
