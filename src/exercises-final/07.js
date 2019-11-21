@@ -6,19 +6,24 @@ import React from 'react'
 import '../suspense-list/style-overrides.css'
 import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'
-import fakeLazy from '../suspense-list/fake-lazy'
 import {createResource, ErrorBoundary, PokemonForm} from '../utils'
 import {fetchUser} from '../fetch-pokemon'
 
-// fakeLazy is just like React.lazy, except it accepts a second argument called
-// "delay" which allows us to simulate the module taking some extra time to load
-const NavBar = fakeLazy(() => import('../suspense-list/nav-bar'), 500)
-const LeftNav = fakeLazy(() => import('../suspense-list/left-nav'), 2000)
-const MainContent = fakeLazy(
-  () => import('../suspense-list/main-content'),
-  1500,
+const delay = time => promiseResult =>
+  new Promise(resolve => setTimeout(() => resolve(promiseResult), time))
+
+const NavBar = React.lazy(() =>
+  import('../suspense-list/nav-bar').then(delay(500)),
 )
-const RightNav = fakeLazy(() => import('../suspense-list/right-nav'), 1000)
+const LeftNav = React.lazy(() =>
+  import('../suspense-list/left-nav').then(delay(2000)),
+)
+const MainContent = React.lazy(() =>
+  import('../suspense-list/main-content').then(delay(1500)),
+)
+const RightNav = React.lazy(() =>
+  import('../suspense-list/right-nav').then(delay(1000)),
+)
 
 const fallback = (
   <div className={cn.spinnerContainer}>

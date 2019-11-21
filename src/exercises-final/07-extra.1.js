@@ -10,18 +10,36 @@ import Spinner from '../suspense-list/spinner'
 import {createResource, ErrorBoundary, PokemonForm} from '../utils'
 import {fetchUser} from '../fetch-pokemon'
 
-function createDelayedResource(fn, delay) {
-  return createResource(async () => {
-    const result = await fn()
-    await new Promise(resolve => setTimeout(resolve, delay))
-    return result
-  })
+const delay = time => promiseResult =>
+  new Promise(resolve => setTimeout(() => resolve(promiseResult), time))
+
+function preloadableLazy(dynamicImport) {
+  let promise
+  function load() {
+    if (!promise) {
+      promise = dynamicImport()
+    }
+    return promise
+  }
+  const Comp = React.lazy(load)
+  Comp.preload = load
+  return Comp
 }
 
-function Lazy({moduleResource, ...props}) {
-  const Comp = moduleResource.read().default
-  return <Comp {...props} />
-}
+// fakeLazy is just like React.lazy, except it accepts a second argument called
+// "delay" which allows us to simulate the module taking some extra time to load
+const NavBar = preloadableLazy(() =>
+  import('../suspense-list/nav-bar').then(delay(500)),
+)
+const LeftNav = preloadableLazy(() =>
+  import('../suspense-list/left-nav').then(delay(2000)),
+)
+const MainContent = preloadableLazy(() =>
+  import('../suspense-list/main-content').then(delay(1500)),
+)
+const RightNav = preloadableLazy(() =>
+  import('../suspense-list/right-nav').then(delay(1000)),
+)
 
 const fallback = (
   <div className={cn.spinnerContainer}>
@@ -33,30 +51,15 @@ const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function App() {
   const [startTransition] = React.useTransition(SUSPENSE_CONFIG)
-  const [lazyResources, setLazyResources] = React.useState({})
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(pokemonName) {
     startTransition(() => {
       setPokemonResource(createResource(() => fetchUser(pokemonName)))
-      setLazyResources({
-        navBar: createDelayedResource(
-          () => import('../suspense-list/nav-bar'),
-          500,
-        ),
-        leftNav: createDelayedResource(
-          () => import('../suspense-list/left-nav'),
-          2000,
-        ),
-        mainContent: createDelayedResource(
-          () => import('../suspense-list/main-content'),
-          1500,
-        ),
-        rightNav: createDelayedResource(
-          () => import('../suspense-list/right-nav'),
-          1000,
-        ),
-      })
+      NavBar.preload()
+      LeftNav.preload()
+      MainContent.preload()
+      RightNav.preload()
     })
   }
 
@@ -73,25 +76,19 @@ function App() {
       <ErrorBoundary>
         <React.SuspenseList revealOrder="forwards" tail="collapsed">
           <React.Suspense fallback={fallback}>
-            <Lazy
-              moduleResource={lazyResources.navBar}
-              pokemonResource={pokemonResource}
-            />
+            <NavBar pokemonResource={pokemonResource} />
           </React.Suspense>
           <div className={cn.mainContentArea}>
             <React.SuspenseList revealOrder="forwards">
               <React.Suspense fallback={fallback}>
-                <Lazy moduleResource={lazyResources.leftNav} />
+                <LeftNav />
               </React.Suspense>
               <React.SuspenseList revealOrder="together">
                 <React.Suspense fallback={fallback}>
-                  <Lazy
-                    moduleResource={lazyResources.mainContent}
-                    pokemonResource={pokemonResource}
-                  />
+                  <MainContent pokemonResource={pokemonResource} />
                 </React.Suspense>
                 <React.Suspense fallback={fallback}>
-                  <Lazy moduleResource={lazyResources.rightNav} />
+                  <RightNav />
                 </React.Suspense>
               </React.SuspenseList>
             </React.SuspenseList>

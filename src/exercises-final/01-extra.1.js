@@ -1,5 +1,5 @@
 // Simple Data-fetching
-// 💯 extract complicated bits to getPokemon
+// 💯 add error handling with an Error Boundary
 
 // http://localhost:3000/isolated/exercises-final/01-extra.1
 
@@ -24,18 +24,13 @@ let pokemonPromise = fetchPokemon('pikachu').then(
   e => (pokemonError = e),
 )
 
-function getPokemon() {
+function PokemonInfo() {
   if (pokemonError) {
     throw pokemonError
   }
   if (!pokemon) {
     throw pokemonPromise
   }
-  return pokemon
-}
-
-function Pokemon() {
-  const pokemon = getPokemon()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
@@ -51,7 +46,7 @@ function App() {
     <div className="pokemon-info">
       <ErrorBoundary>
         <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-          <Pokemon />
+          <PokemonInfo />
         </React.Suspense>
       </ErrorBoundary>
     </div>

@@ -1,6 +1,7 @@
 // Refactor useEffect to Suspense
+// 💯 Suspense and Error Boundary positioning
 
-// http://localhost:3000/isolated/exercises-final/02
+// http://localhost:3000/isolated/exercises-final/02-extra.1
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -51,19 +52,23 @@ function App() {
     <div>
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <div className="pokemon-info">
-        {pokemonResource ? (
-          <ErrorBoundary>
-            <React.Suspense
-              fallback={<PokemonInfoFallback name={pokemonName} />}
-            >
+      <React.Suspense
+        fallback={
+          <div className="pokemon-info">
+            <PokemonInfoFallback name={pokemonName} />
+          </div>
+        }
+      >
+        <div className="pokemon-info">
+          {pokemonResource ? (
+            <ErrorBoundary>
               <PokemonInfo pokemonResource={pokemonResource} />
-            </React.Suspense>
-          </ErrorBoundary>
-        ) : (
-          'Submit a pokemon'
-        )}
-      </div>
+            </ErrorBoundary>
+          ) : (
+            'Submit a pokemon'
+          )}
+        </div>
+      </React.Suspense>
     </div>
   )
 }
