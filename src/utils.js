@@ -8,6 +8,8 @@ import pkg from '../package.json'
 // local server, but we are hosting the images on netlify so we can use those
 // instead. Note our public/_headers file that forces these to cache.
 const fallbackImgUrl = `${pkg.homepage}img/pokemon/fallback-pokemon.jpg`
+preloadImage(`${pkg.homepage}img/pokeball.png`)
+preloadImage(fallbackImgUrl)
 
 // this is just a hacky error boundary for handling any errors in the app
 // it just shows "there was an error" with a button to try and re-render
