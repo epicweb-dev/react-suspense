@@ -1,4 +1,4 @@
-// Render as you Fetch
+// Render as you Fetch 👍
 
 // http://localhost:3000/isolated/examples/fetch-approaches/render-as-you-fetch
 

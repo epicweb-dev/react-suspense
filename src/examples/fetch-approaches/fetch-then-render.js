@@ -1,4 +1,4 @@
-// Fetch then render
+// Fetch then render 👎
 
 // http://localhost:3000/isolated/examples/fetch-approaches/fetch-then-render
 
