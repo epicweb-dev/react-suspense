@@ -8,7 +8,7 @@ const originalFetch = window.fetch
 originalFetch.restoreOriginalFetch = () => (window.fetch = originalFetch)
 originalFetch.overrideFetch = () => (window.fetch = hackFetch)
 
-window.FETCH_TIME = 1500
+window.FETCH_TIME = 0
 window.MIN_FETCH_TIME = 500
 window.FETCH_TIME_RANDOM = false
 
