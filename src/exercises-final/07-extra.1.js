@@ -9,18 +9,16 @@ import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'
 import {createResource} from '../utils'
 
-const sleep = time => new Promise(resolve => setTimeout(resolve, time))
-
 function createDelayedResource(fn, delay) {
   return createResource(async () => {
     const result = await fn()
-    await sleep(delay)
+    await new Promise(resolve => setTimeout(resolve, delay))
     return result
   })
 }
 
 function Lazy({moduleResource, ...props}) {
-  const Comp = moduleResource.read()
+  const Comp = moduleResource.read().default
   return <Comp {...props} />
 }
 
@@ -41,19 +39,19 @@ function App() {
       setLoggedIn(true)
       setLazyResources({
         navBar: createDelayedResource(
-          () => import('../suspense-list/nav-bar').then(c => c.default),
+          () => import('../suspense-list/nav-bar'),
           500,
         ),
         leftNav: createDelayedResource(
-          () => import('../suspense-list/left-nav').then(c => c.default),
+          () => import('../suspense-list/left-nav'),
           2000,
         ),
         mainContent: createDelayedResource(
-          () => import('../suspense-list/main-content').then(c => c.default),
+          () => import('../suspense-list/main-content'),
           1500,
         ),
         rightNav: createDelayedResource(
-          () => import('../suspense-list/right-nav').then(c => c.default),
+          () => import('../suspense-list/right-nav'),
           1000,
         ),
       })
