@@ -10,6 +10,8 @@ import Spinner from '../suspense-list/spinner'
 import {createResource, ErrorBoundary, PokemonForm} from '../utils'
 import {fetchUser} from '../fetch-pokemon'
 
+// 💰 this delay function just allows us to make a promise take longer to resolve
+// so we can easily play around with the loading time of our code.
 const delay = time => promiseResult =>
   new Promise(resolve => setTimeout(() => resolve(promiseResult), time))
 
@@ -26,8 +28,6 @@ function preloadableLazy(dynamicImport) {
   return Comp
 }
 
-// fakeLazy is just like React.lazy, except it accepts a second argument called
-// "delay" which allows us to simulate the module taking some extra time to load
 const NavBar = preloadableLazy(() =>
   import('../suspense-list/nav-bar').then(delay(500)),
 )
