@@ -1,5 +1,5 @@
 // Coordinate Suspending components with SuspenseList
-// 💯 eagerly load modules as resources
+// 💯 preload modules
 
 // http://localhost:3000/isolated/exercises-final/07-extra.1
 
