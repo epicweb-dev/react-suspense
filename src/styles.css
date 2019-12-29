@@ -73,7 +73,7 @@ button:focus:not(:disabled) {
 .pokemon-info {
   height: 400px;
   width: 300px;
-  overflow: scroll;
+  overflow: auto;
   background-color: #eee;
   border-radius: 4px;
   padding: 10px;
