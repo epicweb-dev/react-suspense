@@ -27,13 +27,32 @@ for (const infoKey in exerciseInfo) {
 }
 
 const history = createBrowserHistory()
-function handleAnchorClick(event) {
-  if (event.metaKey || event.shiftKey) {
-    return
+const SuspenseConfig = {timeoutMs: 300}
+function useAnchorClickHandler(navigate) {
+  const [startTransition] = React.useTransition(SuspenseConfig)
+  return event => {
+    // Ignore modified and non-left clicks
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.shiftKey
+    ) {
+      return
+    }
+    event.preventDefault()
+    const href = event.target.getAttribute('href')
+    startTransition(() =>
+      navigate != null ? navigate(href) : history.push(href),
+    )
   }
-  event.preventDefault()
-  history.push(event.target.getAttribute('href'))
 }
+
+const Anchor = ({navigate, ...restProps}) => (
+  /* eslint-disable-next-line jsx-a11y/anchor-has-content */
+  <a {...restProps} onClick={useAnchorClickHandler(navigate)} />
+)
 
 function ComponentContainer({label, ...props}) {
   return (
@@ -65,12 +84,9 @@ function ExtraCreditLinks({exerciseId}) {
       {`Extra Credits: `}
       {Object.entries(extraCreditTitles).map(([id, title], index, array) => (
         <span key={id}>
-          <a
-            href={`/isolated/exercises-final/${exerciseId}-extra.${id}`}
-            onClick={handleAnchorClick}
-          >
+          <Anchor href={`/isolated/exercises-final/${exerciseId}-extra.${id}`}>
             {title}
-          </a>
+          </Anchor>
           {array.length - 1 === index ? null : ' | '}
         </span>
       ))}
@@ -100,20 +116,12 @@ function ExerciseContainer() {
     >
       <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>{title}</h1>
       <ComponentContainer
-        label={
-          <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
-            Exercise
-          </a>
-        }
+        label={<Anchor href={exercise.isolatedPath}>Exercise</Anchor>}
       >
         <Exercise />
       </ComponentContainer>
       <ComponentContainer
-        label={
-          <a href={final.isolatedPath} onClick={handleAnchorClick}>
-            Final
-          </a>
-        }
+        label={<Anchor href={final.isolatedPath}>Final</Anchor>}
       >
         <Final />
       </ComponentContainer>
@@ -143,7 +151,7 @@ function NavigationFooter({exerciseId, type}) {
     >
       <div style={{flex: 1}}>
         {info.previous ? (
-          <Link to={`/${info.previous}${suffix}`}>
+          <Link component={Anchor} to={`/${info.previous}${suffix}`}>
             {exerciseInfo[info.previous].title}{' '}
             <span role="img" aria-label="previous">
               👈
@@ -152,11 +160,13 @@ function NavigationFooter({exerciseId, type}) {
         ) : null}
       </div>
       <div style={{flex: 1, textAlign: 'center'}}>
-        <Link to="/">Home</Link>
+        <Link component={Anchor} to="/">
+          Home
+        </Link>
       </div>
       <div style={{flex: 1, textAlign: 'right'}}>
         {info.next ? (
-          <Link to={`/${info.next}${suffix}`}>
+          <Link component={Anchor} to={`/${info.next}${suffix}`}>
             <span role="img" aria-label="next">
               👉
             </span>{' '}
@@ -186,14 +196,12 @@ function Home() {
               <div key={filename} style={{margin: 10}}>
                 {filename}
                 {'. '}
-                <Link to={`/${filename}`}>{title}</Link>{' '}
+                <Link component={Anchor} to={`/${filename}`}>
+                  {title}
+                </Link>{' '}
                 <small>
-                  <a href={exercise.isolatedPath} onClick={handleAnchorClick}>
-                    (exercise)
-                  </a>{' '}
-                  <a href={final.isolatedPath} onClick={handleAnchorClick}>
-                    (final)
-                  </a>
+                  <Anchor href={exercise.isolatedPath}>(exercise)</Anchor>{' '}
+                  <Anchor href={final.isolatedPath}>(final)</Anchor>
                 </small>
               </div>
             )
@@ -217,7 +225,7 @@ function NotFound() {
       <div>
         Sorry... nothing here. To open one of the exercises, go to{' '}
         <code>{`/exerciseId`}</code>, for example:{' '}
-        <Link to="/01">
+        <Link component={Anchor} to="/01">
           <code>{`/01`}</code>
         </Link>
       </div>
