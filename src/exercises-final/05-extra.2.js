@@ -1,7 +1,7 @@
 // Suspense Image
 // 💯 avoid waterfall
 
-// http://localhost:3000/isolated/exercises-final/05-extra.1
+// http://localhost:3000/isolated/exercises-final/05-extra.2
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
@@ -11,6 +11,7 @@ import {
   PokemonInfoFallback,
   PokemonForm,
 } from '../utils'
+
 const PokemonInfo = React.lazy(() =>
   import('../lazy/pokemon-info-render-as-you-fetch'),
 )
