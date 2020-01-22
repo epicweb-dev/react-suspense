@@ -190,8 +190,9 @@ function Home() {
     >
       <h1 style={{textAlign: 'center'}}>{projectTitle}</h1>
       <div>
-        {Object.entries(exerciseInfo).map(
-          ([filename, {title, final, exercise}]) => {
+        {Object.entries(exerciseInfo)
+          .sort(([aKey], [bKey]) => (Number(aKey) > Number(bKey) ? 1 : -1))
+          .map(([filename, {title, final, exercise}]) => {
             return (
               <div key={filename} style={{margin: 10}}>
                 {filename}
@@ -205,8 +206,7 @@ function Home() {
                 </small>
               </div>
             )
-          },
-        )}
+          })}
       </div>
     </div>
   )
