@@ -8,36 +8,24 @@
   "license": "GPL-3.0-only",
   "main": "src/index.js",
   "engines": {
-    "node": ">=8",
-    "npm": ">=6",
-    "yarn": ">=1"
+    "node": ">=10",
+    "npm": ">=6"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "chalk": "^3.0.0",
-    "glob": "^7.1.6",
-    "history": "^4.10.1",
-    "normalize.css": "^8.0.1",
-    "preval.macro": "^3.0.0",
-    "react": "0.0.0-experimental-b53ea6ca0",
-    "react-dom": "0.0.0-experimental-b53ea6ca0",
-    "react-error-boundary": "^1.2.5",
-    "react-icons": "^3.8.0",
-    "react-router-dom": "^5.1.2",
-    "stop-runaway-react-effects": "^1.2.1"
+    "@kentcdodds/react-workshop-app": "^1.0.2",
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/react": "^9.4.1",
+    "preval.macro": "^4.0.0",
+    "react": "0.0.0-experimental-d28bd2994",
+    "react-dom": "0.0.0-experimental-d28bd2994",
+    "react-icons": "^3.9.0"
   },
   "devDependencies": {
-    "cross-spawn": "^7.0.1",
-    "eslint": "^6.6.0",
-    "husky": "^3.1.0",
-    "inquirer": "^7.0.0",
-    "is-ci": "^2.0.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.3",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.19.1",
-    "react-scripts": "^3.2.0",
-    "replace-in-file": "^4.2.0",
-    "serve": "^11.2.0"
+    "react-scripts": "^3.4.0",
+    "serve": "^11.3.0"
   },
   "scripts": {
     "serve": "serve -s build",
@@ -46,7 +34,7 @@
     "build:profile": "react-scripts build --profile",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm run test -- --watchAll=false --coverage",
-    "setup": "node ./scripts/setup && npm run validate && node ./scripts/autofill-feedback-email.js",
+    "setup": "node ./scripts/setup",
     "lint": "eslint .",
     "validate": "npm-run-all --parallel build test:coverage lint"
   },

@@ -4,7 +4,17 @@ import pkg from '../package.json'
 // if you need this to work locally then comment out the import above and comment in the next line
 // const pkg = {homepage: '/'}
 
-const sleep = time => new Promise(resolve => setTimeout(resolve, time))
+window.FETCH_TIME = undefined
+window.MIN_FETCH_TIME = 500
+window.FETCH_TIME_RANDOM = false
+
+function sleep(t = window.FETCH_TIME) {
+  t = window.FETCH_TIME ?? t
+  if (window.FETCH_TIME_RANDOM) {
+    t = Math.random() * t + window.MIN_FETCH_TIME
+  }
+  return new Promise(resolve => setTimeout(resolve, t))
+}
 
 const formatDate = date =>
   `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(

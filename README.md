@@ -1,9 +1,3 @@
-<p align="center">
-  <a href="https://codefund.io/properties/507/visit-sponsor">
-    <img src="https://codefund.io/properties/507/sponsor" />
-  </a>
-</p>
-
 # Concurrent React
 
 > Improving UX with a faster, more predictable app.
@@ -15,12 +9,15 @@ make your app faster out of the box and it comes along with a few features that
 you can use to improve your app's user experience (most notably the concept of
 "Suspense").
 
+<!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
 [![AppVeyor Build Status][win-build-badge]][win-build]
 [![Code Coverage][coverage-badge]][coverage]
 [![GPL 3.0 License][license-badge]][license]
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-[![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![PRs Welcome][prs-badge]][prs]
+[![Code of Conduct][coc-badge]][coc]
+<!-- prettier-ignore-end -->
 
 ## ⚠️ Warning ⚠️
 
@@ -34,22 +31,23 @@ these features are stable, so enjoy the workshop!
 
 ## Pre-Workshop Instructions/Requirements
 
-In order for us to maximize our efforts during the workshop, please do the
-following:
+In order for us to maximize our efforts during the workshop, please complete the
+following things to prepare (the TV emoji 📺 indicates steps that are only
+necessary if the workshop is remote via Zoom):
 
 - [ ] Setup the project (follow the setup instructions below) (~5 minutes)
-- [ ] Install and setup [Zoom](https://zoom.us) on the computer you will be
+- [ ] 📺 Install and setup [Zoom](https://zoom.us) on the computer you will be
       using (~5 minutes)
-- [ ] Install the React DevTools
-      ([Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-      (recommended),
-      [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/))
-- [ ] Watch
+- [ ] 📺 Watch
       [Use Zoom for KCD Workshops](https://egghead.io/lessons/egghead-use-zoom-for-kcd-workshops)
       (~8 minutes).
 - [ ] Watch
       [Setup and Logistics for KCD Workshops](https://egghead.io/lessons/egghead-setup-and-logistics-for-kcd-workshops)
       (~24 minutes). Please do NOT skip this step.
+- [ ] Install the React DevTools
+      ([Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+      (recommended),
+      [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/))
 - [ ] Watch Dan Abramov's talk
       [Beyond React 16 | JSConf Iceland 2018](https://www.youtube.com/watch?v=nLF0n9SACd4)
       (33 minutes)
@@ -178,29 +176,10 @@ emoji characters are here to help you.
 
 <summary>"npm run setup" command not working</summary>
 
-Here's what the setup script does. If it fails, try doing each of these things
-individually yourself:
-
-```
-# verify your environment will work with the project
-node ./scripts/verify
-
-# install dependencies
-npm install
-
-# verify the project is ready to run
-npm run build
-npm run test:coverage
-npm run lint
-
-# automatically fill in your email for the feedback links.
-node ./scripts/autofill-feedback-email.js
-```
-
-If any of those scripts fail, please try to work out what went wrong by the
-error message you get. If you still can't work it out, feel free to [open an
-issue][issue] with _all_ the output from that script. I will try to help if I
-can.
+Please read through the error message and identify the step that is failing.
+There should be an error message that will hopefully help guide you to the
+solution. If it doesn't, please copy and past _all_ of the output into a new
+issue on the project repository.
 
 </details>
 
@@ -222,6 +201,7 @@ Thanks goes to these wonderful people
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the
@@ -233,46 +213,28 @@ specification. Contributions of any kind welcome!
 This material is available for private, non-commercial use under the
 [GPL version 3](http://www.gnu.org/licenses/gpl-3.0-standalone.html). If you
 would like to use this material to conduct your own workshop, please contact me
-at kent@doddsfamily.us
+at kentcdodds@gmail.com
 
+<!-- prettier-ignore-start -->
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [git]: https://git-scm.com/
 [yarn]: https://yarnpkg.com/
-[build-badge]:
-  https://img.shields.io/travis/kentcdodds/concurrent-react.svg?style=flat-square&logo=travis
+[build-badge]: https://img.shields.io/travis/kentcdodds/concurrent-react.svg?style=flat-square&logo=travis
 [build]: https://travis-ci.org/kentcdodds/concurrent-react
-[license-badge]:
-  https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
-[license]:
-  https://github.com/kentcdodds/concurrent-react/blob/master/README.md#license
-[prs-badge]:
-  https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
+[license]: https://github.com/kentcdodds/concurrent-react/blob/master/README.md#license
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
-[coc-badge]:
-  https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]:
-  https://github.com/kentcdodds/concurrent-react/blob/master/CODE_OF_CONDUCT.md
-[github-watch-badge]:
-  https://img.shields.io/github/watchers/kentcdodds/concurrent-react.svg?style=social
-[github-watch]: https://github.com/kentcdodds/concurrent-react/watchers
-[github-star-badge]:
-  https://img.shields.io/github/stars/kentcdodds/concurrent-react.svg?style=social
-[github-star]: https://github.com/kentcdodds/concurrent-react/stargazers
-[twitter]:
-  https://twitter.com/intent/tweet?text=Check%20out%20concurrent-react%20by%20@kentcdodds%20https://github.com/kentcdodds/concurrent-react%20%F0%9F%91%8D
-[twitter-badge]:
-  https://img.shields.io/twitter/url/https/github.com/kentcdodds/concurrent-react.svg?style=social
+[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[coc]: https://github.com/kentcdodds/concurrent-react/blob/master/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[win-path]:
-  https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/
+[win-path]: https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/
 [mac-path]: http://stackoverflow.com/a/24322978/971592
 [issue]: https://github.com/kentcdodds/concurrent-react/issues/new
-[win-build-badge]:
-  https://img.shields.io/appveyor/ci/kentcdodds/concurrent-react.svg?style=flat-square&logo=appveyor
+[win-build-badge]: https://img.shields.io/appveyor/ci/kentcdodds/concurrent-react.svg?style=flat-square&logo=appveyor
 [win-build]: https://ci.appveyor.com/project/kentcdodds/concurrent-react
-[coverage-badge]:
-  https://img.shields.io/codecov/c/github/kentcdodds/concurrent-react.svg?style=flat-square
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/concurrent-react.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/concurrent-react
-[watchman]: https://facebook.github.io/watchman/docs/install.html
+<!-- prettier-ignore-end -->
