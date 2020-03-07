@@ -1,10 +1,11 @@
 // Simple Data-fetching
+// 💯 make more generic createResource
 
-// http://localhost:3000/isolated/exercises-final/01
+// http://localhost:3000/isolated/final/01-extra.2
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
-import {PokemonDataView} from '../utils'
+import {ErrorBoundary, PokemonDataView} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -16,13 +17,33 @@ import {PokemonDataView} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-let pokemon
-let pokemonPromise = fetchPokemon('pikachu').then(p => (pokemon = p))
+let pokemonResource = createResource(() => fetchPokemon('pikachu'))
 
-function PokemonInfo() {
-  if (!pokemon) {
-    throw pokemonPromise
+function createResource(asyncFn) {
+  let status = 'pending'
+  let result
+  let promise = asyncFn().then(
+    r => {
+      status = 'success'
+      result = r
+    },
+    e => {
+      status = 'error'
+      result = e
+    },
+  )
+  return {
+    read() {
+      if (status === 'pending') throw promise
+      if (status === 'error') throw result
+      if (status === 'success') return result
+      throw new Error('This should be impossible')
+    },
   }
+}
+
+function Pokemon() {
+  const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
@@ -36,9 +57,11 @@ function PokemonInfo() {
 function App() {
   return (
     <div className="pokemon-info">
-      <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-        <PokemonInfo />
-      </React.Suspense>
+      <ErrorBoundary>
+        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+          <Pokemon />
+        </React.Suspense>
+      </ErrorBoundary>
     </div>
   )
 }

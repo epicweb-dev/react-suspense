@@ -1,6 +1,6 @@
 // Simple Data-fetching
 
-// http://localhost:3000/isolated/exercises/01
+// http://localhost:3000/isolated/exercise/01
 
 import React from 'react'
 import {PokemonDataView} from '../utils'

@@ -1,7 +1,7 @@
 // Simple Data-fetching
 // 💯 Use utils
 
-// http://localhost:3000/isolated/exercises-final/01-extra.3
+// http://localhost:3000/isolated/final/01-extra.3
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'

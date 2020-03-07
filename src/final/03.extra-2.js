@@ -1,7 +1,7 @@
-// Refactor useEffect to Suspense
-// 💯 Suspense and Error Boundary positioning
+// useTransition for improved loading states
+// 💯 avoid flash of loading content
 
-// http://localhost:3000/isolated/exercises-final/02-extra.1
+// http://localhost:3000/isolated/final/03-extra.2
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -35,40 +35,50 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
+}
+
 function createPokemonResource(pokemonName) {
+  // fetchPokemon takes an optional second argument called "delay" which
+  // allows you to arbitrarily delay the fetch request by a given number
+  // of milliseconds. For example:
+  // fetchPokemon(pokemonName, 400)
+  // would delay it to at least take 400 milliseconds
   return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    setPokemonResource(createPokemonResource(newPokemonName))
+    startTransition(() => {
+      setPokemonResource(createPokemonResource(newPokemonName))
+    })
   }
 
   return (
     <div>
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <React.Suspense
-        fallback={
-          <div className="pokemon-info">
-            <PokemonInfoFallback name={pokemonName} />
-          </div>
-        }
-      >
-        <div className="pokemon-info">
-          {pokemonResource ? (
-            <ErrorBoundary>
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
+        {pokemonResource ? (
+          <ErrorBoundary>
+            <React.Suspense
+              fallback={<PokemonInfoFallback name={pokemonName} />}
+            >
               <PokemonInfo pokemonResource={pokemonResource} />
-            </ErrorBoundary>
-          ) : (
-            'Submit a pokemon'
-          )}
-        </div>
-      </React.Suspense>
+            </React.Suspense>
+          </ErrorBoundary>
+        ) : (
+          'Submit a pokemon'
+        )}
+      </div>
     </div>
   )
 }

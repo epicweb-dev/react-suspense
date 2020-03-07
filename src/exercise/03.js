@@ -1,6 +1,6 @@
-// Refactor useEffect to Suspense
+// useTransition for improved loading states
 
-// http://localhost:3000/isolated/exercises-final/02
+// http://localhost:3000/isolated/exercise/03
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -34,23 +34,46 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+// try a few of these fetch times:
+// shows busy indicator
+// window.FETCH_TIME = 450
+
+// shows busy indicator, then suspense fallback
+// window.FETCH_TIME = 5000
+
+// shows busy indicator for a split second
+// 💯 this is what the extra credit improves
+// window.FETCH_TIME = 200
+
+// 🐨 create a SUSPENSE_CONFIG variable right here and configure timeoutMs to
+// whatever feels right to you, then try it out and tweek it until you're happy
+// with the experience.
+
 function createPokemonResource(pokemonName) {
   return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
   const [pokemonName, setPokemonName] = React.useState(null)
+  // 🐨 add a useTransition hook here
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
+    // 🐨 wrap this next line in a startTransition call
     setPokemonResource(createPokemonResource(newPokemonName))
+    // 🦉 what do you think would happen if you put the setPokemonName above
+    // into the `startTransition` call? Go ahead and give that a try!
   }
 
   return (
     <div>
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
+      {/*
+        🐨 add inline styles here to set the opacity to 0.6 if the
+        useTransition above is pending
+      */}
       <div className="pokemon-info">
         {pokemonResource ? (
           <ErrorBoundary>
@@ -67,5 +90,18 @@ function App() {
     </div>
   )
 }
+
+/*
+🦉 Elaboration & Feedback
+After the instruction, copy the URL below into your browser and fill out the form:
+http://ws.kcd.im/?ws=Concurrent%20React&e=useTransition%20for%20improved%20loading%20states&em=
+*/
+
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
 
 export default App

@@ -1,6 +1,7 @@
 {
   "name": "concurrent-react",
   "title": "Concurrent React 🔀",
+  "private": true,
   "version": "1.0.0",
   "description": "Concurrent React Workshop",
   "keywords": [],
@@ -12,18 +13,18 @@
     "npm": ">=6"
   },
   "dependencies": {
-    "@kentcdodds/react-workshop-app": "^1.0.2",
-    "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^9.4.1",
-    "preval.macro": "^4.0.0",
-    "react": "0.0.0-experimental-d28bd2994",
-    "react-dom": "0.0.0-experimental-d28bd2994",
+    "@kentcdodds/react-workshop-app": "^2.7.3",
+    "@testing-library/react": "^9.5.0",
+    "chalk": "^3.0.0",
+    "codegen.macro": "^3.0.0",
+    "react": "0.0.0-experimental-235a6c4af",
+    "react-dom": "0.0.0-experimental-235a6c4af",
     "react-icons": "^3.9.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
     "husky": "^4.2.3",
     "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
     "react-scripts": "^3.4.0",
     "serve": "^11.3.0"
   },
@@ -34,6 +35,7 @@
     "build:profile": "react-scripts build --profile",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm run test -- --watchAll=false --coverage",
+    "test:exercises": "npm run test -- testing.*exercises\\/ --onlyChanged",
     "setup": "node ./scripts/setup",
     "lint": "eslint .",
     "validate": "npm-run-all --parallel build test:coverage lint"
@@ -45,11 +47,16 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/exercises-final/**/*.js"
+      "src/final/**/*.js"
     ]
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "babel": {
+    "presets": [
+      "babel-preset-react-app"
+    ]
   },
   "browserslist": {
     "development": [

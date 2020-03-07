@@ -1,6 +1,6 @@
-// useTransition for improved loading states
+// Suspense Image
 
-// http://localhost:3000/isolated/exercises/03
+// http://localhost:3000/isolated/exercise/05
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
@@ -22,11 +22,27 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
+// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
+// We're relying on that cache for this approach to work!
+
+// we need to make a place to store the resources outside of render so
+// 🐨 create "cache" object here.
+
+// 🐨 create an Img component that renders a regular <img /> and accepts a src
+// prop and forwards on any remaining props.
+// 🐨 The first thing you do in this component is check wither your
+// imgSrcResourceCache already has a resource for the given src prop. If it does
+// not, then you need to create one (💰 using createResource).
+// 🐨 Once you have the resource, then render the <img />.
+// 💰 Here's what rendering the <img /> should look like:
+// <img src={imgSrcResource.read()} {...props} />
+
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
+        {/* 🐨 swap this img for your new Img component */}
         <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
@@ -34,47 +50,45 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-// try a few of these fetch times:
-// shows busy indicator
-// window.FETCH_TIME = 450
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
+}
 
-// shows busy indicator, then suspense fallback
-// window.FETCH_TIME = 5000
+const pokemonResourceCache = {}
 
-// shows busy indicator for a split second
-// 💯 this is what the extra credit improves
-// window.FETCH_TIME = 200
-
-// 🐨 create a SUSPENSE_CONFIG variable right here and configure timeoutMs to
-// whatever feels right to you, then try it out and tweek it until you're happy
-// with the experience.
+function getPokemonResource(name) {
+  const lowerName = name.toLowerCase()
+  let resource = pokemonResourceCache[lowerName]
+  if (!resource) {
+    resource = createPokemonResource(lowerName)
+    pokemonResourceCache[lowerName] = resource
+  }
+  return resource
+}
 
 function createPokemonResource(pokemonName) {
   return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
-  // 🐨 add a useTransition hook here
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    // 🐨 wrap this next line in a startTransition call
-    setPokemonResource(createPokemonResource(newPokemonName))
-    // 🦉 what do you think would happen if you put the setPokemonName above
-    // into the `startTransition` call? Go ahead and give that a try!
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(newPokemonName))
+    })
   }
 
   return (
     <div>
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      {/*
-        🐨 add inline styles here to set the opacity to 0.6 if the
-        useTransition above is pending
-      */}
-      <div className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
           <ErrorBoundary>
             <React.Suspense
@@ -94,7 +108,7 @@ function App() {
 /*
 🦉 Elaboration & Feedback
 After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=useTransition%20for%20improved%20loading%20states&em=
+http://ws.kcd.im/?ws=Concurrent%20React&e=Suspense%20Image&em=
 */
 
 ////////////////////////////////////////////////////////////////////

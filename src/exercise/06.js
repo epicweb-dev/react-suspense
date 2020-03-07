@@ -1,13 +1,13 @@
-// useTransition for improved loading states
-// 💯 avoid flash of loading content
+// Suspense with a custom hook
 
-// http://localhost:3000/isolated/exercises-final/03-extra.2
+// http://localhost:3000/isolated/exercise/06
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
+import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {
   ErrorBoundary,
   createResource,
+  preloadImage,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
@@ -24,11 +24,11 @@ import {
 // in your developer tools to throttle your network to something like "Slow 3G"
 
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.read()
+  const pokemon = pokemonResource.data.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img src={pokemon.image} alt={pokemon.name} />
+        <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
     </div>
@@ -41,25 +41,46 @@ const SUSPENSE_CONFIG = {
   busyMinDurationMs: 700,
 }
 
+const pokemonResourceCache = {}
+
+function getPokemonResource(name) {
+  const lowerName = name.toLowerCase()
+  let resource = pokemonResourceCache[lowerName]
+  if (!resource) {
+    resource = createPokemonResource(lowerName)
+    pokemonResourceCache[lowerName] = resource
+  }
+  return resource
+}
+
 function createPokemonResource(pokemonName) {
-  // fetchPokemon takes an optional second argument called "delay" which
-  // allows you to arbitrarily delay the fetch request by a given number
-  // of milliseconds. For example:
-  // fetchPokemon(pokemonName, 400)
-  // would delay it to at least take 400 milliseconds
-  return createResource(() => fetchPokemon(pokemonName))
+  const lowerName = pokemonName
+  const data = createResource(() => fetchPokemon(lowerName))
+  const image = createResource(() =>
+    preloadImage(getImageUrlForPokemon(lowerName)),
+  )
+  return {data, image}
 }
 
 function App() {
   const [pokemonName, setPokemonName] = React.useState('')
+  // 🐨 move these two lines to a custom hook called usePokemonResource
+
+  // 🐨 call usePokemonResource with the pokemonName.
+  //    It should return both the pokemonResource and isPending
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
+    // 🐨 move this startTransition call to a useLayoutEffect inside your
+    //    custom usePokemonResource hook (it should list pokemonName as a
+    //    dependency).
     startTransition(() => {
-      setPokemonResource(createPokemonResource(newPokemonName))
+      setPokemonResource(getPokemonResource(newPokemonName))
     })
+    // 💰 tip: in your effect callback, if pokemonName is an empty string,
+    //    return early.
   }
 
   return (
@@ -82,5 +103,18 @@ function App() {
     </div>
   )
 }
+
+/*
+🦉 Elaboration & Feedback
+After the instruction, copy the URL below into your browser and fill out the form:
+http://ws.kcd.im/?ws=Concurrent%20React&e=Suspense%20with%20a%20custom%20hook&em=
+*/
+
+////////////////////////////////////////////////////////////////////
+//                                                                //
+//                 Don't make changes below here.                 //
+// But do look at it to see how your code is intended to be used. //
+//                                                                //
+////////////////////////////////////////////////////////////////////
 
 export default App

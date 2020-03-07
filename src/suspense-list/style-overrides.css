@@ -1,15 +1,4 @@
-#⚛ {
-  height: 100vh;
-}
-
-body #⚛ .isolated-top-container {
-  padding: 0;
-  display: unset;
-  align-items: unset;
-  justify-content: unset;
-}
-
-body #⚛ .isolated-div-wrapper {
+#root {
   height: 100vh;
 }
 

@@ -1,6 +1,6 @@
 // useTransition for improved loading states
 
-// http://localhost:3000/isolated/exercises-final/03
+// http://localhost:3000/isolated/final/03
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'

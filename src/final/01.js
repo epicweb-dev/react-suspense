@@ -1,11 +1,10 @@
 // Simple Data-fetching
-// 💯 add error handling with an Error Boundary
 
-// http://localhost:3000/isolated/exercises-final/01-extra.1
+// http://localhost:3000/isolated/final/01
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
-import {ErrorBoundary, PokemonDataView} from '../utils'
+import {PokemonDataView} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -18,16 +17,9 @@ import {ErrorBoundary, PokemonDataView} from '../utils'
 // in your developer tools to throttle your network to something like "Slow 3G"
 
 let pokemon
-let pokemonError
-let pokemonPromise = fetchPokemon('pikachu').then(
-  p => (pokemon = p),
-  e => (pokemonError = e),
-)
+let pokemonPromise = fetchPokemon('pikachu').then(p => (pokemon = p))
 
 function PokemonInfo() {
-  if (pokemonError) {
-    throw pokemonError
-  }
   if (!pokemon) {
     throw pokemonPromise
   }
@@ -44,11 +36,9 @@ function PokemonInfo() {
 function App() {
   return (
     <div className="pokemon-info">
-      <ErrorBoundary>
-        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-          <PokemonInfo />
-        </React.Suspense>
-      </ErrorBoundary>
+      <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+        <PokemonInfo />
+      </React.Suspense>
     </div>
   )
 }

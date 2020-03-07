@@ -35,16 +35,16 @@
 ## Schedule
 
 - 😴 Logistics
-- 🏋 Simple Data-fetching
+- 💪 Simple Data-fetching
 - 😴 10 Minutes
-- 🏋 Render as you fetch
-- 🏋 useTransition for improved loading states
+- 💪 Render as you fetch
+- 💪 useTransition for improved loading states
 - 😴 30 Minutes
-- 🏋 Suspense Image
-- 🏋 Cache resources
+- 💪 Suspense Image
+- 💪 Cache resources
 - 😴 10 Minutes
-- 🏋 Suspense with a custom hook
-- 🏋 Coordinate Suspending components with SuspenseList
+- 💪 Suspense with a custom hook
+- 💪 Coordinate Suspending components with SuspenseList
 - ❓ Q&A
 
 ## Scripts
@@ -65,18 +65,16 @@ Please do ask! Interrupt me. If you have an unrelated question, please ask on
 
 ## Exercises
 
-- `src/exercises/0x.md`: Background, Exercise Instructions, Extra Credit
-- `src/exercises/0x.js`: Exercise with Emoji helpers
+- `src/exercise/0x.md`: Background, Exercise Instructions, Extra Credit
+- `src/exercise/0x.js`: Exercise with Emoji helpers
 - `src/__tests__/0x.js`: Tests
-- `src/exercises-final/0x.js`: Final version
-
-> NOTE: Some of the extra credit have tests that are specific to their
-> implementation because the implementation is significantly different and your
-> work needs to be checked differently.
+- `src/final/0x.js`: Final version
 
 ## Emoji
 
 - **Kody the Koala Bear** 🐨 "Do this"
+- **Matthew the Muscle** 💪 "Exercise"
+- **Chuck the Checkered Flag** 🏁 "Final"
 - **Marty the Money Bag** 💰 "Here's a hint"
 - **Hannah the Hundred** 💯 "Extra Credit"
 - **Olivia the Owl** 🦉 "Pro-tip"

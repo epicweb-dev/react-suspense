@@ -19,4 +19,12 @@ var result = spawnSync(
 
 if (result.status === 0) {
   console.log('✅  Workshop setup complete...')
+} else {
+  process.exit(result.status)
 }
+
+/*
+eslint
+  no-var: "off",
+  "vars-on-top": "off",
+*/

@@ -1,10 +1,9 @@
 // Suspense Image
-// 💯 avoid waterfall
 
-// http://localhost:3000/isolated/exercises-final/05-extra.1
+// http://localhost:3000/isolated/final/05
 
 import React from 'react'
-import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
+import fetchPokemon from '../fetch-pokemon'
 import {
   ErrorBoundary,
   createResource,
@@ -34,12 +33,23 @@ function preloadImage(src) {
   })
 }
 
+const imgSrcResourceCache = {}
+
+function Img({src, alt, ...props}) {
+  let imgSrcResource = imgSrcResourceCache[src]
+  if (!imgSrcResource) {
+    imgSrcResource = createResource(() => preloadImage(src))
+    imgSrcResourceCache[src] = imgSrcResource
+  }
+  return <img src={imgSrcResource.read()} alt={alt} {...props} />
+}
+
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.data.read()
+  const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img src={pokemonResource.image.read()} alt={pokemon.name} />
+        <Img src={pokemon.image} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
     </div>
@@ -65,12 +75,7 @@ function getPokemonResource(name) {
 }
 
 function createPokemonResource(pokemonName) {
-  const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName))
-  const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(lowerName)),
-  )
-  return {data, image}
+  return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
