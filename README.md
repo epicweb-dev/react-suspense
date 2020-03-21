@@ -12,10 +12,8 @@ you can use to improve your app's user experience (most notably the concept of
 <!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
 [![AppVeyor Build Status][win-build-badge]][win-build]
-[![Code Coverage][coverage-badge]][coverage]
 [![GPL 3.0 License][license-badge]][license]
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 <!-- prettier-ignore-end -->
 
@@ -32,8 +30,10 @@ these features are stable, so enjoy the workshop!
 ## Pre-Workshop Instructions/Requirements
 
 In order for us to maximize our efforts during the workshop, please complete the
-following things to prepare (the TV emoji 📺 indicates steps that are only
-necessary if the workshop is remote via Zoom):
+following things to prepare.
+
+- 📺 only necessary if the workshop is remote via Zoom
+- 👋 specific to the material for this workshop
 
 - [ ] Setup the project (follow the setup instructions below) (~5 minutes)
 - [ ] 📺 Install and setup [Zoom](https://zoom.us) on the computer you will be
@@ -82,8 +82,8 @@ Here are the concepts we'll be covering:
 ## System Requirements
 
 - [git][git] v2 or greater
-- [NodeJS][node] v8 or greater
-- [yarn][yarn] v1 or greater (or [npm][npm] v6 or greater)
+- [NodeJS][node] v10 or greater
+- [npm][npm] v6 or greater
 
 All of these must be available in your `PATH`. To verify things are set up
 properly, you can run this:
@@ -91,7 +91,7 @@ properly, you can run this:
 ```shell
 git --version
 node --version
-yarn --version # or npm --version
+npm --version
 ```
 
 If you have trouble with any of these, learn more about the PATH environment
@@ -100,15 +100,8 @@ variable and how to fix it here for [windows][win-path] or
 
 ## Setup
 
-For many of my workshops, you should be able to run them
-[entirely in the browser](https://codesandbox.io/s/github/kentcdodds/react-suspense).
-However for this one, I recommend you work through the workshop on your own
-computer.
-
-To do so, please follow these instructions.
-
-After you've made sure to have the correct things (and versions) installed (as
-indicated above), you should be able to just run a few commands to get set up:
+After you've made sure to have the correct things (and versions) installed, you
+should be able to just run a few commands to get set up:
 
 ```
 git clone https://github.com/kentcdodds/react-suspense.git
@@ -119,10 +112,16 @@ npm run setup --silent
 This may take a few minutes. **It will ask you for your email.** This is
 optional and just automatically adds your email to the links in the project to
 make filling out some forms easier If you get any errors, please read through
-them and see if you can find out what the problem is. You may also want to look
-at [Troubleshooting](#troubleshooting). If you can't work it out on your own
-then please [file an issue][issue] and provide _all_ the output from the
-commands you ran (even if it's a lot).
+them and see if you can find out what the problem is. If you can't work it out
+on your own then please [file an issue][issue] and provide _all_ the output from
+the commands you ran (even if it's a lot).
+
+You may be able to work through the entire workshop in the browser. Go to
+[this codesandbox](https://codesandbox.io/s/github/kentcdodds/react-suspense)
+and you should be good to go. Note that sometimes people have trouble with
+codesandbox not working quite right with tests, but you should be able to work
+around that. If you're concerned, then it would probably be better to just set
+things up locally.
 
 ## Running the app
 
@@ -133,10 +132,10 @@ npm start
 ```
 
 This should start up your browser. If you're familiar, this is a standard
-[react-scripts](https://github.com/facebook/create-react-app) application.
+[react-scripts](https://create-react-app.dev/) application.
 
 You can also open
-[the deployment of the app on Netlify](https://react-suspense.netlify.com/).
+[the deployment of the app on Netlify](https://react-suspense.netlify.app/).
 
 ## Running the tests
 
@@ -144,19 +143,81 @@ You can also open
 npm test
 ```
 
-This will start [Jest](http://facebook.github.io/jest) in watch mode. Read the
-output and play around with it.
+This will start [Jest](https://jestjs.io/) in watch mode. Read the output and
+play around with it. The tests are there to help you reach the final version,
+however _sometimes_ you can accomplish the task and the tests still fail if you
+implement things differently than I do in my solution, so don't look to them as
+a complete authority.
 
-**Your goal will be to go into each test, swap the final version for the
-exercise version in the import, and make the tests pass**
+## Workshop Outline
 
-## Helpful Emoji 🐨 💰 💯 🦉 📜 💣 🚨
+> React Suspense Workshop 🔀
+
+👋 I'm Kent C. Dodds
+
+- 🏡 Utah
+- 👩 👧 👦 👦 👦 🐕
+- 🏢 kentcdodds.com
+- 🐦/🐙 @kentcdodds
+- 🏆 testingjavascript.com
+- 🥚 kcd.im/egghead
+- 🥋 kcd.im/fem
+- 💌 kcd.im/news
+- 📝 kcd.im/blog
+- 📺 kcd.im/devtips
+- 💻 kcd.im/coding
+- 📽 kcd.im/youtube
+- 🎙 kcd.im/3-mins
+- ❓ kcd.im/ama
+
+### Schedule
+
+- 😴 Logistics
+- 💪 Simple Data-fetching
+- 😴 10 Minutes
+- 💪 Render as you fetch
+- 💪 useTransition for improved loading states
+- 😴 30 Minutes
+- 💪 Suspense Image
+- 💪 Cache resources
+- 😴 10 Minutes
+- 💪 Suspense with a custom hook
+- 💪 Coordinate Suspending components with SuspenseList
+- ❓ Q&A
+
+### Questions
+
+Please do ask! Interrupt me. If you have an unrelated question, please ask on
+[my AMA](https://kcd.im/ama).
+
+### Zoom (for remote workshops)
+
+- Help us make this more human by keeping your video on if possible
+- Keep microphone muted unless speaking
+- Breakout rooms
+
+### Exercises
+
+- `src/exercise/00.md`: Background, Exercise Instructions, Extra Credit
+- `src/exercise/00.js`: Exercise with Emoji helpers
+- `src/__tests__/00.js`: Tests
+- `src/final/00.js`: Final version
+- `src/final/00.extra-0.js`: Final version of extra credit
+
+The purpose of the exercise is **not** for you to work through all the material.
+It's intended to get your brain thinking about the right questions to ask me as
+_I_ walk through the material.
+
+### Helpful Emoji 🐨 💪 🏁 💰 💯 🦉 📜 💣 👨‍💼 🚨
 
 Each exercise has comments in it to help you get through the exercise. These fun
 emoji characters are here to help you.
 
 - **Kody the Koala Bear** 🐨 will tell you when there's something specific you
   should do
+- **Matthew the Muscle** 💪 will indicate what you're working with an exercise
+- **Chuck the Checkered Flag** 🏁 will indicate that you're working with a final
+  version
 - **Marty the Money Bag** 💰 will give you specific tips (and sometimes code)
   along the way
 - **Hannah the Hundred** 💯 will give you extra challenges you can do if you
@@ -170,18 +231,24 @@ emoji characters are here to help you.
 - **Alfred the Alert** 🚨 will occasionally show up in the test failures with
   potential explanations for why the tests are failing.
 
-## Troubleshooting
+## Disclaimers
 
-<details>
+1. React Concurrent Mode is experimental
+2. I've never shipped Concurrent Mode to production, and you shouldn't either
+   (yet)
+3. React Suspense is a particularly primitive API and we're still working out
+   good abstractions for it
+4. I've been informed that the API for suspending _will change_ before the
+   stable release (don't worry though, the concepts are solid)
+5. I will probably say "I don't know" as a response to your questions sometimes
 
-<summary>"npm run setup" command not working</summary>
+## Workshop Feedback
 
-Please read through the error message and identify the step that is failing.
-There should be an error message that will hopefully help guide you to the
-solution. If it doesn't, please copy and past _all_ of the output into a new
-issue on the project repository.
+Each exercise has an Elaboration and Feedback link. Please fill that out after
+the exercise and instruction.
 
-</details>
+At the end of the workshop, please go to this URL to give overall feedback.
+Thank you! https://kcd.im/rs-ws-feedback
 
 ## Contributors
 
@@ -224,8 +291,6 @@ at kentcdodds@gmail.com
 [build]: https://travis-ci.org/kentcdodds/react-suspense
 [license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
 [license]: https://github.com/kentcdodds/react-suspense/blob/master/README.md#license
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [coc]: https://github.com/kentcdodds/react-suspense/blob/master/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
@@ -235,6 +300,4 @@ at kentcdodds@gmail.com
 [issue]: https://github.com/kentcdodds/react-suspense/issues/new
 [win-build-badge]: https://img.shields.io/appveyor/ci/kentcdodds/react-suspense.svg?style=flat-square&logo=appveyor
 [win-build]: https://ci.appveyor.com/project/kentcdodds/react-suspense
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/react-suspense.svg?style=flat-square
-[coverage]: https://codecov.io/github/kentcdodds/react-suspense
 <!-- prettier-ignore-end -->
