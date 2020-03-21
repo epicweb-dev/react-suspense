@@ -1,4 +1,3 @@
-/*
 a {
   color: #cc0000;
 }
@@ -43,7 +42,6 @@ button:focus:not(:disabled) {
   border-color: #cc0000;
   background-color: #8a0000;
 }
-*/
 
 .totally-centered {
   width: 100%;
