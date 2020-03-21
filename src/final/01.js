@@ -33,6 +33,7 @@ function PokemonInfo() {
 }
 
 function App() {
+  debugger
   return (
     <div className="pokemon-info">
       <React.Suspense fallback={<div>Loading Pokemon...</div>}>

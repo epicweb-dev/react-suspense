@@ -34,7 +34,7 @@
     "build": "react-scripts build",
     "build:profile": "react-scripts build --profile",
     "test": "react-scripts test --env=jsdom",
-    "test:coverage": "npm run test -- --watchAll=false --coverage",
+    "test:coverage": "npm run test -- --watchAll=false",
     "test:exercises": "npm run test -- testing.*exercises\\/ --onlyChanged",
     "setup": "node ./scripts/setup",
     "lint": "eslint .",
