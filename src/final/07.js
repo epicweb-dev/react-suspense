@@ -1,6 +1,5 @@
 // Coordinate Suspending components with SuspenseList
-
-// http://localhost:3000/isolated/final/07
+// http://localhost:3000/isolated/final/07.js
 
 import React from 'react'
 import '../suspense-list/style-overrides.css'

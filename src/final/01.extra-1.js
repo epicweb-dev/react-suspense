@@ -1,7 +1,6 @@
 // Simple Data-fetching
 // 💯 add error handling with an Error Boundary
-
-// http://localhost:3000/isolated/final/01-extra.1
+// http://localhost:3000/isolated/final/01.extra-1.js
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'

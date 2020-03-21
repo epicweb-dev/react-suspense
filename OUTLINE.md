@@ -1,6 +1,6 @@
-# Concurrent React
+# React Suspense
 
-> Concurrent React Workshop 🔀
+> React Suspense Workshop 🔀
 
 👋 I'm Kent C. Dodds
 

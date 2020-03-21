@@ -1,7 +1,6 @@
 // Coordinate Suspending components with SuspenseList
 // 💯 preload modules
-
-// http://localhost:3000/isolated/final/07-extra.1
+// http://localhost:3000/isolated/final/07.extra-1.js
 
 import React from 'react'
 import '../suspense-list/style-overrides.css'

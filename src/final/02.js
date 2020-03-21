@@ -1,6 +1,5 @@
 // Refactor useEffect to Suspense
-
-// http://localhost:3000/isolated/final/02
+// http://localhost:3000/isolated/final/02.js
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'

@@ -1,3 +1,5 @@
+// http://localhost:3000/isolated/examples/fetch-approaches/lazy/pokemon-info-render-as-you-fetch.data.js
+
 import {createResource, preloadImage} from '../../../utils'
 import fetchPokemon, {getImageUrlForPokemon} from '../../../fetch-pokemon'
 

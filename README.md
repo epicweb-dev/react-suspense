@@ -1,4 +1,4 @@
-# Concurrent React
+# React Suspense 🔀
 
 > Improving UX with a faster, more predictable app.
 
@@ -101,7 +101,7 @@ variable and how to fix it here for [windows][win-path] or
 ## Setup
 
 For many of my workshops, you should be able to run them
-[entirely in the browser](https://codesandbox.io/s/github/kentcdodds/concurrent-react).
+[entirely in the browser](https://codesandbox.io/s/github/kentcdodds/react-suspense).
 However for this one, I recommend you work through the workshop on your own
 computer.
 
@@ -111,8 +111,8 @@ After you've made sure to have the correct things (and versions) installed (as
 indicated above), you should be able to just run a few commands to get set up:
 
 ```
-git clone https://github.com/kentcdodds/concurrent-react.git
-cd concurrent-react
+git clone https://github.com/kentcdodds/react-suspense.git
+cd react-suspense
 npm run setup --silent
 ```
 
@@ -136,7 +136,7 @@ This should start up your browser. If you're familiar, this is a standard
 [react-scripts](https://github.com/facebook/create-react-app) application.
 
 You can also open
-[the deployment of the app on Netlify](https://concurrent-react.netlify.com/).
+[the deployment of the app on Netlify](https://react-suspense.netlify.com/).
 
 ## Running the tests
 
@@ -193,9 +193,9 @@ Thanks goes to these wonderful people
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt=""/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/concurrent-react/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/concurrent-react/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/concurrent-react/commits?author=kentcdodds" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/Hypnosphi"><img src="https://avatars3.githubusercontent.com/u/6651625?v=4" width="100px;" alt=""/><br /><sub><b>Filipp Riabchun</b></sub></a><br /><a href="https://github.com/kentcdodds/concurrent-react/commits?author=Hypnosphi" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/lauchness"><img src="https://avatars0.githubusercontent.com/u/51837850?v=4" width="100px;" alt=""/><br /><sub><b>lauchness</b></sub></a><br /><a href="https://github.com/kentcdodds/concurrent-react/commits?author=lauchness" title="Code">💻</a></td>
+    <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt=""/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/react-suspense/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/react-suspense/commits?author=kentcdodds" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/Hypnosphi"><img src="https://avatars3.githubusercontent.com/u/6651625?v=4" width="100px;" alt=""/><br /><sub><b>Filipp Riabchun</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=Hypnosphi" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/lauchness"><img src="https://avatars0.githubusercontent.com/u/51837850?v=4" width="100px;" alt=""/><br /><sub><b>lauchness</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=lauchness" title="Code">💻</a></td>
   </tr>
 </table>
 
@@ -220,21 +220,21 @@ at kentcdodds@gmail.com
 [node]: https://nodejs.org
 [git]: https://git-scm.com/
 [yarn]: https://yarnpkg.com/
-[build-badge]: https://img.shields.io/travis/kentcdodds/concurrent-react.svg?style=flat-square&logo=travis
-[build]: https://travis-ci.org/kentcdodds/concurrent-react
+[build-badge]: https://img.shields.io/travis/kentcdodds/react-suspense.svg?style=flat-square&logo=travis
+[build]: https://travis-ci.org/kentcdodds/react-suspense
 [license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
-[license]: https://github.com/kentcdodds/concurrent-react/blob/master/README.md#license
+[license]: https://github.com/kentcdodds/react-suspense/blob/master/README.md#license
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/concurrent-react/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/kentcdodds/react-suspense/blob/master/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [win-path]: https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/
 [mac-path]: http://stackoverflow.com/a/24322978/971592
-[issue]: https://github.com/kentcdodds/concurrent-react/issues/new
-[win-build-badge]: https://img.shields.io/appveyor/ci/kentcdodds/concurrent-react.svg?style=flat-square&logo=appveyor
-[win-build]: https://ci.appveyor.com/project/kentcdodds/concurrent-react
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/concurrent-react.svg?style=flat-square
-[coverage]: https://codecov.io/github/kentcdodds/concurrent-react
+[issue]: https://github.com/kentcdodds/react-suspense/issues/new
+[win-build-badge]: https://img.shields.io/appveyor/ci/kentcdodds/react-suspense.svg?style=flat-square&logo=appveyor
+[win-build]: https://ci.appveyor.com/project/kentcdodds/react-suspense
+[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/react-suspense.svg?style=flat-square
+[coverage]: https://codecov.io/github/kentcdodds/react-suspense
 <!-- prettier-ignore-end -->

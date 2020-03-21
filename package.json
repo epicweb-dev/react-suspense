@@ -1,11 +1,11 @@
 {
-  "name": "concurrent-react",
-  "title": "Concurrent React 🔀",
+  "name": "react-suspense",
+  "title": "React Suspense 🔀",
   "private": true,
   "version": "1.0.0",
-  "description": "Concurrent React Workshop",
+  "description": "React Suspense Workshop",
   "keywords": [],
-  "homepage": "https://learn-concurrent-react.netlify.com/",
+  "homepage": "https://react-suspense.netlify.app",
   "license": "GPL-3.0-only",
   "main": "src/index.js",
   "engines": {
@@ -14,18 +14,18 @@
   },
   "dependencies": {
     "@kentcdodds/react-workshop-app": "^2.7.3",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^10.0.1",
     "chalk": "^3.0.0",
     "codegen.macro": "^3.0.0",
-    "react": "0.0.0-experimental-235a6c4af",
-    "react-dom": "0.0.0-experimental-235a6c4af",
+    "react": "0.0.0-experimental-aae83a4b9",
+    "react-dom": "0.0.0-experimental-aae83a4b9",
     "react-icons": "^3.9.0"
   },
   "devDependencies": {
     "husky": "^4.2.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
-    "react-scripts": "^3.4.0",
+    "react-scripts": "^3.4.1",
     "serve": "^11.3.0"
   },
   "scripts": {

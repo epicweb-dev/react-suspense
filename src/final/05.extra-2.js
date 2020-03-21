@@ -1,7 +1,6 @@
 // Suspense Image
 // 💯 avoid waterfall
-
-// http://localhost:3000/isolated/final/05-extra.2
+// http://localhost:3000/isolated/final/05.extra-2.js
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'

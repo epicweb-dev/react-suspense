@@ -1,7 +1,8 @@
+// Preload image demo 🖼
+// http://localhost:3000/isolated/examples/preload-image.js
+
 import React from 'react'
 import {getImageUrlForPokemon} from '../fetch-pokemon'
-
-// http://localhost:3000/isolated/examples/preload-image
 
 const bulbasaurImageUrl = getImageUrlForPokemon('bulbasaur')
 const dittoImageUrl = getImageUrlForPokemon('ditto')

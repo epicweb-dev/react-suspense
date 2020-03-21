@@ -1,6 +1,6 @@
 {
-  "short_name": "Concurrent React 🔀",
-  "name": "Concurrent React",
+  "short_name": "React Suspense 🔀",
+  "name": "React Suspense",
   "icons": [
     {
       "src": "favicon.ico",

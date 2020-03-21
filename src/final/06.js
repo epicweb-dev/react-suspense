@@ -1,6 +1,5 @@
 // Suspense with a custom hook
-
-// http://localhost:3000/isolated/final/06
+// http://localhost:3000/isolated/final/06.js
 
 import React from 'react'
 import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
@@ -76,7 +75,7 @@ function usePokemonResource(pokemonName) {
 
     // ESLint wants me to add startTransition to the dependency list. I'm
     // excluding it like we are because of a known bug which will be fixed
-    // before the stable release of Concurrent React:
+    // before the stable release of Concurrent Mode:
     // https://github.com/facebook/react/issues/17273
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokemonName])

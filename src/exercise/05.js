@@ -1,6 +1,5 @@
 // Suspense Image
-
-// http://localhost:3000/isolated/exercise/05
+// http://localhost:3000/isolated/exercise/05.js
 
 import React from 'react'
 import fetchPokemon from '../fetch-pokemon'
