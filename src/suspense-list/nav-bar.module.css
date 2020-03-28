@@ -24,18 +24,18 @@
 }
 
 .root button {
-  border: none;
+  border: none !important;
   color: black;
-  background-color: transparent;
-  font-size: 30px;
-  cursor: pointer;
+  background-color: transparent !important;
+  font-size: 30px !important;
+  cursor: pointer !important;
 }
 
 .root button:focus,
 .root button:active,
 .root button:hover {
-  opacity: 0.8;
-  background-color: transparent;
+  opacity: 0.8 !important;
+  background-color: transparent !important;
 }
 
 .logoAndSearch {
@@ -51,8 +51,8 @@
 }
 
 .logoAndSearch input {
-  background-color: #eee;
-  width: 250px;
+  background-color: #eee !important;
+  width: 250px !important;
 }
 
 .centerButtons {
