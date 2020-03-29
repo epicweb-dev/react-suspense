@@ -84,7 +84,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="pokemon-info-app">
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
@@ -103,18 +103,5 @@ function App() {
     </div>
   )
 }
-
-/*
-🦉 Elaboration & Feedback
-After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=Suspense%20Image&em=
-*/
-
-////////////////////////////////////////////////////////////////////
-//                                                                //
-//                 Don't make changes below here.                 //
-// But do look at it to see how your code is intended to be used. //
-//                                                                //
-////////////////////////////////////////////////////////////////////
 
 export default App

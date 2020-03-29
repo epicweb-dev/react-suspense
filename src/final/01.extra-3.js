@@ -37,12 +37,14 @@ function Pokemon() {
 
 function App() {
   return (
-    <div className="pokemon-info">
-      <ErrorBoundary>
-        <React.Suspense fallback={<PokemonInfoFallback name="Pikachu" />}>
-          <Pokemon />
-        </React.Suspense>
-      </ErrorBoundary>
+    <div className="pokemon-info-app">
+      <div className="pokemon-info">
+        <ErrorBoundary>
+          <React.Suspense fallback={<PokemonInfoFallback name="Pikachu" />}>
+            <Pokemon />
+          </React.Suspense>
+        </ErrorBoundary>
+      </div>
     </div>
   )
 }

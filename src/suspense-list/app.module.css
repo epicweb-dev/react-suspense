@@ -3,6 +3,10 @@
   min-height: 100%;
 }
 
+.root input {
+  background-color: white;
+}
+
 .mainContentArea {
   display: flex;
   justify-content: space-between;

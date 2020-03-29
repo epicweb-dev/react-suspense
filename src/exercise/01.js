@@ -62,28 +62,17 @@ function PokemonInfo() {
 
 function App() {
   return (
-    <div className="pokemon-info">
-      {/*
+    <div className="pokemon-info-app">
+      <div className="pokemon-info">
+        {/*
         🐨 Wrap the PokemonInfo component with a React.Suspense component with a fallback
         🐨 Then wrap all that with an <ErrorBoundary /> to catch errors
         💰 I wrote the ErrorBoundary for you. You can take a look at it in the utils file if you want
       */}
-      <PokemonInfo />
+        <PokemonInfo />
+      </div>
     </div>
   )
 }
-
-/*
-🦉 Elaboration & Feedback
-After the instruction, copy the URL below into your browser and fill out the form:
-http://ws.kcd.im/?ws=Concurrent%20React&e=Simple%20Data-fetching&em=
-*/
-
-////////////////////////////////////////////////////////////////////
-//                                                                //
-//                 Don't make changes below here.                 //
-// But do look at it to see how your code is intended to be used. //
-//                                                                //
-////////////////////////////////////////////////////////////////////
 
 export default App

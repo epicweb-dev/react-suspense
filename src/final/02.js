@@ -47,7 +47,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="pokemon-info-app">
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">

@@ -63,7 +63,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="pokemon-info-app">
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
       <div style={{opacity: isPending ? 0.6 : 1}} className="pokemon-info">

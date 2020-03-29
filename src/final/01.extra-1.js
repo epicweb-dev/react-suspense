@@ -42,12 +42,14 @@ function PokemonInfo() {
 
 function App() {
   return (
-    <div className="pokemon-info">
-      <ErrorBoundary>
-        <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-          <PokemonInfo />
-        </React.Suspense>
-      </ErrorBoundary>
+    <div className="pokemon-info-app">
+      <div className="pokemon-info">
+        <ErrorBoundary>
+          <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+            <PokemonInfo />
+          </React.Suspense>
+        </ErrorBoundary>
+      </div>
     </div>
   )
 }
