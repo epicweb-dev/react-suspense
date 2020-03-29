@@ -46,8 +46,13 @@ function App() {
 
   if (!pokemonResource) {
     return (
-      <div className={`${cn.root} totally-centered`} style={{height: '100vh'}}>
-        <PokemonForm onSubmit={handleSubmit} />
+      <div className="pokemon-info-app">
+        <div
+          className={`${cn.root} totally-centered`}
+          style={{height: '100vh'}}
+        >
+          <PokemonForm onSubmit={handleSubmit} />
+        </div>
       </div>
     )
   }
