@@ -178,8 +178,8 @@ a complete authority.
 - 💪 Render as you fetch
 - 💪 useTransition for improved loading states
 - 😴 30 Minutes
-- 💪 Suspense Image
 - 💪 Cache resources
+- 💪 Suspense Image
 - 😴 10 Minutes
 - 💪 Suspense with a custom hook
 - 💪 Coordinate Suspending components with SuspenseList
