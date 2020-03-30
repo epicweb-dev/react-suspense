@@ -51,6 +51,15 @@
   align-items: center;
 }
 
+.pokemon-info-app {
+  max-width: 500px;
+  margin: auto;
+}
+
+[class*='_isolated'] .pokemon-info-app {
+  margin-top: 50px;
+}
+
 .pokemon-form {
   display: flex;
   flex-direction: column;
@@ -65,6 +74,7 @@
 .pokemon-info {
   height: 400px;
   width: 300px;
+  margin: auto;
   overflow: auto;
   background-color: #eee;
   border-radius: 4px;
