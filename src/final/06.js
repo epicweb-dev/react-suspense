@@ -65,20 +65,14 @@ function usePokemonResource(pokemonName) {
   const [pokemonResource, setPokemonResource] = React.useState(null)
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!pokemonName) {
       return
     }
     startTransition(() => {
       setPokemonResource(getPokemonResource(pokemonName))
     })
-
-    // ESLint wants me to add startTransition to the dependency list. I'm
-    // excluding it like we are because of a known bug which will be fixed
-    // before the stable release of Concurrent Mode:
-    // https://github.com/facebook/react/issues/17273
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pokemonName])
+  }, [pokemonName, startTransition])
 
   return [pokemonResource, isPending]
 }
