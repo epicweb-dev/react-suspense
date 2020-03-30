@@ -72,7 +72,7 @@ function App() {
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    // 🐨 move this startTransition call to a useLayoutEffect inside your
+    // 🐨 move this startTransition call to a useEffect inside your
     //    custom usePokemonResource hook (it should list pokemonName as a
     //    dependency).
     startTransition(() => {
