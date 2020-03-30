@@ -60,7 +60,11 @@ function App() {
               <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
             </div>
           ) : status === 'success' ? (
-            <PokemonInfo pokemon={pokemon} />
+            <React.Suspense
+              fallback={<PokemonInfoFallback name={pokemonName} />}
+            >
+              <PokemonInfo pokemon={pokemon} />
+            </React.Suspense>
           ) : null
         ) : (
           'Submit a pokemon'

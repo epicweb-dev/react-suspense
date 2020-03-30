@@ -2,7 +2,7 @@
 // http://localhost:3000/isolated/examples/fetch-approaches/fetch-on-render.js
 
 import React from 'react'
-import {PokemonForm} from '../../utils'
+import {PokemonForm, ErrorBoundary, PokemonInfoFallback} from '../../utils'
 
 const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-fetch-on-render'),
@@ -23,7 +23,13 @@ function App() {
       <hr />
       <div className="pokemon-info">
         {pokemonName ? (
-          <PokemonInfo pokemonName={pokemonName} />
+          <ErrorBoundary>
+            <React.Suspense
+              fallback={<PokemonInfoFallback name={pokemonName} />}
+            >
+              <PokemonInfo pokemonName={pokemonName} />
+            </React.Suspense>
+          </ErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}

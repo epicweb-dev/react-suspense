@@ -1,3 +1,4 @@
+import './hacks/fetch'
 import './styles.css'
 import codegen from 'codegen.macro'
 
