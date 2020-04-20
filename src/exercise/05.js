@@ -21,8 +21,10 @@ import {
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
+// ❗❗❗❗
+// 🦉 On this one, make sure that you UNCHECK the "Disable cache" checkbox.
 // We're relying on that cache for this approach to work!
+// ❗❗❗❗
 
 // we need to make a place to store the resources outside of render so
 // 🐨 create "cache" object here.
