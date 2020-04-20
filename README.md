@@ -177,7 +177,7 @@ a complete authority.
 - 😴 10 Minutes
 - 💪 Render as you fetch
 - 💪 useTransition for improved loading states
-- 😴 30 Minutes
+- 🌮 30 Minutes
 - 💪 Cache resources
 - 💪 Suspense Image
 - 😴 10 Minutes
