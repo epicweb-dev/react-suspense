@@ -47,7 +47,7 @@ function App() {
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary>
+          <ErrorBoundary key={pokemonResource.id}>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >

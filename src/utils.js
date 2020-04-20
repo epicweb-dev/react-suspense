@@ -90,7 +90,7 @@ function PokemonDataView({pokemon}) {
 // for experimentation purposes. The API for suspense (currently throwing a
 // promise) is likely to change before suspense is officially released.
 // This was strongly inspired by work done in the React Docs by Dan Abramov
-function createResource(asyncFn) {
+function createResource(asyncFn, data) {
   let status = 'pending'
   let result
   let promise = asyncFn().then(
@@ -110,6 +110,7 @@ function createResource(asyncFn) {
       if (status === 'success') return result
       throw new Error('This should be impossible')
     },
+    ...data,
   }
 }
 

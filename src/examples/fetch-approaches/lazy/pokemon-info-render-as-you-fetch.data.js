@@ -5,9 +5,9 @@ import fetchPokemon, {getImageUrlForPokemon} from '../../../fetch-pokemon'
 
 function createPokemonResource(pokemonName) {
   const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName))
+  const data = createResource(() => fetchPokemon(lowerName), {id: lowerName})
   const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(lowerName)),
+    preloadImage(getImageUrlForPokemon(lowerName), {id: lowerName}),
   )
   return {data, image}
 }

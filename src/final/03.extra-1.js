@@ -46,7 +46,7 @@ function PokemonInfo({pokemonResource}) {
 const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
 }
 
 function App() {
@@ -67,7 +67,7 @@ function App() {
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary>
+          <ErrorBoundary key={pokemonResource.id}>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >

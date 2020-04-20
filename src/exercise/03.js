@@ -73,7 +73,7 @@ function App() {
       */}
       <div className="pokemon-info">
         {pokemonResource ? (
-          <ErrorBoundary>
+          <ErrorBoundary key={pokemonResource.id}>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >

@@ -38,7 +38,9 @@ function App() {
 
   function handleSubmit(pokemonName) {
     startTransition(() => {
-      setPokemonResource(createResource(() => fetchUser(pokemonName)))
+      setPokemonResource(
+        createResource(() => fetchUser(pokemonName), {pokemonName}),
+      )
     })
   }
 
@@ -58,7 +60,7 @@ function App() {
   return (
     <div className="pokemon-info-app">
       <div className={cn.root}>
-        <ErrorBoundary>
+        <ErrorBoundary key={pokemonResource.pokemonName}>
           <React.SuspenseList revealOrder="forwards" tail="collapsed">
             <React.Suspense fallback={fallback}>
               <NavBar pokemonResource={pokemonResource} />
