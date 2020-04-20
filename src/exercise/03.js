@@ -49,7 +49,7 @@ function PokemonInfo({pokemonResource}) {
 // with the experience.
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
 }
 
 function App() {
