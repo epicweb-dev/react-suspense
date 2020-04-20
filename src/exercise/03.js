@@ -61,8 +61,6 @@ function App() {
     setPokemonName(newPokemonName)
     // 🐨 wrap this next line in a startTransition call
     setPokemonResource(createPokemonResource(newPokemonName))
-    // 🦉 what do you think would happen if you put the setPokemonName above
-    // into the `startTransition` call? Go ahead and give that a try!
   }
 
   return (
