@@ -23,8 +23,7 @@ import {PokemonDataView} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-// 🐨 create the following mutable variable references (using let):
-// pokemon, pokemonError, pokemonPromise
+// 🐨 create a variable called "pokemon" (using let)
 
 // 💣 delete this now...
 const pokemon = {
@@ -40,11 +39,10 @@ const pokemon = {
 // named "pikachu" so we can go ahead and do that right here.
 // 🐨 assign the pokemonPromise variable to a call to fetchPokemon('pikachu')
 
-// 🐨 when the promise resolves, set the pokemon variable to the resolved value
-// 🐨 if the promise fails, set the pokemonError variable to the error
+// 🐨 when the promise resolves, assign the "pokemon" variable to the resolved value
+// 💰 For example: somePromise.then(resolvedValue => (someValue = resolvedValue))
 
 function PokemonInfo() {
-  // 🐨 if pokemonError is defined, then throw it here
   // 🐨 if there's no pokemon yet, then throw the pokemonPromise
   // 💰 (no, for real. Like: `throw pokemonPromise`)
 
@@ -64,11 +62,7 @@ function App() {
   return (
     <div className="pokemon-info-app">
       <div className="pokemon-info">
-        {/*
-        🐨 Wrap the PokemonInfo component with a React.Suspense component with a fallback
-        🐨 Then wrap all that with an <ErrorBoundary /> to catch errors
-        💰 I wrote the ErrorBoundary for you. You can take a look at it in the utils file if you want
-      */}
+        {/* 🐨 Wrap the PokemonInfo component with a React.Suspense component with a fallback */}
         <PokemonInfo />
       </div>
     </div>
