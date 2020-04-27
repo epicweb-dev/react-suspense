@@ -3,8 +3,8 @@
 // http://localhost:3000/isolated/final/01.extra-1.js
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
-import {ErrorBoundary, PokemonDataView} from '../utils'
+import {fetchPokemon, PokemonDataView} from '../pokemon'
+import {ErrorBoundary} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:

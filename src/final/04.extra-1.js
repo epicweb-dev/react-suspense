@@ -1,6 +1,6 @@
-// Refactor useEffect to Suspense
-// 💯 Reset the Error Boundary
-// http://localhost:3000/isolated/final/02.extra-2.js
+// Cache resources
+// 💯 put cache in context
+// http://localhost:3000/isolated/final/04.extra-1.js
 
 import React from 'react'
 import {
@@ -33,20 +33,47 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
+const SUSPENSE_CONFIG = {
+  timeoutMs: 4000,
+  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyMinDurationMs: 700,
+}
+
+const pokemonResourceCache = {}
+const PokemonResourceCacheContext = React.createContext(getPokemonResource)
+
+function getPokemonResource(name) {
+  const lowerName = name.toLowerCase()
+  let resource = pokemonResourceCache[lowerName]
+  if (!resource) {
+    resource = createPokemonResource(lowerName)
+    pokemonResourceCache[lowerName] = resource
+  }
+  return resource
+}
+
+function usePokemonResourceCache() {
+  return React.useContext(PokemonResourceCacheContext)
+}
+
 function createPokemonResource(pokemonName) {
   return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
+  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
+  const getPokemonResource = usePokemonResourceCache()
 
   React.useEffect(() => {
     if (!pokemonName) {
       return
     }
-    setPokemonResource(createPokemonResource(pokemonName))
-  }, [pokemonName])
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(pokemonName))
+    })
+  }, [getPokemonResource, pokemonName, startTransition])
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
@@ -56,7 +83,7 @@ function App() {
     <div className="pokemon-info-app">
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <div className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
           <ErrorBoundary key={pokemonResource.id}>
             <React.Suspense

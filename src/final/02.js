@@ -2,14 +2,13 @@
 // http://localhost:3000/isolated/final/02.js
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
 import {
-  ErrorBoundary,
-  createResource,
+  fetchPokemon,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
-} from '../utils'
+} from '../pokemon'
+import {ErrorBoundary, createResource} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -41,9 +40,15 @@ function App() {
   const [pokemonName, setPokemonName] = React.useState(null)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
+  React.useEffect(() => {
+    if (!pokemonName) {
+      return
+    }
+    setPokemonResource(createPokemonResource(pokemonName))
+  }, [pokemonName])
+
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    setPokemonResource(createPokemonResource(newPokemonName))
   }
 
   return (

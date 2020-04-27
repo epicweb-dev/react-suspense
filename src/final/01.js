@@ -2,8 +2,7 @@
 // http://localhost:3000/isolated/final/01.js
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
-import {PokemonDataView} from '../utils'
+import {fetchPokemon, PokemonDataView} from '../pokemon'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:

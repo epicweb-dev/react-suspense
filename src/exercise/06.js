@@ -2,15 +2,14 @@
 // http://localhost:3000/isolated/exercise/06.js
 
 import React from 'react'
-import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {
-  ErrorBoundary,
-  createResource,
-  preloadImage,
+  fetchPokemon,
+  getImageUrlForPokemon,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
-} from '../utils'
+} from '../pokemon'
+import {ErrorBoundary, createResource, preloadImage} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -53,12 +52,13 @@ function getPokemonResource(name) {
 }
 
 function createPokemonResource(pokemonName) {
-  const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName), {id: lowerName})
+  const data = createResource(() => fetchPokemon(pokemonName), {
+    id: pokemonName,
+  })
   const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(lowerName), {id: lowerName}),
+    preloadImage(getImageUrlForPokemon(pokemonName), {id: pokemonName}),
   )
-  return {data, image}
+  return {data, image, id: pokemonName}
 }
 
 function App() {

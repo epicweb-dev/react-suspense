@@ -5,8 +5,8 @@ import React from 'react'
 import '../suspense-list/style-overrides.css'
 import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'
-import {createResource, ErrorBoundary, PokemonForm} from '../utils'
-import {fetchUser} from '../fetch-pokemon'
+import {createResource, ErrorBoundary} from '../utils'
+import {fetchUser, PokemonForm} from '../pokemon'
 
 const delay = time => promiseResult =>
   new Promise(resolve => setTimeout(() => resolve(promiseResult), time))

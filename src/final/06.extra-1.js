@@ -1,15 +1,15 @@
-// Refactor useEffect to Suspense
-// 💯 Reset the Error Boundary
-// http://localhost:3000/isolated/final/02.extra-2.js
+// Suspense with a custom hook
+// 💯 use the usePokemonResource pre-built hook
+// http://localhost:3000/isolated/final/06.extra-1.js
 
 import React from 'react'
 import {
-  fetchPokemon,
+  usePokemonResource,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
 } from '../pokemon'
-import {ErrorBoundary, createResource} from '../utils'
+import {ErrorBoundary} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -22,31 +22,21 @@ import {ErrorBoundary, createResource} from '../utils'
 // in your developer tools to throttle your network to something like "Slow 3G"
 
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.read()
+  const pokemon = pokemonResource.data.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img src={pokemon.image} alt={pokemon.name} />
+        <img src={pokemonResource.image.read()} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
     </div>
   )
 }
 
-function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
-}
-
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
-  const [pokemonResource, setPokemonResource] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
 
-  React.useEffect(() => {
-    if (!pokemonName) {
-      return
-    }
-    setPokemonResource(createPokemonResource(pokemonName))
-  }, [pokemonName])
+  const [pokemonResource, isPending] = usePokemonResource(pokemonName)
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
@@ -56,7 +46,7 @@ function App() {
     <div className="pokemon-info-app">
       <PokemonForm onSubmit={handleSubmit} />
       <hr />
-      <div className="pokemon-info">
+      <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
           <ErrorBoundary key={pokemonResource.id}>
             <React.Suspense

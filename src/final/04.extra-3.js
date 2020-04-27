@@ -1,15 +1,15 @@
-// Suspense with a custom hook
-// http://localhost:3000/isolated/final/06.js
+// Cache resources
+// 💯 add cache timeout
+// http://localhost:3000/isolated/final/04.extra-2.js
 
 import React from 'react'
 import {
   fetchPokemon,
-  getImageUrlForPokemon,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
 } from '../pokemon'
-import {ErrorBoundary, createResource, preloadImage} from '../utils'
+import {ErrorBoundary, createResource} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -22,11 +22,11 @@ import {ErrorBoundary, createResource, preloadImage} from '../utils'
 // in your developer tools to throttle your network to something like "Slow 3G"
 
 function PokemonInfo({pokemonResource}) {
-  const pokemon = pokemonResource.data.read()
+  const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
-        <img src={pokemonResource.image.read()} alt={pokemon.name} />
+        <img src={pokemon.image} alt={pokemon.name} />
       </div>
       <PokemonDataView pokemon={pokemon} />
     </div>
@@ -40,6 +40,7 @@ const SUSPENSE_CONFIG = {
 }
 
 const pokemonResourceCache = {}
+const PokemonResourceCacheContext = React.createContext(getPokemonResource)
 
 function getPokemonResource(name) {
   const lowerName = name.toLowerCase()
@@ -51,19 +52,62 @@ function getPokemonResource(name) {
   return resource
 }
 
-function createPokemonResource(pokemonName) {
-  const data = createResource(() => fetchPokemon(pokemonName), {
-    id: pokemonName,
-  })
-  const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(pokemonName), {id: pokemonName}),
+function PokemonCacheProvider({children, cacheTime}) {
+  const cache = React.useRef({})
+  const expirations = React.useRef({})
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      for (const [name, time] of Object.entries(expirations.current)) {
+        if (time < Date.now()) {
+          delete cache.current[name]
+        }
+      }
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const getPokemonResource = React.useCallback(
+    name => {
+      const lowerName = name.toLowerCase()
+      let resource = cache.current[lowerName]
+      if (!resource) {
+        resource = createPokemonResource(lowerName)
+        cache.current[lowerName] = resource
+      }
+      expirations.current[lowerName] = Date.now() + cacheTime
+      return resource
+    },
+    [cacheTime],
   )
-  return {data, image, id: pokemonName}
+
+  return (
+    <PokemonResourceCacheContext.Provider value={getPokemonResource}>
+      {children}
+    </PokemonResourceCacheContext.Provider>
+  )
 }
 
-function usePokemonResource(pokemonName) {
-  const [pokemonResource, setPokemonResource] = React.useState(null)
+function usePokemonResourceCache() {
+  const context = React.useContext(PokemonResourceCacheContext)
+  if (!context) {
+    throw new Error(
+      `usePokemonResourceCache should be used within a PokemonCacheProvider`,
+    )
+  }
+  return context
+}
+
+function createPokemonResource(pokemonName) {
+  return createResource(() => fetchPokemon(pokemonName))
+}
+
+function App() {
+  const [pokemonName, setPokemonName] = React.useState('')
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const [pokemonResource, setPokemonResource] = React.useState(null)
+  const getPokemonResource = usePokemonResourceCache()
 
   React.useEffect(() => {
     if (!pokemonName) {
@@ -72,15 +116,7 @@ function usePokemonResource(pokemonName) {
     startTransition(() => {
       setPokemonResource(getPokemonResource(pokemonName))
     })
-  }, [pokemonName, startTransition])
-
-  return [pokemonResource, isPending]
-}
-
-function App() {
-  const [pokemonName, setPokemonName] = React.useState('')
-
-  const [pokemonResource, isPending] = usePokemonResource(pokemonName)
+  }, [getPokemonResource, pokemonName, startTransition])
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
@@ -107,4 +143,12 @@ function App() {
   )
 }
 
-export default App
+function AppWithProvider() {
+  return (
+    <PokemonCacheProvider cacheTime={5000}>
+      <App />
+    </PokemonCacheProvider>
+  )
+}
+
+export default AppWithProvider

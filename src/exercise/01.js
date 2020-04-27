@@ -2,10 +2,10 @@
 // http://localhost:3000/isolated/exercise/01.js
 
 import React from 'react'
-import {PokemonDataView} from '../utils'
+import {PokemonDataView} from '../pokemon'
 // 🐨 you'll need to import the fetchPokemon function
 // 💰 here you go:
-// import fetchPokemon from '../fetch-pokemon'
+// import fetchPokemon from '../pokemon'
 // 💰 use it like this: fetchPokemon(pokemonName).then(handleSuccess, handleFailure)
 
 // you'll also need the ErrorBoundary component from utils

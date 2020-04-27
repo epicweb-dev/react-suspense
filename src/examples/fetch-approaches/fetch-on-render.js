@@ -2,7 +2,8 @@
 // http://localhost:3000/isolated/examples/fetch-approaches/fetch-on-render.js
 
 import React from 'react'
-import {PokemonForm, ErrorBoundary, PokemonInfoFallback} from '../../utils'
+import {ErrorBoundary} from '../../utils'
+import {PokemonForm, PokemonInfoFallback} from '../../pokemon'
 
 const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-fetch-on-render'),

@@ -3,14 +3,14 @@
 // http://localhost:3000/isolated/final/05.extra-1.js
 
 import React from 'react'
-import fetchPokemon, {getImageUrlForPokemon} from '../fetch-pokemon'
 import {
-  ErrorBoundary,
-  createResource,
+  fetchPokemon,
+  getImageUrlForPokemon,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
-} from '../utils'
+} from '../pokemon'
+import {ErrorBoundary, createResource} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -64,12 +64,13 @@ function getPokemonResource(name) {
 }
 
 function createPokemonResource(pokemonName) {
-  const lowerName = pokemonName
-  const data = createResource(() => fetchPokemon(lowerName), {id: lowerName})
+  const data = createResource(() => fetchPokemon(pokemonName), {
+    id: pokemonName,
+  })
   const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(lowerName), {id: lowerName}),
+    preloadImage(getImageUrlForPokemon(pokemonName), {id: pokemonName}),
   )
-  return {data, image}
+  return {data, image, id: pokemonName}
 }
 
 function App() {
@@ -77,11 +78,17 @@ function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
+  React.useEffect(() => {
+    if (!pokemonName) {
+      return
+    }
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(pokemonName))
+    })
+  }, [pokemonName, startTransition])
+
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    startTransition(() => {
-      setPokemonResource(getPokemonResource(newPokemonName))
-    })
   }
 
   return (

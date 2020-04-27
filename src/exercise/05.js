@@ -2,14 +2,13 @@
 // http://localhost:3000/isolated/exercise/05.js
 
 import React from 'react'
-import fetchPokemon from '../fetch-pokemon'
 import {
-  ErrorBoundary,
-  createResource,
+  fetchPokemon,
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
-} from '../utils'
+} from '../pokemon'
+import {ErrorBoundary, createResource} from '../utils'
 
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
@@ -78,11 +77,17 @@ function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
+  React.useEffect(() => {
+    if (!pokemonName) {
+      return
+    }
+    startTransition(() => {
+      setPokemonResource(getPokemonResource(pokemonName))
+    })
+  }, [pokemonName, startTransition])
+
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    startTransition(() => {
-      setPokemonResource(getPokemonResource(newPokemonName))
-    })
   }
 
   return (
