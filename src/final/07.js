@@ -60,7 +60,7 @@ function App() {
   return (
     <div className="pokemon-info-app">
       <div className={cn.root}>
-        <ErrorBoundary key={pokemonResource.pokemonName}>
+        <ErrorBoundary>
           <React.SuspenseList revealOrder="forwards" tail="collapsed">
             <React.Suspense fallback={fallback}>
               <NavBar pokemonResource={pokemonResource} />

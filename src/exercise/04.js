@@ -46,7 +46,7 @@ const SUSPENSE_CONFIG = {
 // resource.
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
+  return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
@@ -68,7 +68,7 @@ function App() {
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary key={pokemonResource.id}>
+          <ErrorBoundary>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >

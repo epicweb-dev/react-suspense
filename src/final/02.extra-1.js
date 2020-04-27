@@ -34,7 +34,7 @@ function PokemonInfo({pokemonResource}) {
 }
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
+  return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
@@ -65,7 +65,7 @@ function App() {
       >
         <div className="pokemon-info">
           {pokemonResource ? (
-            <ErrorBoundary key={pokemonResource.id}>
+            <ErrorBoundary>
               <PokemonInfo pokemonResource={pokemonResource} />
             </ErrorBoundary>
           ) : (

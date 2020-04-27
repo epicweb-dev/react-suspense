@@ -52,13 +52,11 @@ function getPokemonResource(name) {
 }
 
 function createPokemonResource(pokemonName) {
-  const data = createResource(() => fetchPokemon(pokemonName), {
-    id: pokemonName,
-  })
+  const data = createResource(() => fetchPokemon(pokemonName))
   const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(pokemonName), {id: pokemonName}),
+    preloadImage(getImageUrlForPokemon(pokemonName)),
   )
-  return {data, image, id: pokemonName}
+  return {data, image}
 }
 
 function App() {
@@ -88,7 +86,7 @@ function App() {
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary key={pokemonResource.id}>
+          <ErrorBoundary>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >

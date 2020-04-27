@@ -33,7 +33,7 @@ function PokemonInfo({pokemonResource}) {
 }
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName), {id: pokemonName})
+  return createResource(() => fetchPokemon(pokemonName))
 }
 
 function App() {
@@ -57,7 +57,7 @@ function App() {
       <hr />
       <div className="pokemon-info">
         {pokemonResource ? (
-          <ErrorBoundary key={pokemonResource.id}>
+          <ErrorBoundary>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
