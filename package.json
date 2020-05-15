@@ -17,9 +17,11 @@
     "@testing-library/react": "^10.0.4",
     "chalk": "^4.0.0",
     "codegen.macro": "^4.0.0",
+    "faker": "^4.1.0",
     "react": "0.0.0-experimental-33c3af284",
     "react-dom": "0.0.0-experimental-33c3af284",
-    "react-icons": "^3.10.0"
+    "react-icons": "^3.10.0",
+    "react-virtual": "^2.1.10"
   },
   "devDependencies": {
     "husky": "^4.2.5",
