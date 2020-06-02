@@ -4,20 +4,19 @@
 // This was strongly inspired by work done in the React Docs by Dan Abramov
 function createResource(promise) {
   let status = 'pending'
-  let result
-  promise.then(
-    r => {
+  let result = promise.then(
+    resolved => {
       status = 'success'
-      result = r
+      result = resolved
     },
-    e => {
+    rejected => {
       status = 'error'
-      result = e
+      result = rejected
     },
   )
   return {
     read() {
-      if (status === 'pending') throw promise
+      if (status === 'pending') throw result
       if (status === 'error') throw result
       if (status === 'success') return result
       throw new Error('This should be impossible')
