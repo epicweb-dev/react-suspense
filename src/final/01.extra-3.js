@@ -13,7 +13,7 @@ import {createResource} from '../utils'
 
 let pokemonResource = createResource(fetchPokemon('pikachu'))
 
-function Pokemon() {
+function PokemonInfo() {
   const pokemon = pokemonResource.read()
   return (
     <div>
@@ -31,7 +31,7 @@ function App() {
       <div className="pokemon-info">
         <PokemonErrorBoundary>
           <React.Suspense fallback={<PokemonInfoFallback name="Pikachu" />}>
-            <Pokemon />
+            <PokemonInfo />
           </React.Suspense>
         </PokemonErrorBoundary>
       </div>

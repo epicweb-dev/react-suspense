@@ -29,7 +29,7 @@ function createResource(promise) {
   }
 }
 
-function Pokemon() {
+function PokemonInfo() {
   const pokemon = pokemonResource.read()
   return (
     <div>
@@ -47,7 +47,7 @@ function App() {
       <div className="pokemon-info">
         <PokemonErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
-            <Pokemon />
+            <PokemonInfo />
           </React.Suspense>
         </PokemonErrorBoundary>
       </div>
