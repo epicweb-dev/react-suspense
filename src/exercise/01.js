@@ -8,11 +8,6 @@ import {PokemonDataView} from '../pokemon'
 // import fetchPokemon from '../pokemon'
 // 💰 use it like this: fetchPokemon(pokemonName).then(handleSuccess, handleFailure)
 
-// you'll also need the ErrorBoundary component from utils
-// 💰 here you go:
-// import {ErrorBoundary} from '../utils'
-// 💰 use it like this: <ErrorBoundary><SomeOtherComponents /></ErrorBoundary>
-
 // By default, all fetches are mocked so we can control the time easily.
 // You can adjust the fetch time with this:
 // window.FETCH_TIME = 3000
