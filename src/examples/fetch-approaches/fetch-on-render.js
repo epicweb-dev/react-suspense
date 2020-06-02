@@ -2,8 +2,11 @@
 // http://localhost:3000/isolated/examples/fetch-approaches/fetch-on-render.js
 
 import React from 'react'
-import {ErrorBoundary} from '../../utils'
-import {PokemonForm, PokemonInfoFallback} from '../../pokemon'
+import {
+  PokemonForm,
+  PokemonInfoFallback,
+  PokemonErrorBoundary,
+} from '../../pokemon'
 
 const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-fetch-on-render'),
@@ -12,25 +15,29 @@ const PokemonInfo = React.lazy(() =>
 window.fetch.restoreOriginalFetch()
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
 
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
   }
 
+  function handleReset() {
+    setPokemonName('')
+  }
+
   return (
     <div>
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
         {pokemonName ? (
-          <ErrorBoundary>
+          <PokemonErrorBoundary onReset={handleReset} resetKeys={[pokemonName]}>
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
               <PokemonInfo pokemonName={pokemonName} />
             </React.Suspense>
-          </ErrorBoundary>
+          </PokemonErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}

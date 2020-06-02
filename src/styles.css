@@ -1,3 +1,8 @@
+/* For exercise 1, we're working on error boundaries */
+body[class*='01'] iframe {
+  display: none;
+}
+
 .pokemon-info-app a {
   color: #cc0000;
 }

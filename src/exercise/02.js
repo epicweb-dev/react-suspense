@@ -72,7 +72,7 @@ function PokemonInfo({pokemonName}) {
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
   // 🐨 add a useState here to keep track of the current pokemonResource
 
   function handleSubmit(newPokemonName) {
@@ -82,7 +82,7 @@ function App() {
 
   return (
     <div className="pokemon-info-app">
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
         {pokemonName ? ( // 🐨 instead of pokemonName, use pokemonResource here

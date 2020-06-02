@@ -9,8 +9,9 @@ import {
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
+  PokemonErrorBoundary,
 } from '../pokemon'
-import {ErrorBoundary, createResource} from '../utils'
+import {createResource} from '../utils'
 
 // 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
 // We're relying on that cache for this approach to work!
@@ -77,19 +78,27 @@ function App() {
     setPokemonName(newPokemonName)
   }
 
+  function handleReset() {
+    setPokemonName('')
+    setPokemonResource(null)
+  }
+
   return (
     <div className="pokemon-info-app">
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary>
+          <PokemonErrorBoundary
+            onReset={handleReset}
+            resetKeys={[pokemonResource]}
+          >
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
               <PokemonInfo pokemonResource={pokemonResource} />
             </React.Suspense>
-          </ErrorBoundary>
+          </PokemonErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}

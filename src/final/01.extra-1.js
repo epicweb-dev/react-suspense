@@ -3,8 +3,7 @@
 // http://localhost:3000/isolated/final/01.extra-1.js
 
 import React from 'react'
-import {fetchPokemon, PokemonDataView} from '../pokemon'
-import {ErrorBoundary} from '../utils'
+import {fetchPokemon, PokemonDataView, PokemonErrorBoundary} from '../pokemon'
 
 let pokemon
 let pokemonError
@@ -34,11 +33,11 @@ function App() {
   return (
     <div className="pokemon-info-app">
       <div className="pokemon-info">
-        <ErrorBoundary>
+        <PokemonErrorBoundary>
           <React.Suspense fallback={<div>Loading Pokemon...</div>}>
             <PokemonInfo />
           </React.Suspense>
-        </ErrorBoundary>
+        </PokemonErrorBoundary>
       </div>
     </div>
   )

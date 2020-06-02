@@ -8,8 +8,9 @@ import {
   getImageUrlForPokemon,
   PokemonInfoFallback,
   PokemonForm,
+  PokemonErrorBoundary,
 } from '../pokemon'
-import {ErrorBoundary, createResource} from '../utils'
+import {createResource} from '../utils'
 
 const PokemonInfo = React.lazy(() =>
   import('../lazy/pokemon-info-render-as-you-fetch'),
@@ -78,19 +79,27 @@ function App() {
     setPokemonName(newPokemonName)
   }
 
+  function handleReset() {
+    setPokemonName('')
+    setPokemonResource(null)
+  }
+
   return (
     <div className="pokemon-info-app">
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary>
+          <PokemonErrorBoundary
+            onReset={handleReset}
+            resetKeys={[pokemonResource]}
+          >
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
               <PokemonInfo pokemonResource={pokemonResource} />
             </React.Suspense>
-          </ErrorBoundary>
+          </PokemonErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}

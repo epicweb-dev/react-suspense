@@ -1,4 +1,5 @@
 import React from 'react'
+import {ErrorBoundary} from 'react-error-boundary'
 import {createResource, preloadImage} from './utils'
 
 import transactions from './hacks/transactions'
@@ -161,8 +162,24 @@ function PokemonDataView({pokemon}) {
   )
 }
 
-function PokemonForm({initialPokemonName = '', onSubmit}) {
+function PokemonForm({
+  pokemonName: externalPokemonName,
+  initialPokemonName = externalPokemonName || '',
+  onSubmit,
+}) {
   const [pokemonName, setPokemonName] = React.useState(initialPokemonName)
+
+  // this is generally not a great idea. We're synchronizing state when it is
+  // normally better to derive it https://kentcdodds.com/blog/dont-sync-state-derive-it
+  // however, we're doing things this way to make it easier for the exercises
+  // to not have to worry about the logic for this PokemonForm component.
+  React.useEffect(() => {
+    // note that because it's a string value, if the externalPokemonName
+    // is the same as the one we're managing, this will not trigger a re-render
+    if (typeof externalPokemonName === 'string') {
+      setPokemonName(externalPokemonName)
+    }
+  }, [externalPokemonName])
 
   function handleChange(e) {
     setPokemonName(e.target.value)
@@ -261,6 +278,7 @@ function usePokemonResource(pokemonName) {
 
   React.useEffect(() => {
     if (!pokemonName) {
+      setPokemonResource(null)
       return
     }
     startTransition(() => {
@@ -271,6 +289,28 @@ function usePokemonResource(pokemonName) {
   return [pokemonResource, isPending]
 }
 
+function ErrorFallback({canReset, error, resetErrorBoundary}) {
+  return (
+    <div role="alert">
+      There was an error:{' '}
+      <pre style={{whiteSpace: 'normal'}}>{error.message}</pre>
+      {canReset ? (
+        <button onClick={resetErrorBoundary}>Try again</button>
+      ) : null}
+    </div>
+  )
+}
+
+function PokemonErrorBoundary(parentProps) {
+  const canReset = Boolean(parentProps.onReset || parentProps.resetKeys)
+  return (
+    <ErrorBoundary
+      fallbackRender={props => <ErrorFallback canReset={canReset} {...props} />}
+      {...parentProps}
+    />
+  )
+}
+
 export {
   fetchPokemon,
   getImageUrlForPokemon,
@@ -279,4 +319,5 @@ export {
   PokemonForm,
   PokemonDataView,
   PokemonInfoFallback,
+  PokemonErrorBoundary,
 }

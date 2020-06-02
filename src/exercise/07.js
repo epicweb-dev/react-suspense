@@ -5,8 +5,8 @@ import React from 'react'
 import '../suspense-list/style-overrides.css'
 import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'
-import {createResource, ErrorBoundary} from '../utils'
-import {fetchUser, PokemonForm} from '../pokemon'
+import {createResource} from '../utils'
+import {fetchUser, PokemonForm, PokemonErrorBoundary} from '../pokemon'
 
 // 💰 this delay function just allows us to make a promise take longer to resolve
 // so we can easily play around with the loading time of our code.
@@ -57,13 +57,20 @@ function App() {
     )
   }
 
+  function handleReset() {
+    setPokemonResource(null)
+  }
+
   // 🐨 Use React.SuspenseList throughout these Suspending components to make
   // them load in a way that is not jaring to the user.
   // 💰 there's not really a specifically "right" answer for this.
   return (
     <div className="pokemon-info-app">
       <div className={cn.root}>
-        <ErrorBoundary>
+        <PokemonErrorBoundary
+          onReset={handleReset}
+          resetKeys={[pokemonResource]}
+        >
           <React.Suspense fallback={fallback}>
             <NavBar pokemonResource={pokemonResource} />
           </React.Suspense>
@@ -78,7 +85,7 @@ function App() {
               <RightNav pokemonResource={pokemonResource} />
             </React.Suspense>
           </div>
-        </ErrorBoundary>
+        </PokemonErrorBoundary>
       </div>
     </div>
   )

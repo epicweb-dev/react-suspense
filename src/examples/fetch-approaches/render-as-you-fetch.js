@@ -2,8 +2,11 @@
 // http://localhost:3000/isolated/examples/fetch-approaches/render-as-you-fetch.js
 
 import React from 'react'
-import {ErrorBoundary} from '../../utils'
-import {PokemonInfoFallback, PokemonForm} from '../../pokemon'
+import {
+  PokemonInfoFallback,
+  PokemonForm,
+  PokemonErrorBoundary,
+} from '../../pokemon'
 import createPokemonInfoResource from './lazy/pokemon-info-render-as-you-fetch.data'
 
 const PokemonInfo = React.lazy(() =>
@@ -48,19 +51,27 @@ function App() {
     setPokemonName(newPokemonName)
   }
 
+  function handleReset() {
+    setPokemonName('')
+    setPokemonResource(null)
+  }
+
   return (
     <div>
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary>
+          <PokemonErrorBoundary
+            onReset={handleReset}
+            resetKeys={[pokemonResource]}
+          >
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
               <PokemonInfo pokemonResource={pokemonResource} />
             </React.Suspense>
-          </ErrorBoundary>
+          </PokemonErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}

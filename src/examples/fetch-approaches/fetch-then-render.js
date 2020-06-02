@@ -38,7 +38,7 @@ function usePokemon(pokemonName) {
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
   const {pokemon, error, status} = usePokemon(pokemonName)
 
   function handleSubmit(newPokemonName) {
@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div>
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">
         {pokemonName ? (

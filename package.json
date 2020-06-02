@@ -19,6 +19,7 @@
     "codegen.macro": "^4.0.0",
     "react": "0.0.0-experimental-33c3af284",
     "react-dom": "0.0.0-experimental-33c3af284",
+    "react-error-boundary": "^2.2.1",
     "react-icons": "^3.10.0"
   },
   "devDependencies": {

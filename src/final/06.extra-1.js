@@ -8,8 +8,8 @@ import {
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
+  PokemonErrorBoundary,
 } from '../pokemon'
-import {ErrorBoundary} from '../utils'
 
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
@@ -32,19 +32,26 @@ function App() {
     setPokemonName(newPokemonName)
   }
 
+  function handleReset() {
+    setPokemonName('')
+  }
+
   return (
     <div className="pokemon-info-app">
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
         {pokemonResource ? (
-          <ErrorBoundary>
+          <PokemonErrorBoundary
+            onReset={handleReset}
+            resetKeys={[pokemonResource]}
+          >
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
               <PokemonInfo pokemonResource={pokemonResource} />
             </React.Suspense>
-          </ErrorBoundary>
+          </PokemonErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}

@@ -5,8 +5,8 @@ import React from 'react'
 import '../suspense-list/style-overrides.css'
 import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'
-import {createResource, ErrorBoundary} from '../utils'
-import {fetchUser, PokemonForm} from '../pokemon'
+import {createResource} from '../utils'
+import {fetchUser, PokemonForm, PokemonErrorBoundary} from '../pokemon'
 
 const delay = time => promiseResult =>
   new Promise(resolve => setTimeout(() => resolve(promiseResult), time))
@@ -55,10 +55,17 @@ function App() {
     )
   }
 
+  function handleReset() {
+    setPokemonResource(null)
+  }
+
   return (
     <div className="pokemon-info-app">
       <div className={cn.root}>
-        <ErrorBoundary>
+        <PokemonErrorBoundary
+          onReset={handleReset}
+          resetKeys={[pokemonResource]}
+        >
           <React.SuspenseList revealOrder="forwards" tail="collapsed">
             <React.Suspense fallback={fallback}>
               <NavBar pokemonResource={pokemonResource} />
@@ -79,7 +86,7 @@ function App() {
               </React.SuspenseList>
             </div>
           </React.SuspenseList>
-        </ErrorBoundary>
+        </PokemonErrorBoundary>
       </div>
     </div>
   )

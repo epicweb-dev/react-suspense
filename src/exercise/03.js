@@ -7,8 +7,9 @@ import {
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
+  PokemonErrorBoundary,
 } from '../pokemon'
-import {ErrorBoundary, createResource} from '../utils'
+import {createResource} from '../utils'
 
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.read()
@@ -42,7 +43,7 @@ function createPokemonResource(pokemonName) {
 }
 
 function App() {
-  const [pokemonName, setPokemonName] = React.useState(null)
+  const [pokemonName, setPokemonName] = React.useState('')
   // 🐨 add a useTransition hook here
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
@@ -52,9 +53,14 @@ function App() {
     setPokemonResource(createPokemonResource(newPokemonName))
   }
 
+  function handleReset() {
+    setPokemonName('')
+    setPokemonResource(null)
+  }
+
   return (
     <div className="pokemon-info-app">
-      <PokemonForm onSubmit={handleSubmit} />
+      <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       {/*
         🐨 add inline styles here to set the opacity to 0.6 if the
@@ -62,13 +68,16 @@ function App() {
       */}
       <div className="pokemon-info">
         {pokemonResource ? (
-          <ErrorBoundary>
+          <PokemonErrorBoundary
+            onReset={handleReset}
+            resetKeys={[pokemonResource]}
+          >
             <React.Suspense
               fallback={<PokemonInfoFallback name={pokemonName} />}
             >
               <PokemonInfo pokemonResource={pokemonResource} />
             </React.Suspense>
-          </ErrorBoundary>
+          </PokemonErrorBoundary>
         ) : (
           'Submit a pokemon'
         )}
