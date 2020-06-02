@@ -7,8 +7,9 @@ import {
   PokemonInfoFallback,
   PokemonForm,
   PokemonDataView,
+  // 🐨 you'll need PokemonErrorBoundary here
 } from '../pokemon'
-// 🐨 you'll need ErrorBoundary and createResource from ../utils
+// 🐨 you'll need createResource from ../utils
 
 // 🐨 Your goal is to refactor this traditional useEffect-style async
 // interaction to suspense with resources. Enjoy!
@@ -43,7 +44,7 @@ function PokemonInfo({pokemonName}) {
     return <PokemonInfoFallback name={pokemonName} />
   }
 
-  // 💰 This is the same thing the ErrorBoundary renders
+  // 💰 This is the same thing the PokemonErrorBoundary renders
   if (status === 'error') {
     return (
       <div>
