@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import './hacks/fetch'
 import './styles.css'
 import codegen from 'codegen.macro'
@@ -8,6 +9,7 @@ import codegen from 'codegen.macro'
 // I just don't want to have to type "unstable_" prefixes everywhere
 React.useTransition = React.unstable_useTransition
 React.SuspenseList = React.unstable_SuspenseList
+ReactDOM.createRoot = ReactDOM.unstable_createRoot
 
 codegen`module.exports = require('@kentcdodds/react-workshop-app/codegen')({
   options: {concurrentMode: true}
