@@ -45,7 +45,7 @@ function createPokemonResource(pokemonName) {
   // of milliseconds. For example:
   // fetchPokemon(pokemonName, 400)
   // would delay it to at least take 400 milliseconds
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(fetchPokemon(pokemonName))
 }
 
 function App() {

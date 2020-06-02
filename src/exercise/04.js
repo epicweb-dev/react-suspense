@@ -46,7 +46,7 @@ const SUSPENSE_CONFIG = {
 // resource.
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(fetchPokemon(pokemonName))
 }
 
 function App() {

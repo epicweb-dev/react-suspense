@@ -249,10 +249,8 @@ function usePokemonResourceCache() {
 }
 
 function createPokemonResource(pokemonName) {
-  const data = createResource(() => fetchPokemon(pokemonName))
-  const image = createResource(() =>
-    preloadImage(getImageUrlForPokemon(pokemonName)),
-  )
+  const data = createResource(fetchPokemon(pokemonName))
+  const image = createResource(preloadImage(getImageUrlForPokemon(pokemonName)))
   return {data, image}
 }
 

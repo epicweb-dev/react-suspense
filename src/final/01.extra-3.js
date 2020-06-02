@@ -16,7 +16,7 @@ import {ErrorBoundary, createResource} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-let pokemonResource = createResource(() => fetchPokemon('pikachu'))
+let pokemonResource = createResource(fetchPokemon('pikachu'))
 
 function Pokemon() {
   const pokemon = pokemonResource.read()

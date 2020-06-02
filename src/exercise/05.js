@@ -69,7 +69,7 @@ function getPokemonResource(name) {
 }
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(fetchPokemon(pokemonName))
 }
 
 function App() {

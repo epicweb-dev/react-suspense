@@ -16,12 +16,12 @@ import {ErrorBoundary} from '../utils'
 // and if you want to slow things down you should use the Network tab
 // in your developer tools to throttle your network to something like "Slow 3G"
 
-let pokemonResource = createResource(() => fetchPokemon('pikachu'))
+let pokemonResource = createResource(fetchPokemon('pikachu'))
 
-function createResource(asyncFn) {
+function createResource(promise) {
   let status = 'pending'
   let result
-  let promise = asyncFn().then(
+  promise.then(
     r => {
       status = 'success'
       result = r

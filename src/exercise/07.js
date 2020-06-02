@@ -40,7 +40,7 @@ function App() {
 
   function handleSubmit(pokemonName) {
     startTransition(() => {
-      setPokemonResource(createResource(() => fetchUser(pokemonName)))
+      setPokemonResource(createResource(fetchUser(pokemonName)))
     })
   }
 

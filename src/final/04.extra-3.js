@@ -100,7 +100,7 @@ function usePokemonResourceCache() {
 }
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(fetchPokemon(pokemonName))
 }
 
 function App() {

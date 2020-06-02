@@ -38,10 +38,10 @@ function ErrorBoundary(props) {
 // for experimentation purposes. The API for suspense (currently throwing a
 // promise) is likely to change before suspense is officially released.
 // This was strongly inspired by work done in the React Docs by Dan Abramov
-function createResource(asyncFn) {
+function createResource(promise) {
   let status = 'pending'
   let result
-  let promise = asyncFn().then(
+  promise.then(
     r => {
       status = 'success'
       result = r

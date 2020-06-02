@@ -14,7 +14,7 @@ const imgSrcResourceCache = {}
 function Img({src, alt, ...props}) {
   let imgSrcResource = imgSrcResourceCache[src]
   if (!imgSrcResource) {
-    imgSrcResource = createResource(() => preloadImage(src))
+    imgSrcResource = createResource(preloadImage(src))
     imgSrcResourceCache[src] = imgSrcResource
   }
   return <img src={imgSrcResource.read()} alt={alt} {...props} />

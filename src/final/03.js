@@ -46,7 +46,7 @@ function PokemonInfo({pokemonResource}) {
 const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function createPokemonResource(pokemonName) {
-  return createResource(() => fetchPokemon(pokemonName))
+  return createResource(fetchPokemon(pokemonName))
 }
 
 function App() {
