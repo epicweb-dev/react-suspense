@@ -25,7 +25,7 @@ function PokemonInfo({pokemonResource}) {
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyDelayMs: 300,
   busyMinDurationMs: 700,
 }
 
@@ -45,12 +45,19 @@ function App() {
   const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
-  function handleSubmit(newPokemonName) {
-    setPokemonName(newPokemonName)
+  React.useEffect(() => {
+    if (!pokemonName) {
+      setPokemonResource(null)
+      return
+    }
     startTransition(() => {
       // 🐨 change this to getPokemonResource instead
-      setPokemonResource(createPokemonResource(newPokemonName))
+      setPokemonResource(createPokemonResource(pokemonName))
     })
+  }, [pokemonName, startTransition])
+
+  function handleSubmit(newPokemonName) {
+    setPokemonName(newPokemonName)
   }
 
   function handleReset() {

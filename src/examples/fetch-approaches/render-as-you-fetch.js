@@ -17,7 +17,7 @@ window.useRealAPI = true
 
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
-  busyDelayMs: 300, // this time is slightly shorter than our css transition delay
+  busyDelayMs: 300,
   busyMinDurationMs: 700,
 }
 
