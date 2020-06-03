@@ -31,11 +31,6 @@ const SUSPENSE_CONFIG = {
 }
 
 function createPokemonResource(pokemonName) {
-  // fetchPokemon takes an optional second argument called "delay" which
-  // allows you to arbitrarily delay the fetch request by a given number
-  // of milliseconds. For example:
-  // fetchPokemon(pokemonName, 400)
-  // would delay it to at least take 400 milliseconds
   return createResource(fetchPokemon(pokemonName))
 }
 

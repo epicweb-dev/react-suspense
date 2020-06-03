@@ -28,7 +28,8 @@ function PokemonInfo({pokemonResource}) {
 // with the experience.
 
 function createPokemonResource(pokemonName) {
-  // 💰 the second parameter to fetchPokemon is a delay so you can play around
+  // 🦉 once you've finished the exercise, play around with the delay...
+  // the second parameter to fetchPokemon is a delay so you can play around
   // with different timings
   let delay = 1500
   // try a few of these fetch times:
@@ -49,10 +50,18 @@ function App() {
   // 🐨 add a useTransition hook here
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
+  React.useEffect(() => {
+    if (!pokemonName) {
+      setPokemonResource(null)
+      return
+    }
+    // 🐨 wrap this next line in a startTransition call
+    setPokemonResource(createPokemonResource(pokemonName))
+    // 🐨 add startTransition to the deps list here
+  }, [pokemonName])
+
   function handleSubmit(newPokemonName) {
     setPokemonName(newPokemonName)
-    // 🐨 wrap this next line in a startTransition call
-    setPokemonResource(createPokemonResource(newPokemonName))
   }
 
   function handleReset() {
