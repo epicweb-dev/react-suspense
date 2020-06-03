@@ -27,6 +27,12 @@ function App() {
 
   return (
     <div>
+      <h1 style={{textAlign: 'center'}}>
+        {'Fetch on render '}
+        <span role="img" aria-label="thumbs down">
+          👎
+        </span>
+      </h1>
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className="pokemon-info">

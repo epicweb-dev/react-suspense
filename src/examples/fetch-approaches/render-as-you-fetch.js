@@ -58,6 +58,12 @@ function App() {
 
   return (
     <div>
+      <h1 style={{textAlign: 'center'}}>
+        {'Render as you fetch '}
+        <span role="img" aria-label="thumbs up">
+          👍
+        </span>
+      </h1>
       <PokemonForm pokemonName={pokemonName} onSubmit={handleSubmit} />
       <hr />
       <div className={`pokemon-info ${isPending ? 'pokemon-loading' : ''}`}>
