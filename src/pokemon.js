@@ -2,22 +2,11 @@ import React from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 import {createResource, preloadImage} from './utils'
 
-import transactions from './test/data/transactions'
-import users from './test/data/users'
+import transactions from './hacks/transactions.json'
+import users from './hacks/users.json'
 import pkg from '../package.json'
 
 const homepage = process.env.NODE_ENV === 'production' ? pkg.homepage : '/'
-
-// it's tricky to know whether people have check the "Bypass for network" box
-// in the DevTools Application tab. So we do this check here and with each
-// fetch request we make
-let swEnabled = true
-async function checkSwEnabled(response) {
-  swEnabled = response.headers.get('x-powered-by') === 'msw'
-  return response
-}
-
-window.fetch('/sw-test.json').then(checkSwEnabled)
 
 // You really only get the benefit of pre-loading an image when the cache-control
 // is set to cache the image for some period of time. We can't do that with our
@@ -40,6 +29,7 @@ const graphql = String.raw
 
 // the delay argument is for faking things out a bit
 function fetchPokemon(name, delay = 1500) {
+  const endTime = Date.now() + delay
   const pokemonQuery = graphql`
     query Pokemon($name: String) {
       pokemon(name: $name) {
@@ -64,15 +54,17 @@ function fetchPokemon(name, delay = 1500) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        delay,
       },
       body: JSON.stringify({
         query: pokemonQuery,
         variables: {name: name.toLowerCase()},
       }),
     })
-    .then(checkSwEnabled)
     .then(response => response.json())
+    .then(async response => {
+      await sleep(endTime - Date.now())
+      return response
+    })
     .then(response => {
       if (response.errors) {
         return Promise.reject(
@@ -90,7 +82,7 @@ function fetchPokemon(name, delay = 1500) {
 }
 
 function getImageUrlForPokemon(pokemonName) {
-  if (swEnabled) {
+  if (window.useRealAPI) {
     return `${homepage}img/pokemon/${pokemonName.toLowerCase()}.jpg`
   } else {
     return `https://img.pokemondb.net/artwork/${pokemonName.toLowerCase()}.jpg`
