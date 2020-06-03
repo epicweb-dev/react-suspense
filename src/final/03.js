@@ -23,21 +23,23 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-// try a few of these fetch times:
-// shows busy indicator
-// window.FETCH_TIME = 450
-
-// shows busy indicator, then suspense fallback
-// window.FETCH_TIME = 5000
-
-// shows busy indicator for a split second
-// 💯 this is what the extra credit improves
-// window.FETCH_TIME = 200
-
 const SUSPENSE_CONFIG = {timeoutMs: 4000}
 
 function createPokemonResource(pokemonName) {
-  return createResource(fetchPokemon(pokemonName))
+  // 💰 the second parameter to fetchPokemon is a delay so you can play around
+  // with different timings
+  let delay = 1500
+  // try a few of these fetch times:
+  // shows busy indicator
+  // delay = 450
+
+  // shows busy indicator, then suspense fallback
+  // delay = 5000
+
+  // shows busy indicator for a split second
+  // 💯 this is what the extra credit improves
+  // delay = 200
+  return createResource(fetchPokemon(pokemonName, delay))
 }
 
 function App() {

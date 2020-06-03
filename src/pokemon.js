@@ -2,8 +2,8 @@ import React from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 import {createResource, preloadImage} from './utils'
 
-import transactions from './hacks/transactions'
-import users from './hacks/users'
+import transactions from './test/data/transactions'
+import users from './test/data/users'
 import pkg from '../package.json'
 // if you need this to work locally then comment out the import above and comment in the next line
 // const pkg = {homepage: '/'}
@@ -16,28 +16,22 @@ const fallbackImgUrl = `${pkg.homepage}img/pokemon/fallback-pokemon.jpg`
 preloadImage(`${pkg.homepage}img/pokeball.png`)
 preloadImage(fallbackImgUrl)
 
-window.FETCH_TIME = undefined
-window.MIN_FETCH_TIME = 500
-window.FETCH_TIME_RANDOM = false
-
-function sleep(t = window.FETCH_TIME) {
-  t = window.FETCH_TIME ?? t
-  if (window.FETCH_TIME_RANDOM) {
-    t = Math.random() * t + window.MIN_FETCH_TIME
-  }
-  return new Promise(resolve => setTimeout(resolve, t))
-}
+const sleep = t => new Promise(resolve => setTimeout(resolve, t))
 
 const formatDate = date =>
   `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(
     date.getSeconds(),
   ).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`
 
+// this gives me syntax highlighting and prettier formatting
+// for graphql queries.
+const graphql = String.raw
+
 // the delay argument is for faking things out a bit
 function fetchPokemon(name, delay = 1500) {
   const endTime = Date.now() + delay
-  const pokemonQuery = `
-    query ($name: String) {
+  const pokemonQuery = graphql`
+    query Pokemon($name: String) {
       pokemon(name: $name) {
         id
         number
@@ -59,7 +53,7 @@ function fetchPokemon(name, delay = 1500) {
       // learn more about this API here: https://graphql-pokemon.now.sh/
       method: 'POST',
       headers: {
-        'content-type': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         query: pokemonQuery,
@@ -72,6 +66,11 @@ function fetchPokemon(name, delay = 1500) {
       return response
     })
     .then(response => {
+      if (response.errors) {
+        return Promise.reject(
+          new Error(response.errors.map(e => e.message).join('\n')),
+        )
+      }
       const pokemon = response.data.pokemon
       if (pokemon) {
         pokemon.fetchedAt = formatDate(new Date())

@@ -12,7 +12,7 @@ const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-fetch-on-render'),
 )
 
-window.fetch.restoreOriginalFetch()
+window.useRealAPI = true
 
 function App() {
   const [pokemonName, setPokemonName] = React.useState('')

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './hacks/fetch'
+// if you want to hit a real backend, then comment out the next line:
+import './test/server'
 import './styles.css'
 import codegen from 'codegen.macro'
 
