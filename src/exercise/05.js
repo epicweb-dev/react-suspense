@@ -71,6 +71,7 @@ function App() {
 
   React.useEffect(() => {
     if (!pokemonName) {
+      setPokemonResource(null)
       return
     }
     startTransition(() => {
@@ -84,7 +85,6 @@ function App() {
 
   function handleReset() {
     setPokemonName('')
-    setPokemonResource(null)
   }
 
   return (

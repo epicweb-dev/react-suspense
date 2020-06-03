@@ -55,7 +55,6 @@ function App() {
 
   function handleReset() {
     setPokemonName('')
-    setPokemonResource(null)
   }
 
   return (

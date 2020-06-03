@@ -33,6 +33,7 @@ function App() {
 
   React.useEffect(() => {
     if (!pokemonName) {
+      setPokemonResource(null)
       return
     }
     setPokemonResource(createPokemonResource(pokemonName))
@@ -44,7 +45,6 @@ function App() {
 
   function handleReset() {
     setPokemonName('')
-    setPokemonResource(null)
   }
 
   return (
