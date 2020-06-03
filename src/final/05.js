@@ -11,8 +11,11 @@ import {
 } from '../pokemon'
 import {createResource} from '../utils'
 
-// 🦉 On this one, make sure that you uncheck the "Disable cache" checkbox.
-// We're relying on that cache for this approach to work!
+// ❗❗❗❗
+// 🦉 On this one, make sure that you UNCHECK the "Disable cache" checkbox
+// in your DevTools "Network Tab". We're relying on that cache for this
+// approach to work!
+// ❗❗❗❗
 
 function preloadImage(src) {
   return new Promise(resolve => {
