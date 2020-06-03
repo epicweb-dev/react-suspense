@@ -30,18 +30,7 @@ const SUSPENSE_CONFIG = {
   busyMinDurationMs: 700,
 }
 
-const pokemonResourceCache = {}
-const PokemonResourceCacheContext = React.createContext(getPokemonResource)
-
-function getPokemonResource(name) {
-  const lowerName = name.toLowerCase()
-  let resource = pokemonResourceCache[lowerName]
-  if (!resource) {
-    resource = createPokemonResource(lowerName)
-    pokemonResourceCache[lowerName] = resource
-  }
-  return resource
-}
+const PokemonResourceCacheContext = React.createContext()
 
 function PokemonCacheProvider({children, cacheTime}) {
   const cache = React.useRef({})
