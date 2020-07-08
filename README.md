@@ -13,7 +13,6 @@ you can use to improve your app's user experience (most notably the concept of
   <h2><a href="https://epicreact.dev">EpicReact.Dev</a></h2>
   <a href="https://epicreact.dev">
     <img
-      width="500"
       alt="Learn React from Start to Finish"
       src="https://kentcdodds.com/images/epicreact-promo/er-1.gif"
     />
