@@ -13,13 +13,13 @@
     "npm": ">=6"
   },
   "dependencies": {
-    "@kentcdodds/react-workshop-app": "^2.11.2",
-    "@testing-library/react": "^10.3.0",
+    "@kentcdodds/react-workshop-app": "^2.12.0",
+    "@testing-library/react": "^10.4.4",
     "chalk": "^4.1.0",
     "codegen.macro": "^4.0.0",
-    "react": "0.0.0-experimental-33c3af284",
-    "react-dom": "0.0.0-experimental-33c3af284",
-    "react-error-boundary": "^2.2.2",
+    "react": "0.0.0-experimental-7f28234f8",
+    "react-dom": "0.0.0-experimental-7f28234f8",
+    "react-error-boundary": "^2.2.3",
     "react-icons": "^3.10.0"
   },
   "devDependencies": {

@@ -11,6 +11,7 @@ you can use to improve your app's user experience (most notably the concept of
 
 <div align="center">
   <a href="https://epicreact.dev">
+    <h2>EpicReact.Dev</h2>
     <img
       width="500"
       alt="Learn React from Start to Finish"
@@ -18,6 +19,8 @@ you can use to improve your app's user experience (most notably the concept of
     />
   </a>
 </div>
+
+<hr />
 
 <!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
