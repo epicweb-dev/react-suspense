@@ -24,12 +24,6 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-const SUSPENSE_CONFIG = {
-  timeoutMs: 4000,
-  busyDelayMs: 300,
-  busyMinDurationMs: 700,
-}
-
 const pokemonResourceCache = {}
 
 function getPokemonResource(name) {
@@ -51,7 +45,7 @@ function createPokemonResource(pokemonName) {
 function App() {
   const [pokemonName, setPokemonName] = React.useState('')
   // 🐨 move these two lines to a custom hook called usePokemonResource
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const [startTransition, isPending] = React.useTransition()
   const [pokemonResource, setPokemonResource] = React.useState(null)
   // 🐨 call usePokemonResource with the pokemonName.
   //    It should return both the pokemonResource and isPending

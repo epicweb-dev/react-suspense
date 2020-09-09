@@ -240,12 +240,6 @@ function PokemonForm({
   )
 }
 
-const SUSPENSE_CONFIG = {
-  timeoutMs: 4000,
-  busyDelayMs: 300,
-  busyMinDurationMs: 700,
-}
-
 const PokemonResourceCacheContext = React.createContext({})
 
 function usePokemonResourceCache() {
@@ -272,7 +266,7 @@ function createPokemonResource(pokemonName) {
 
 function usePokemonResource(pokemonName) {
   const [pokemonResource, setPokemonResource] = React.useState(null)
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const [startTransition, isPending] = React.useTransition()
   const getPokemonResource = usePokemonResourceCache()
 
   React.useEffect(() => {

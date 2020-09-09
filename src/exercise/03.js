@@ -23,10 +23,6 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-// 🐨 create a SUSPENSE_CONFIG variable right here and configure timeoutMs to
-// whatever feels right to you, then try it out and tweek it until you're happy
-// with the experience.
-
 function createPokemonResource(pokemonName) {
   // 🦉 once you've finished the exercise, play around with the delay...
   // the second parameter to fetchPokemon is a delay so you can play around

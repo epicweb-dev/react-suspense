@@ -17,13 +17,13 @@
     "@testing-library/react": "^11.0.2",
     "chalk": "^4.1.0",
     "codegen.macro": "^4.0.0",
-    "react": "0.0.0-experimental-4c8c98ab9",
-    "react-dom": "0.0.0-experimental-4c8c98ab9",
+    "react": "0.0.0-experimental-94c0244ba",
+    "react-dom": "0.0.0-experimental-94c0244ba",
     "react-error-boundary": "^2.3.1",
     "react-icons": "^3.11.0"
   },
   "devDependencies": {
-    "husky": "^4.2.5",
+    "husky": "^4.3.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
     "react-scripts": "^4.0.0-next.77",

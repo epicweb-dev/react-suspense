@@ -30,10 +30,8 @@ const fallback = (
   </div>
 )
 
-const SUSPENSE_CONFIG = {timeoutMs: 4000}
-
 function App() {
-  const [startTransition] = React.useTransition(SUSPENSE_CONFIG)
+  const [startTransition] = React.useTransition()
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   function handleSubmit(pokemonName) {

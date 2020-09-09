@@ -23,12 +23,6 @@ function PokemonInfo({pokemonResource}) {
   )
 }
 
-const SUSPENSE_CONFIG = {
-  timeoutMs: 4000,
-  busyDelayMs: 300,
-  busyMinDurationMs: 700,
-}
-
 // 🐨 create a pokemonResourceCache object
 
 // 🐨 create a getPokemonResource function which accepts a name checks the cache
@@ -42,7 +36,7 @@ function createPokemonResource(pokemonName) {
 
 function App() {
   const [pokemonName, setPokemonName] = React.useState('')
-  const [startTransition, isPending] = React.useTransition(SUSPENSE_CONFIG)
+  const [startTransition, isPending] = React.useTransition()
   const [pokemonResource, setPokemonResource] = React.useState(null)
 
   React.useEffect(() => {
