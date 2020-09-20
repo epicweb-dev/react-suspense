@@ -1,16 +1,12 @@
-# React Suspense 🔀
+<div>
+  <h1 align="center"><a href="https://epicreact.dev">🔀 React Suspense 🚀 EpicReact.Dev</a></h1>
+  <strong>
+    Simplify your Async UI and improve your User Experience
+  </strong>
+  <p>
+    Learn how Suspense works under the hood, preparing you for the future of asynchronous state management.
+  </p>
 
-> Improving UX with a faster, more predictable app.
-
-👋 hi there! My name is [Kent C. Dodds](https://kentcdodds.com)! This is a
-workshop repo to teach you the fundamentals of React's (EXPERIMENTAL)
-[concurrent mode](https://reactjs.org/concurrent). This feature enables React to
-make your app faster out of the box and it comes along with a few features that
-you can use to improve your app's user experience (most notably the concept of
-"Suspense").
-
-<div align="center">
-  <h2><a href="https://epicreact.dev">EpicReact.Dev</a></h2>
   <a href="https://epicreact.dev">
     <img
       alt="Learn React from Start to Finish"
@@ -39,57 +35,16 @@ same as demonstrated in this workshop material.
 That said, the concepts in this workshop will very likely be applicable when
 these features are stable, so enjoy the workshop!
 
-## Pre-Workshop Instructions/Requirements
+## Prerequisites
 
-In order for us to maximize our efforts during the workshop, please complete the
-following things to prepare.
-
-- 📺 only necessary if the workshop is remote via Zoom
-- 👋 specific to the material for this workshop
-
-- [ ] Setup the project (follow the setup instructions below) (~5 minutes)
-- [ ] 📺 Install and setup [Zoom](https://zoom.us) on the computer you will be
-      using (~5 minutes)
-- [ ] 📺 Watch
-      [Use Zoom for KCD Workshops](https://egghead.io/lessons/egghead-use-zoom-for-kcd-workshops)
-      (~8 minutes).
-- [ ] Watch
-      [Setup and Logistics for KCD Workshops](https://egghead.io/lessons/egghead-setup-and-logistics-for-kcd-workshops)
-      (~24 minutes). Please do NOT skip this step.
-- [ ] Install the React DevTools
-      ([Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
-      (recommended),
-      [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/))
-- [ ] Watch Dan Abramov's talk
-      [Beyond React 16 | JSConf Iceland 2018](https://www.youtube.com/watch?v=nLF0n9SACd4)
-      (33 minutes)
-- [ ] Go through my
-      [Learn React Hooks Workshop](https://kentcdodds.com/workshops/hooks), or
-      have the equivalent basic experience of using hooks. You should be
-      experienced with `useState`, `useEffect`, and `useRef`.
-- [ ] Go through my
-      [Advanced React Hooks Workshop](https://kentcdodds.com/workshops/advanced-react-hooks),
-      or have the equivalent experience. You should be experienced with
-      `useContext` and `useReducer` (experience with `useMemo` and `useCallback`
-      is a bonus).
-
-The more prepared you are for the workshop, the better it will go for you.
-
-## Workshop Outline
-
-Here are the concepts we'll be covering:
-
-- Opting into React Concurrent Mode
-- Thinking in Suspense
-- The fundamentals of "suspending"
-- Structuring `<React.Suspense />` components with fallbacks
-- Using `useTransition`
-- Refactor an existing async interaction to suspense
-- The difference between the three data-fetching approaches:
-  - Fetch-on-Render (not using Suspense)
-  - Fetch-Then-Render (not using Suspense)
-  - Render-as-You-Fetch (using Suspense)
-- Using `<React.SuspenseList />` to coordinate multiple suspending components
+- Install the React DevTools
+  ([Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+  (recommended),
+  [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/))
+- Watch Dan Abramov's talk
+  [Beyond React 16 | JSConf Iceland 2018](https://www.youtube.com/watch?v=nLF0n9SACd4)
+  (33 minutes)
+- Experience with React and all hooks
 
 ## System Requirements
 
@@ -123,17 +78,12 @@ npm run setup --silent
 
 This may take a few minutes. **It will ask you for your email.** This is
 optional and just automatically adds your email to the links in the project to
-make filling out some forms easier If you get any errors, please read through
-them and see if you can find out what the problem is. If you can't work it out
-on your own then please [file an issue][issue] and provide _all_ the output from
-the commands you ran (even if it's a lot).
+make filling out some forms easier.
 
-You may be able to work through the entire workshop in the browser. Go to
-[this codesandbox](https://codesandbox.io/s/github/kentcdodds/react-suspense)
-and you should be good to go. Note that sometimes people have trouble with
-codesandbox not working quite right with tests, but you should be able to work
-around that. If you're concerned, then it would probably be better to just set
-things up locally.
+If you get any errors, please read through them and see if you can find out what
+the problem is. If you can't work it out on your own then please [file an
+issue][issue] and provide _all_ the output from the commands you ran (even if
+it's a lot).
 
 ## Running the app
 
@@ -160,53 +110,6 @@ play around with it. The tests are there to help you reach the final version,
 however _sometimes_ you can accomplish the task and the tests still fail if you
 implement things differently than I do in my solution, so don't look to them as
 a complete authority.
-
-## Workshop Outline
-
-> React Suspense Workshop 🔀
-
-👋 I'm Kent C. Dodds
-
-- 🏡 Utah
-- 👩 👧 👦 👦 👦 🐕
-- 🏢 kentcdodds.com
-- 🐦/🐙 @kentcdodds
-- 🏆 testingjavascript.com
-- 🥚 kcd.im/egghead
-- 🥋 kcd.im/fem
-- 💌 kcd.im/news
-- 📝 kcd.im/blog
-- 📺 kcd.im/devtips
-- 💻 kcd.im/coding
-- 📽 kcd.im/youtube
-- 🎙 kcd.im/3-mins
-- ❓ kcd.im/ama
-
-### Schedule
-
-- 😴 Logistics
-- 💪 Simple Data-fetching
-- 😴 10 Minutes
-- 💪 Render as you fetch
-- 💪 useTransition for improved loading states
-- 🌮 30 Minutes
-- 💪 Cache resources
-- 💪 Suspense Image
-- 😴 10 Minutes
-- 💪 Suspense with a custom hook
-- 💪 Coordinate Suspending components with SuspenseList
-- ❓ Q&A
-
-### Questions
-
-Please do ask! Interrupt me. If you have an unrelated question, please ask on
-[my AMA](https://kcd.im/ama).
-
-### Zoom (for remote workshops)
-
-- Help us make this more human by keeping your video on if possible
-- Keep microphone muted unless speaking
-- Breakout rooms
 
 ### Exercises
 
@@ -243,25 +146,6 @@ emoji characters are here to help you.
 - **Alfred the Alert** 🚨 will occasionally show up in the test failures with
   potential explanations for why the tests are failing.
 
-## Disclaimers
-
-1. React Concurrent Mode is experimental
-2. I've never shipped Concurrent Mode to production, and you shouldn't either
-   (yet)
-3. React Suspense is a particularly primitive API and we're still working out
-   good abstractions for it
-4. I've been informed that the API for suspending _will change_ before the
-   stable release (don't worry though, the concepts are solid)
-5. I will probably say "I don't know" as a response to your questions sometimes
-
-## Workshop Feedback
-
-Each exercise has an Elaboration and Feedback link. Please fill that out after
-the exercise and instruction.
-
-At the end of the workshop, please go to this URL to give overall feedback.
-Thank you! https://kcd.im/rs-ws-feedback
-
 ## Contributors
 
 Thanks goes to these wonderful people
@@ -287,17 +171,24 @@ This project follows the
 [all-contributors](https://github.com/kentcdodds/all-contributors)
 specification. Contributions of any kind welcome!
 
+## Workshop Feedback
+
+Each exercise has an Elaboration and Feedback link. Please fill that out after
+the exercise and instruction.
+
+At the end of the workshop, please go to this URL to give overall feedback.
+Thank you! https://kcd.im/rs-ws-feedback
+
 <!-- prettier-ignore-start -->
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [git]: https://git-scm.com/
-[yarn]: https://yarnpkg.com/
 [build-badge]: https://img.shields.io/travis/kentcdodds/react-suspense.svg?style=flat-square&logo=travis
 [build]: https://travis-ci.org/kentcdodds/react-suspense
 [license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
-[license]: https://github.com/kentcdodds/react-fundamentals/blob/master/LICENSE
+[license]: https://github.com/kentcdodds/react-suspense/blob/main/LICENSE
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/react-suspense/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/kentcdodds/react-suspense/blob/main/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [win-path]: https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/
