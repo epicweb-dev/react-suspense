@@ -2,8 +2,6 @@ import React from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
 import {createResource, preloadImage} from './utils'
 
-import transactions from './hacks/transactions.json'
-import users from './hacks/users.json'
 import pkg from '../package.json'
 
 const homepage = process.env.NODE_ENV === 'production' ? pkg.homepage : '/'
@@ -92,25 +90,12 @@ function getImageUrlForPokemon(pokemonName) {
 async function fetchUser(pokemonName, delay = 0) {
   await sleep(delay)
   const lowerName = pokemonName.toLowerCase()
-  const pokemonTransactions = transactions.filter(
-    t => t.recipient !== lowerName,
-  )
-  const user = users[lowerName]
-  if (!user) {
-    throw new Error(
-      `${pokemonName} is not a user. Try ${Object.keys(users).join(', ')}`,
-    )
-  }
-  return {
-    transactions: pokemonTransactions,
-    friends: Object.keys(users)
-      .filter(u => lowerName !== u)
-      .map(n => upperName(n)),
-    ...user,
-    name: upperName(lowerName),
-  }
+  const response = await window.fetch(`/pokemoney/${lowerName}`, {
+    headers: {'Content-Type': 'application/json'},
+  })
+  const result = response.json()
+  return result
 }
-const upperName = name => `${name.slice(0, 1).toUpperCase()}${name.slice(1)}`
 
 function PokemonInfoFallback({name}) {
   const initialName = React.useRef(name).current

@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './hacks/fetch'
 import './styles.css'
 import codegen from 'codegen.macro'
 
