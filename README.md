@@ -159,12 +159,12 @@ Thanks goes to these wonderful people
     <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt=""/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/react-suspense/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/react-suspense/commits?author=kentcdodds" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/Hypnosphi"><img src="https://avatars3.githubusercontent.com/u/6651625?v=4" width="100px;" alt=""/><br /><sub><b>Filipp Riabchun</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=Hypnosphi" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/lauchness"><img src="https://avatars0.githubusercontent.com/u/51837850?v=4" width="100px;" alt=""/><br /><sub><b>lauchness</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=lauchness" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/pritamsangani/"><img src="https://avatars3.githubusercontent.com/u/22857896?v=4" width="100px;" alt=""/><br /><sub><b>Pritam Sangani</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=PritamSangani" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the
