@@ -197,7 +197,7 @@ Thank you! https://kcd.im/rs-ws-feedback
 [node]: https://nodejs.org
 [git]: https://git-scm.com/
 [build-badge]: https://img.shields.io/travis/kentcdodds/react-suspense.svg?style=flat-square&logo=travis
-[build]: https://travis-ci.org/kentcdodds/react-suspense
+[build]: https://travis-ci.com/kentcdodds/react-suspense
 [license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
 [license]: https://github.com/kentcdodds/react-suspense/blob/main/LICENSE
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
