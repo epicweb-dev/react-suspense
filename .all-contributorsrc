@@ -64,6 +64,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jcarty",
+      "name": "Jerome Carty",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/952914?v=4",
+      "profile": "http://twitter.com/jcarty",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoHost": "https://github.com",
