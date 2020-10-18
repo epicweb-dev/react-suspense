@@ -29,7 +29,7 @@ const graphql = String.raw
 function fetchPokemon(name, delay = 1500) {
   const endTime = Date.now() + delay
   const pokemonQuery = graphql`
-    query Pokemon($name: String) {
+    query PokemonInfo($name: String) {
       pokemon(name: $name) {
         id
         number
