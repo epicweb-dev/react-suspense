@@ -180,12 +180,12 @@ Thanks goes to these wonderful people
     <td align="center"><a href="https://www.linkedin.com/in/pritamsangani/"><img src="https://avatars3.githubusercontent.com/u/22857896?v=4" width="100px;" alt=""/><br /><sub><b>Pritam Sangani</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=PritamSangani" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/emzoumpo"><img src="https://avatars2.githubusercontent.com/u/2103443?v=4" width="100px;" alt=""/><br /><sub><b>Emmanouil Zoumpoulakis</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=emzoumpo" title="Documentation">📖</a></td>
     <td align="center"><a href="http://peter.hozak.info/"><img src="https://avatars0.githubusercontent.com/u/1087670?v=4" width="100px;" alt=""/><br /><sub><b>Peter Hozák</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=Aprillion" title="Code">💻</a></td>
+    <td align="center"><a href="http://twitter.com/jcarty"><img src="https://avatars1.githubusercontent.com/u/952914?v=4" width="100px;" alt=""/><br /><sub><b>Jerome Carty</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=jcarty" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the
