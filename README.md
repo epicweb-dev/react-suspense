@@ -182,6 +182,9 @@ Thanks goes to these wonderful people
     <td align="center"><a href="http://peter.hozak.info/"><img src="https://avatars0.githubusercontent.com/u/1087670?v=4" width="100px;" alt=""/><br /><sub><b>Peter Hozák</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=Aprillion" title="Code">💻</a></td>
     <td align="center"><a href="http://twitter.com/jcarty"><img src="https://avatars1.githubusercontent.com/u/952914?v=4" width="100px;" alt=""/><br /><sub><b>Jerome Carty</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=jcarty" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://anthonyng.me"><img src="https://avatars1.githubusercontent.com/u/14035529?v=4" width="100px;" alt=""/><br /><sub><b>Anthony Ng</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=newyork-anthonyng" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
