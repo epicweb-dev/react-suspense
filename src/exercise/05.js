@@ -22,7 +22,7 @@ import {createResource} from '../utils'
 
 // 🐨 create an Img component that renders a regular <img /> and accepts a src
 // prop and forwards on any remaining props.
-// 🐨 The first thing you do in this component is check wither your
+// 🐨 The first thing you do in this component is check whether your
 // imgSrcResourceCache already has a resource for the given src prop. If it does
 // not, then you need to create one (💰 using createResource).
 // 🐨 Once you have the resource, then render the <img />.
