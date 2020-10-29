@@ -1,7 +1,7 @@
 // Simple Data-fetching
 // http://localhost:3000/isolated/exercise/01.js
 
-import React from 'react'
+import * as React from 'react'
 // 🐨 you'll also need to get the fetchPokemon function from ../pokemon:
 import {PokemonDataView} from '../pokemon'
 

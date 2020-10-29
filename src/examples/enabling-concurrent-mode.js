@@ -1,6 +1,6 @@
 // http://localhost:3000/isolated/examples/enabling-concurrent-mode.js
 
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 
 function App() {

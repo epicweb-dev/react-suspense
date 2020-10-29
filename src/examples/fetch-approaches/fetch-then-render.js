@@ -1,7 +1,7 @@
 // Fetch then render 👎
 // http://localhost:3000/isolated/examples/fetch-approaches/fetch-then-render.js
 
-import React from 'react'
+import * as React from 'react'
 import {fetchPokemon, PokemonForm, PokemonInfoFallback} from '../../pokemon'
 
 const PokemonInfo = React.lazy(() =>

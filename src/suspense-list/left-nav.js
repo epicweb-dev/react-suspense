@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import * as cn from './left-nav.module.css'
 
 function LeftNav() {

@@ -2,7 +2,7 @@
 // 💯 make more generic createResource
 // http://localhost:3000/isolated/final/01.extra-2.js
 
-import React from 'react'
+import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonErrorBoundary} from '../pokemon'
 
 let pokemonResource = createResource(fetchPokemon('pikachu'))

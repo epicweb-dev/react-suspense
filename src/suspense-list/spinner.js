@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import * as cn from './spinner.module.css'
 
 function Spinner() {

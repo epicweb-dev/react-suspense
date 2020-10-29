@@ -1,7 +1,7 @@
 // useTransition for improved loading states
 // http://localhost:3000/isolated/exercise/03.js
 
-import React from 'react'
+import * as React from 'react'
 import {
   fetchPokemon,
   PokemonInfoFallback,
