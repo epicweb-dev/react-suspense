@@ -8,8 +8,6 @@ const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-fetch-then-render'),
 )
 
-window.useRealAPI = true
-
 function usePokemon(pokemonName) {
   const [state, setState] = React.useReducer((s, a) => ({...s, ...a}), {
     pokemon: null,

@@ -4,9 +4,6 @@ const pokemonApi = graphql.link('https://graphql-pokemon2.vercel.app/')
 
 export const handlers = [
   rest.get('/pokemoney/:pokemonName', (req, res, ctx) => {
-    // there's no "real API" for this, so we can't react to this setting
-    // if (window.useRealAPI) return ctx.fetch(req)
-
     const {pokemonName} = req.params
 
     const upperName = name =>
@@ -33,8 +30,6 @@ export const handlers = [
     )
   }),
   pokemonApi.query('PokemonInfo', (req, res, ctx) => {
-    if (window.useRealAPI) return ctx.fetch(req)
-
     const pokemon = allPokemon[req.variables.name.toLowerCase()]
     if (pokemon) {
       return res(ctx.status(200), ctx.data({pokemon}))

@@ -80,11 +80,7 @@ function fetchPokemon(name, delay = 1500) {
 }
 
 function getImageUrlForPokemon(pokemonName) {
-  if (window.useRealAPI) {
-    return `${homepage}img/pokemon/${pokemonName.toLowerCase()}.jpg`
-  } else {
-    return `https://img.pokemondb.net/artwork/${pokemonName.toLowerCase()}.jpg`
-  }
+  return `${homepage}img/pokemon/${pokemonName.toLowerCase()}.jpg`
 }
 
 async function fetchUser(pokemonName, delay = 0) {

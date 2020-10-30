@@ -12,8 +12,6 @@ const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-fetch-on-render'),
 )
 
-window.useRealAPI = true
-
 function App() {
   const [pokemonName, setPokemonName] = React.useState('')
 

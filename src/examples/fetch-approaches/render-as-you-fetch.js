@@ -13,8 +13,6 @@ const PokemonInfo = React.lazy(() =>
   import('./lazy/pokemon-info-render-as-you-fetch'),
 )
 
-window.useRealAPI = true
-
 const SUSPENSE_CONFIG = {
   timeoutMs: 4000,
   busyDelayMs: 300,
