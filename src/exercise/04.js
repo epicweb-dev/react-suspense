@@ -1,7 +1,7 @@
 // Cache resources
 // http://localhost:3000/isolated/exercise/04.js
 
-import React from 'react'
+import * as React from 'react'
 import {
   fetchPokemon,
   PokemonInfoFallback,

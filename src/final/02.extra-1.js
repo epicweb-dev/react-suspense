@@ -2,7 +2,7 @@
 // 💯 Suspense and Error Boundary positioning
 // http://localhost:3000/isolated/final/02.extra-1.js
 
-import React from 'react'
+import * as React from 'react'
 import {
   fetchPokemon,
   PokemonInfoFallback,

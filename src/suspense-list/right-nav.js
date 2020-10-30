@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import Img from './img'
 import * as cn from './right-nav.module.css'
 
@@ -46,5 +46,5 @@ export default RightNav
 
 /*
 eslint
-  jsx-a11y/anchor-is-valid: 0 
+  jsx-a11y/anchor-is-valid: 0
 */

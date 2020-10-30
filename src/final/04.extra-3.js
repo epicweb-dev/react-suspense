@@ -2,7 +2,7 @@
 // 💯 add cache timeout
 // http://localhost:3000/isolated/final/04.extra-3.js
 
-import React from 'react'
+import * as React from 'react'
 import {
   fetchPokemon,
   PokemonInfoFallback,

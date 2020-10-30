@@ -1,7 +1,7 @@
 // Coordinate Suspending components with SuspenseList
 // http://localhost:3000/isolated/exercise/07.js
 
-import React from 'react'
+import * as React from 'react'
 import '../suspense-list/style-overrides.css'
 import * as cn from '../suspense-list/app.module.css'
 import Spinner from '../suspense-list/spinner'

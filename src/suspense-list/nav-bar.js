@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import Img from './img'
 import * as cn from './nav-bar.module.css'
 import {

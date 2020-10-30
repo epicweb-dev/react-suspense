@@ -1,7 +1,7 @@
 // Render as you fetch
 // http://localhost:3000/isolated/exercise/02.js
 
-import React from 'react'
+import * as React from 'react'
 import {
   fetchPokemon,
   PokemonInfoFallback,

@@ -1,7 +1,7 @@
 // Preload image demo 🖼
 // http://localhost:3000/isolated/examples/preload-image.js
 
-import React from 'react'
+import * as React from 'react'
 import {getImageUrlForPokemon} from '../pokemon'
 
 const bulbasaurImageUrl = getImageUrlForPokemon('bulbasaur')

@@ -1,7 +1,7 @@
 // Fetch on render 👎
 // http://localhost:3000/isolated/examples/fetch-approaches/fetch-on-render.js
 
-import React from 'react'
+import * as React from 'react'
 import {
   PokemonForm,
   PokemonInfoFallback,
