@@ -21,7 +21,6 @@
 [![Build Status][build-badge]][build]
 [![All Contributors][all-contributors-badge]](#contributors)
 [![GPL 3.0 License][license-badge]][license]
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![Code of Conduct][coc-badge]][coc]
 <!-- prettier-ignore-end -->
 
