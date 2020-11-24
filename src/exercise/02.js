@@ -56,7 +56,7 @@ function PokemonInfo({pokemonName}) {
 
   // 💰 this is the part that will suspend
   if (status === 'success') {
-    // 🐨 instead of accpeting the pokemonName as a prop to this component
+    // 🐨 instead of accepting the pokemonName as a prop to this component
     // you'll accept a pokemonResource.
     // 💰 you'll get the pokemon from: pokemonResource.read()
     // 🐨 This will be the return value of this component. You wont need it
