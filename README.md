@@ -195,6 +195,7 @@ Thanks goes to these wonderful people
     <td align="center"><a href="https://github.com/dsod"><img src="https://avatars0.githubusercontent.com/u/19597385?v=4" width="100px;" alt=""/><br /><sub><b>Daniel Söderling</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=dsod" title="Documentation">📖</a></td>
     <td align="center"><a href="http://bobbywarner.com"><img src="https://avatars0.githubusercontent.com/u/554961?v=4" width="100px;" alt=""/><br /><sub><b>Bobby Warner</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=bobbywarner" title="Code">💻</a></td>
     <td align="center"><a href="http://angular-tips.com"><img src="https://avatars2.githubusercontent.com/u/1087957?v=4" width="100px;" alt=""/><br /><sub><b>Jesús Rodríguez</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=Foxandxss" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/cesarcf"><img src="https://avatars0.githubusercontent.com/u/5168360?v=4" width="100px;" alt=""/><br /><sub><b>Cesar Carbajo</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=cesarcf" title="Code">💻</a></td>
   </tr>
 </table>
 
