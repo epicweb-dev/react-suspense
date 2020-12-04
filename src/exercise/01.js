@@ -21,7 +21,7 @@ const pokemon = {
 
 // We don't need the app to be mounted to know that we want to fetch the pokemon
 // named "pikachu" so we can go ahead and do that right here.
-// 🐨 assign the pokemonPromise variable to a call to fetchPokemon('pikachu')
+// 🐨 assign a pokemonPromise variable to a call to fetchPokemon('pikachu')
 
 // 🐨 when the promise resolves, assign the "pokemon" variable to the resolved value
 // 💰 For example: somePromise.then(resolvedValue => (someValue = resolvedValue))
