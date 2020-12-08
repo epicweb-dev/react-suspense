@@ -74,7 +74,7 @@ function fetchPokemon(name, delay = 1500) {
         pokemon.fetchedAt = formatDate(new Date())
         return pokemon
       } else {
-        return Promise.reject(`No pokemon with the name "${name}"`)
+        return Promise.reject(new Error(`No pokemon with the name "${name}"`))
       }
     })
 }
