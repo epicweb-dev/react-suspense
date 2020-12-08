@@ -146,6 +146,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "intrueder",
+      "name": "Tymur Mudzhyri",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/182339?v=4",
+      "profile": "https://github.com/intrueder",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "repoHost": "https://github.com",
