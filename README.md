@@ -199,7 +199,7 @@ Thanks goes to these wonderful people
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/waxidiotic"><img src="https://avatars1.githubusercontent.com/u/8037469?v=4" width="100px;" alt=""/><br /><sub><b>Alex Bussey</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=waxidiotic" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/intrueder"><img src="https://avatars2.githubusercontent.com/u/182339?v=4" width="100px;" alt=""/><br /><sub><b>Tymur Mudzhyri</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/issues?q=author%3Aintrueder" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/intrueder"><img src="https://avatars2.githubusercontent.com/u/182339?v=4" width="100px;" alt=""/><br /><sub><b>Tymur Mudzhyri</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/issues?q=author%3Aintrueder" title="Bug reports">🐛</a> <a href="https://github.com/kentcdodds/react-suspense/commits?author=intrueder" title="Code">💻</a></td>
   </tr>
 </table>
 
