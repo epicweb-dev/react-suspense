@@ -39,13 +39,11 @@ export const handlers = [
         pokemonNames[Math.floor(pokemonNames.length * Math.random())]
       return res(
         ctx.status(404),
-        ctx.data({
-          errors: [
-            {
-              message: `Unsupported pokemon: "${req.variables.name}". Try "${randomName}"`,
-            },
-          ],
-        }),
+        ctx.errors([
+          {
+            message: `Unsupported pokemon: "${req.variables.name}". Try "${randomName}"`,
+          },
+        ]),
       )
     }
   }),
