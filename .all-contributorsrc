@@ -156,6 +156,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "billfienberg",
+      "name": "Bill Fienberg",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6130520?v=4",
+      "profile": "https://github.com/billfienberg",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "repoHost": "https://github.com",
