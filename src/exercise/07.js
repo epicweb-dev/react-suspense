@@ -62,7 +62,7 @@ function App() {
   }
 
   // 🐨 Use React.SuspenseList throughout these Suspending components to make
-  // them load in a way that is not jaring to the user.
+  // them load in a way that is not jarring to the user.
   // 💰 there's not really a specifically "right" answer for this.
   return (
     <div className="pokemon-info-app">
