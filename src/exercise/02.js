@@ -59,8 +59,8 @@ function PokemonInfo({pokemonName}) {
     // 🐨 instead of accepting the pokemonName as a prop to this component
     // you'll accept a pokemonResource.
     // 💰 you'll get the pokemon from: pokemonResource.read()
-    // 🐨 This will be the return value of this component. You wont need it
-    // to be in this if statement anymore thought!
+    // 🐨 This will be the return value of this component. You won't need it
+    // to be in this if statement anymore though!
     return (
       <div>
         <div className="pokemon-info__img-wrapper">
