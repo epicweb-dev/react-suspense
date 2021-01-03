@@ -201,6 +201,7 @@ Thanks goes to these wonderful people
     <td align="center"><a href="https://github.com/waxidiotic"><img src="https://avatars1.githubusercontent.com/u/8037469?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Bussey</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=waxidiotic" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/intrueder"><img src="https://avatars2.githubusercontent.com/u/182339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tymur Mudzhyri</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/issues?q=author%3Aintrueder" title="Bug reports">🐛</a> <a href="https://github.com/kentcdodds/react-suspense/commits?author=intrueder" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/billfienberg"><img src="https://avatars3.githubusercontent.com/u/6130520?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bill Fienberg</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=billfienberg" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://devlogger.wordpress.com"><img src="https://avatars2.githubusercontent.com/u/15407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Martin Carel</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=cawel" title="Documentation">📖</a></td>
   </tr>
 </table>
 

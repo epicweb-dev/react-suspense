@@ -165,6 +165,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "cawel",
+      "name": "Martin Carel",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/15407?v=4",
+      "profile": "http://devlogger.wordpress.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "repoHost": "https://github.com",
