@@ -34,6 +34,14 @@ same as demonstrated in this workshop material.
 That said, the concepts in this workshop will very likely be applicable when
 these features are stable, so enjoy the workshop!
 
+## NOTICE:
+
+This workshop deals a lot with error boundaries and it's important to note that
+create-react-app has a special and helpful "Error Overlay" component that will
+sometimes be displayed when an error occurs (whether your app implements error
+boundaries or not). For you to see the error handling within the app, you'll
+need to close that overlay by clicking the "x" in the upper-right.
+
 ## Prerequisites
 
 - Install the React DevTools
