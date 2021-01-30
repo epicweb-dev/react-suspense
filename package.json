@@ -13,10 +13,10 @@
     "npm": ">=6"
   },
   "dependencies": {
-    "@kentcdodds/react-workshop-app": "^2.20.0",
-    "@testing-library/react": "^11.2.2",
+    "@kentcdodds/react-workshop-app": "^3.0.0",
+    "@testing-library/react": "^11.2.3",
     "chalk": "^4.1.0",
-    "codegen.macro": "^4.0.0",
+    "codegen.macro": "^4.1.0",
     "react": "0.0.0-experimental-4c8c98ab9",
     "react-dom": "0.0.0-experimental-4c8c98ab9",
     "react-error-boundary": "^3.1.0",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "husky": "^4.3.5",
+    "husky": "^4.3.8",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "react-scripts": "^4.0.1",
