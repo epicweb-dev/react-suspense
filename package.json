@@ -13,8 +13,8 @@
     "npm": ">=6"
   },
   "dependencies": {
-    "@kentcdodds/react-workshop-app": "^3.0.0",
-    "@testing-library/react": "^11.2.3",
+    "@kentcdodds/react-workshop-app": "^3.0.1",
+    "@testing-library/react": "^11.2.5",
     "chalk": "^4.1.0",
     "codegen.macro": "^4.1.0",
     "react": "0.0.0-experimental-4c8c98ab9",
