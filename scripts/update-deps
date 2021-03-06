@@ -1,0 +1,1 @@
+npx npm-check-updates --upgrade --reject husky,react,react-dom
