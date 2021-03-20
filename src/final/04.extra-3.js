@@ -41,6 +41,7 @@ function PokemonCacheProvider({children, cacheTime}) {
       for (const [name, time] of Object.entries(expirations.current)) {
         if (time < Date.now()) {
           delete cache.current[name]
+          delete expirations.current[name]
         }
       }
     }, 1000)
