@@ -56,8 +56,8 @@ function PokemonCacheProvider({children, cacheTime}) {
       if (!resource) {
         resource = createPokemonResource(lowerName)
         cache.current[lowerName] = resource
-        expirations.current[lowerName] = Date.now() + cacheTime
       }
+      expirations.current[lowerName] = Date.now() + cacheTime
       return resource
     },
     [cacheTime],
