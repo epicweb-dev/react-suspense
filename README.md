@@ -213,6 +213,7 @@ Thanks goes to these wonderful people
     <td align="center"><a href="http://devlogger.wordpress.com"><img src="https://avatars2.githubusercontent.com/u/15407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Martin Carel</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=cawel" title="Documentation">📖</a></td>
     <td align="center"><a href="https://gkueny.fr"><img src="https://avatars.githubusercontent.com/u/10655690?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gaëtan Kueny</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/issues?q=author%3Agkueny" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/nawok"><img src="https://avatars.githubusercontent.com/u/159773?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pavel Fomchenkov</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/issues?q=author%3Anawok" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://plai.team"><img src="https://avatars.githubusercontent.com/u/6297446?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andriy Bas</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=AndriyBas" title="Code">💻</a></td>
   </tr>
 </table>
 

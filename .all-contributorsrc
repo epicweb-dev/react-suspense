@@ -192,6 +192,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "AndriyBas",
+      "name": "Andriy Bas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6297446?v=4",
+      "profile": "https://plai.team",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoHost": "https://github.com",
