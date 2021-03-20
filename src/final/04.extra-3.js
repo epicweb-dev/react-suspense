@@ -41,6 +41,7 @@ function PokemonCacheProvider({children, cacheTime}) {
       for (const [name, time] of Object.entries(expirations.current)) {
         if (time < Date.now()) {
           delete cache.current[name]
+          delete expirations.current[name]
         }
       }
     }, 1000)
@@ -55,8 +56,8 @@ function PokemonCacheProvider({children, cacheTime}) {
       if (!resource) {
         resource = createPokemonResource(lowerName)
         cache.current[lowerName] = resource
+        expirations.current[lowerName] = Date.now() + cacheTime
       }
-      expirations.current[lowerName] = Date.now() + cacheTime
       return resource
     },
     [cacheTime],
