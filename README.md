@@ -215,6 +215,9 @@ Thanks goes to these wonderful people
     <td align="center"><a href="https://github.com/nawok"><img src="https://avatars.githubusercontent.com/u/159773?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pavel Fomchenkov</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/issues?q=author%3Anawok" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://plai.team"><img src="https://avatars.githubusercontent.com/u/6297446?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andriy Bas</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=AndriyBas" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://pavlos.dev"><img src="https://avatars.githubusercontent.com/u/100233?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pavlos Vinieratos</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=pvinis" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
