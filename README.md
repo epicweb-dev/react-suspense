@@ -217,6 +217,7 @@ Thanks goes to these wonderful people
   </tr>
   <tr>
     <td align="center"><a href="http://pavlos.dev"><img src="https://avatars.githubusercontent.com/u/100233?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pavlos Vinieratos</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=pvinis" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/marioleed"><img src="https://avatars.githubusercontent.com/u/1763448?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mario Sannum</b></sub></a><br /><a href="https://github.com/kentcdodds/react-suspense/commits?author=marioleed" title="Code">💻</a></td>
   </tr>
 </table>
 
