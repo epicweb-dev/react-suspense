@@ -56,7 +56,7 @@ function App() {
   // 🐨 call usePokemonResource with the pokemonName.
   //    It should return both the pokemonResource and isPending
 
-  // 🐨 move this useEffect call your custom usePokemonResource hook
+  // 🐨 move this useEffect call to your custom usePokemonResource hook
   React.useEffect(() => {
     if (!pokemonName) {
       setPokemonResource(null)
