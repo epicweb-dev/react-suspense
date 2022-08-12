@@ -29,11 +29,10 @@
 
 This workshop material deals with **EXPERIMENTAL** features in React. Please do
 not copy/paste any of the code you find here into a production application and
-expect it to work. Even when the features are released they may not work the
-same as demonstrated in this workshop material.
-
-That said, the concepts in this workshop will very likely be applicable when
-these features are stable, so enjoy the workshop!
+expect it to work. The features have been released in the latest version of
+React 18 and there are some slight changes. However the concepts and most APIs
+taught in this workshop are still applicable (any changes are noted in the
+material).
 
 ## NOTICE:
 
@@ -59,7 +58,8 @@ need to close that overlay by clicking the "x" in the upper-right.
 It's recommended you run everything in the same environment you work in every
 day, but if you don't want to set up the repository locally, you can get started
 in one click with [Gitpod](https://gitpod.io),
-[CodeSandbox](https://codesandbox.io/s/github/kentcdodds/react-suspense), or by following the [video demo](https://www.youtube.com/watch?v=gCoVJm3hGk4)
+[CodeSandbox](https://codesandbox.io/s/github/kentcdodds/react-suspense), or by
+following the [video demo](https://www.youtube.com/watch?v=gCoVJm3hGk4)
 instructions for [GitHub Codespaces](https://github.com/features/codespaces).
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/kentcdodds/react-suspense)
