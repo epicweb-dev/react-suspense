@@ -33,9 +33,9 @@
   },
   "scripts": {
     "serve": "serve -s build",
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts --openssl-legacy-provider build",
-    "build:profile": "react-scripts --openssl-legacy-provider build --profile",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "build:profile": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build --profile",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm run test -- --watchAll=false",
     "test:exercises": "npm run test -- testing.*exercises\\/ --onlyChanged",
