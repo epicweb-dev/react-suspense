@@ -30,6 +30,9 @@
 ##
 ## Learn more about these tasks at 'https://www.gitpod.io/docs/config-start-tasks'
 
+image:
+  file: .gitpod.Dockerfile
+
 tasks:
   - name: App
     init: npm install
