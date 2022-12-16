@@ -1,5 +1,4 @@
-/* For exercise 1, we're working on error boundaries */
-body[class*='01'] iframe {
+iframe {
   display: none;
 }
 
