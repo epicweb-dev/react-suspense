@@ -237,9 +237,19 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "PhilippVujic",
+      "name": "Philipp Vujic",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28774924?v=4",
+      "profile": "https://github.com/PhilippVujic",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoHost": "https://github.com",
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
