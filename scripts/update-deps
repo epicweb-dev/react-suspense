@@ -1,5 +1,0 @@
-# prettier-ignore
-npx npm-check-updates --upgrade --reject husky,react,react-dom,@types/react,@types/react-dom,react-scripts,@kentcdodds/react-workshop-app,chalk,@testing-library/react
-rm -rf node_modules package-lock.json
-npx npm@8 install
-npm run validate
