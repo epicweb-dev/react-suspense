@@ -28,9 +28,12 @@
     "/node_modules"
   ],
   "dependencies": {
+    "@epic-web/invariant": "^1.0.0",
+    "downshift": "^8.3.2",
     "react": "^18.3.0-canary-98b8359f6-20240223",
     "react-dom": "^18.3.0-canary-98b8359f6-20240223",
-    "react-error-boundary": "^4.0.12"
+    "react-error-boundary": "^4.0.12",
+    "spin-delay": "^1.2.0"
   },
   "devDependencies": {
     "@kentcdodds/workshop-utils": "^3.6.0",
