@@ -21,26 +21,6 @@ async function getShipImpl(name: string, delay?: number) {
 	return ship as Ship
 }
 
-const shipSearchCache = new Map<string, Promise<ShipSearch>>()
-
-export function searchShips(query: string, delay?: number) {
-	const searchPromise =
-		shipSearchCache.get(query) ?? searchShipImpl(query, delay)
-	shipSearchCache.set(query, searchPromise)
-	return searchPromise
-}
-
-async function searchShipImpl(query: string, delay?: number) {
-	const searchParams = new URLSearchParams({ query })
-	if (delay) searchParams.set('delay', String(delay))
-	const response = await fetch(`api/search-ships?${searchParams.toString()}`)
-	if (!response.ok) {
-		return Promise.reject(new Error(await response.text()))
-	}
-	const ship = await response.json()
-	return ship as ShipSearch
-}
-
 const imgCache = new Map<string, Promise<string>>()
 
 export function imgSrc(src: string) {
@@ -51,6 +31,7 @@ export function imgSrc(src: string) {
 
 export function preloadImage(src: string) {
 	return new Promise<string>(async (resolve, reject) => {
+		await new Promise(r => setTimeout(r, 1000))
 		const img = document.createElement('img')
 		img.src = src
 		img.onload = () => resolve(src)

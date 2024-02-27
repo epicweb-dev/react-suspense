@@ -7,7 +7,7 @@ import { getImageUrlForShip, getShip, imgSrc, searchShips } from './utils'
 const shipFallbackSrc = '/img/fallback-ship.png'
 
 function App() {
-	const [shipName, setShipName] = useState('Infinity Drifter')
+	const [shipName, setShipName] = useState('Dreadnought')
 	const [isTransitionPending, startTransition] = useTransition()
 	const isPending = useSpinDelay(isTransitionPending)
 	return (
@@ -118,7 +118,7 @@ function SearchResults({
 }
 
 function ShipDetails({ shipName }: { shipName: string }) {
-	const ship = use(getShip(shipName, 500))
+	const ship = use(getShip(shipName))
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">
