@@ -1,9 +1,39 @@
 import { Suspense } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip, type Ship } from './utils'
+import { getImageUrlForShip, getShip } from './utils'
 
-const shipName = 'Dreadyacht'
+type UsePromise<Value> = Promise<Value> & {
+	status: string
+	value: Value
+	reason: any
+}
+
+function use<Value>(promise: Promise<Value>): Value {
+	const usePromise = promise as UsePromise<Value>
+	if (usePromise.status === 'fulfilled') {
+		return usePromise.value
+	} else if (usePromise.status === 'rejected') {
+		throw usePromise.reason
+	} else if (usePromise.status === 'pending') {
+		throw usePromise
+	} else {
+		usePromise.status = 'pending'
+		usePromise.then(
+			result => {
+				usePromise.status = 'fulfilled'
+				usePromise.value = result
+			},
+			reason => {
+				usePromise.status = 'rejected'
+				usePromise.reason = reason
+			},
+		)
+		throw usePromise
+	}
+}
+
+const shipName = 'Dreadnought'
 
 function App() {
 	return (
@@ -21,17 +51,10 @@ function App() {
 	)
 }
 
-let ship: Ship
-let error: unknown
-const shipPromise = getShip(shipName).then(
-	result => (ship = result),
-	err => (error = err),
-)
+const shipPromise = getShip(shipName)
 
 function ShipDetails() {
-	if (error) throw error
-	if (!ship) throw shipPromise
-
+	const ship = use(shipPromise)
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">

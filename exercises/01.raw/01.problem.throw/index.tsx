@@ -1,36 +1,36 @@
 import { Suspense } from 'react'
 import * as ReactDOM from 'react-dom/client'
-import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip, type Ship } from './utils'
+import {
+	getImageUrlForShip,
+	getShip,
+	// 💰 you're gonna want this
+	// type Ship
+} from './utils'
 
-const shipName = 'Dreadyacht'
+const shipName = 'Dreadnought'
 
 function App() {
 	return (
 		<div className="app-wrapper">
 			<div className="app">
 				<div className="details">
-					<ErrorBoundary fallback={<ShipError />}>
-						<Suspense fallback={<ShipFallback />}>
-							<ShipDetails />
-						</Suspense>
-					</ErrorBoundary>
+					<Suspense fallback={<ShipFallback />}>
+						<ShipDetails />
+					</Suspense>
 				</div>
 			</div>
 		</div>
 	)
 }
 
-let ship: Ship
-let error: unknown
-const shipPromise = getShip(shipName).then(
-	result => (ship = result),
-	err => (error = err),
-)
+// 🐨 create a new ship variable that's a Ship
+// 💰 let ship: Ship
+// 🐨 rename this to shipPromise and remove the `await`
+// 🐨 add a .then on the shipPromise that assigns the ship to the resolved value
+const ship = await getShip(shipName)
 
 function ShipDetails() {
-	if (error) throw error
-	if (!ship) throw shipPromise
+	// 🐨 if the ship hasn't loaded yet, throw the shipPromise
 
 	return (
 		<div className="ship-info">
@@ -95,20 +95,6 @@ function ShipFallback() {
 					))}
 				</ul>
 			</section>
-		</div>
-	)
-}
-
-function ShipError() {
-	return (
-		<div className="ship-info">
-			<div className="ship-info__img-wrapper">
-				<img src="/img/broken-ship.webp" alt="broken ship" />
-			</div>
-			<section>
-				<h2>There was an error</h2>
-			</section>
-			<section>There was an error loading "{shipName}"</section>
 		</div>
 	)
 }

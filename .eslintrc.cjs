@@ -6,6 +6,7 @@ module.exports = {
 		'prettier',
 	],
 	rules: {
+		'@typescript-eslint/no-unused-vars': 'off',
 		'jsx-a11y/alt-text': 'off',
 		// playwright requires destructuring in fixtures even if you don't use anything 🤷‍♂️
 		'no-empty-pattern': 'off',

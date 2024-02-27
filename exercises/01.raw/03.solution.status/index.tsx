@@ -23,14 +23,21 @@ function App() {
 
 let ship: Ship
 let error: unknown
+let status: 'pending' | 'rejected' | 'fulfilled' = 'pending'
 const shipPromise = getShip(shipName).then(
-	result => (ship = result),
-	err => (error = err),
+	result => {
+		ship = result
+		status = 'fulfilled'
+	},
+	err => {
+		error = err
+		status = 'rejected'
+	},
 )
 
 function ShipDetails() {
-	if (error) throw error
-	if (!ship) throw shipPromise
+	if (status === 'rejected') throw error
+	if (status === 'pending') throw shipPromise
 
 	return (
 		<div className="ship-info">

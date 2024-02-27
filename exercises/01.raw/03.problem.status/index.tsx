@@ -23,13 +23,22 @@ function App() {
 
 let ship: Ship
 let error: unknown
+// 🐨 create a status variable here
 const shipPromise = getShip(shipName).then(
-	result => (ship = result),
-	err => (error = err),
+	result => {
+		ship = result
+		// 🐨 set the status to 'fulfilled'
+	},
+	err => {
+		error = err
+		// 🐨 set the status to 'rejected'
+	},
 )
 
 function ShipDetails() {
+	// 🐨 change this condition to if the status is rejected
 	if (error) throw error
+	// 🐨 change this condition to if the status is pending
 	if (!ship) throw shipPromise
 
 	return (

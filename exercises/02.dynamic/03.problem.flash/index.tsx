@@ -1,18 +1,34 @@
-import { Suspense } from 'react'
+import { Suspense, use, useState, useTransition } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip, type Ship } from './utils'
-
-const shipName = 'Dreadyacht'
+// 💰 you're gonna want this:
+// import { useSpinDelay } from 'spin-delay'
+import { getImageUrlForShip, getShip } from './utils'
 
 function App() {
+	const [shipName, setShipName] = useState('Dreadnought')
+	// 🐨 rename this to isTransitionPending
+	const [isPending, startTransition] = useTransition()
+	// 🐨 create an isPending based on what you get back from useSpinDelay
+
+	function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+		startTransition(() => {
+			setShipName(e.currentTarget.textContent!)
+		})
+	}
+
 	return (
 		<div className="app-wrapper">
+			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+				<button onClick={handleClick}>Interceptor</button>
+				<button onClick={handleClick}>Dreadnought</button>
+				<button onClick={handleClick}>Galaxy Cruiser</button>
+			</div>
 			<div className="app">
-				<div className="details">
-					<ErrorBoundary fallback={<ShipError />}>
-						<Suspense fallback={<ShipFallback />}>
-							<ShipDetails />
+				<div className="details" style={{ opacity: isPending ? 0.6 : 1 }}>
+					<ErrorBoundary fallback={<ShipError shipName={shipName} />}>
+						<Suspense fallback={<ShipFallback shipName={shipName} />}>
+							<ShipDetails shipName={shipName} />
 						</Suspense>
 					</ErrorBoundary>
 				</div>
@@ -21,17 +37,8 @@ function App() {
 	)
 }
 
-let ship: Ship
-let error: unknown
-const shipPromise = getShip(shipName).then(
-	result => (ship = result),
-	err => (error = err),
-)
-
-function ShipDetails() {
-	if (error) throw error
-	if (!ship) throw shipPromise
-
+function ShipDetails({ shipName }: { shipName: string }) {
+	const ship = use(getShip(shipName))
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">
@@ -69,7 +76,7 @@ function ShipDetails() {
 	)
 }
 
-function ShipFallback() {
+function ShipFallback({ shipName }: { shipName: string }) {
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">
@@ -99,7 +106,7 @@ function ShipFallback() {
 	)
 }
 
-function ShipError() {
+function ShipError({ shipName }: { shipName: string }) {
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">

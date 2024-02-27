@@ -3,7 +3,24 @@ import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
 import { getImageUrlForShip, getShip, type Ship } from './utils'
 
-const shipName = 'Dreadyacht'
+// 💰 this will help your TypeScript be nicer:
+type UsePromise<Value> = Promise<Value> & {
+	status: string
+	value: Value
+	reason: any
+}
+
+// 🐨 create a function called "use" which accepts a promise and here's what it should do:
+// - assign the promise to a variable called "usePromise" as a UsePromise
+// - if the usePromise.status is fuilfilled, return usePromise.value
+// - if the usePromise.status is rejected, throw usePromise.reason
+// - if the usePromise.status is pending, throw usePromise
+// - otherwise, set usePromise.status to 'pending' and then add a .then to the promise
+//   - if the promise resolves, set usePromise.status to 'fulfilled' and set usePromise.value to the result
+//   - if the promise rejects, set usePromise.status to 'rejected' and set usePromise.reason to the rejection reason
+//   - then throw usePromise
+
+const shipName = 'Dreadnought'
 
 function App() {
 	return (
@@ -21,16 +38,28 @@ function App() {
 	)
 }
 
+// 💣 get rid of the ship, error, and status variables
 let ship: Ship
 let error: unknown
-const shipPromise = getShip(shipName).then(
-	result => (ship = result),
-	err => (error = err),
-)
+let status: 'pending' | 'rejected' | 'fulfilled' = 'pending'
+const shipPromise = getShip(shipName)
+	// 💣 get rid of the .then here
+	.then(
+		result => {
+			ship = result
+			status = 'fulfilled'
+		},
+		err => {
+			error = err
+			status = 'rejected'
+		},
+	)
 
 function ShipDetails() {
-	if (error) throw error
-	if (!ship) throw shipPromise
+	// 💣 get rid of these if statements
+	if (status === 'rejected') throw error
+	if (status === 'pending') throw shipPromise
+	// 🐨 create a ship variable that's set to use(shipPromise)
 
 	return (
 		<div className="ship-info">

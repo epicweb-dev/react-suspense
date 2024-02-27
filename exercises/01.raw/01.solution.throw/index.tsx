@@ -19,7 +19,8 @@ function App() {
 }
 
 let ship: Ship
-const shipPromise = getShip(shipName).then(s => (ship = s))
+const shipPromise = getShip(shipName).then(result => (ship = result))
+
 function ShipDetails() {
 	if (!ship) throw shipPromise
 
