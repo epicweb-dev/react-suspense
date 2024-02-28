@@ -19,4 +19,5 @@ CMD node ./setup-swap.js && \
     rm -rf ${KCDSHOP_CONTEXT_CWD} && \
     git clone https://github.com/epicweb-dev/react-suspense ${KCDSHOP_CONTEXT_CWD} && \
     cd ${KCDSHOP_CONTEXT_CWD} && \
+    npm install && \
     npx kcdshop start
