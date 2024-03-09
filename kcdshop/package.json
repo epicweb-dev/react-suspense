@@ -4,7 +4,7 @@
     "start": "cd .. && npm start"
   },
   "dependencies": {
-    "@kentcdodds/workshop-app": "^3.8.2",
+    "@kentcdodds/workshop-app": "^3.8.4",
     "cross-env": "^7.0.3"
   }
 }
