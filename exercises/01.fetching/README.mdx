@@ -1,1 +1,90 @@
 # Data fetching
+
+Most applications require some level of data fetching from a server. The code
+required to perform this data fetching can be as simple as a `fetch` request:
+
+```tsx
+const response = await fetch('https://api.example.com/data')
+const data = await response.json()
+```
+
+That's simple enough, but no matter how fast your server is, you need to think
+about what the user's looking at while they wait. You don't get to control the
+user's network connection. For a similar reason you also need to think about
+what happens if the request fails. You can't control the user's connection
+relability either.
+
+React has a nice way to manage both of these declaratively in components using
+`Suspense` and `ErrorBoundary`.
+
+The biggest trick is how to trigger these two things to happen when rendering
+the UI. This is where the `use` hook comes in:
+
+```tsx
+function PhoneDetails() {
+	const details = use(phoneDetailsPromise)
+	// now you have the details
+}
+```
+
+What's important for you to understand here is that the `use` hook is passed a
+promise. It's not where you _create_ a promise. You need to have triggered the
+`fetch` request somewhere else and then pass it along to the `use` hook.
+Otherwise every time your component renders you'll trigger the `fetch` request
+again. However, there are ways around this which we'll explore later on.
+
+The real trick though is how the heck does `use` turn a promise into a resolved
+value without using `await`!? We need to make sure the code does not continue if
+the `use` hook can't return the resolved `details`. So how does it manage to do
+this? The answer is actually simpler than you might think.
+
+Let me ask you some JavaScript trivia... How do you synchronously stop a
+function from running to completion? You `throw` something! So that's exactly
+what the `use` hook does. It adds a `.then` onto the promise so it can store the
+resolved value, and then it throws the promise. When the promise resolves, React
+will re-render your component and this time the `use` hook will have the
+resolved value to return!
+
+This is kind of hilarious, but it works great. The implementation details of the
+`use` hook are a bit more complex and they definitely can change, but we'll
+implement a simplified version of it in this exercise.
+
+To complete the declarative circle, when the promise is thrown, React will
+"suspend" the component which means it will look up the tree of parent
+components for a `Suspense` component and render its boundary:
+
+```tsx
+import { Suspense } from 'react'
+
+function App() {
+	return (
+		<Suspense fallback={<div>loading phone details</div>}>
+			<PhoneDetails />
+		</Suspense>
+	)
+}
+```
+
+This works similar to Error Boundaries in that the suspense boundary can handle
+any thrown promises in its children or grandchildren. Also they can be nested so
+you have a great amount of control over the loading state of your application.
+
+If the promise rejects, then your `ErrorBoundary` will be triggered and you can
+render an error message to the user:
+
+```tsx
+import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+
+function App() {
+	return (
+		<ErrorBoundary fallback={<div>Oh no, something bad happened</div>}>
+			<Suspense fallback={<div>loading phone details</div>}>
+				<PhoneDetails />
+			</Suspense>
+		</ErrorBoundary>
+	)
+}
+```
+
+In this exercise, we're going to build a simplified `use` hook from scratch.

@@ -1,1 +1,28 @@
 # Utility
+
+👨‍💼 With what you've built so far, we want you to make a reusable utility for
+this use case. We want you to call it `use` and it should take a promise and
+return the `Value` from the promise.
+
+The only way we can do this is by tracking some values which we'll monkey-patch
+onto the `promise` itself. So Kellie's added a special type for you to use to
+make TypeScript happier with the hackery we plan to perform for this simplified
+version of `use`.
+
+🧝‍♂️ Here's a good start for you:
+
+```tsx
+type UsePromise<Value> = Promise<Value> & {
+	status: string
+	value: Value
+	reason: any
+}
+
+function use<Value>(promise: Promise<Value>): Value {
+	const usePromise = promise as UsePromise<Value>
+	// throw stuff, .then stuff, and return Value!
+}
+```
+
+That should get you a good start. When you're done, you should be able to remove
+a bunch of our code and replace it with a `use` call. Good luck!

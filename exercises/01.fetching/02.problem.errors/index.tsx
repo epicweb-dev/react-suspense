@@ -102,7 +102,7 @@ function ShipFallback() {
 	)
 }
 
-// 💰 here you go!
+// 🧝‍♂️ here you go!
 function ShipError() {
 	return (
 		<div className="ship-info">

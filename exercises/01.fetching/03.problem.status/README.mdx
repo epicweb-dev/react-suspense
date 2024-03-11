@@ -1,1 +1,15 @@
 # Formal Status
+
+👨‍💼 Let's clean up things a little bit with what we've built so far by making the
+status of our promise a little more formal.
+
+What we have now is:
+
+- if there's an error, throw it
+- if there's no ship, throw the promise
+- render the ship
+
+But that's not exactly clear.
+
+So instead, let's add a `status` variable that can be
+`'pending' | 'resolved' | 'rejected'` (start it out with `'pending'`).

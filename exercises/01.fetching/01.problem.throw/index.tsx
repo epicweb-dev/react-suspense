@@ -14,9 +14,8 @@ function App() {
 		<div className="app-wrapper">
 			<div className="app">
 				<div className="details">
-					<Suspense fallback={<ShipFallback />}>
-						<ShipDetails />
-					</Suspense>
+					{/* 🐨 add a Suspense component here with the fallback set to <ShipFallback /> */}
+					<ShipDetails />
 				</div>
 			</div>
 		</div>
