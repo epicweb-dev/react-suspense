@@ -86,3 +86,17 @@ Here's how things will work when you're finished with this exercise:
 7. The `ShipDetails` renders fine while `ShipImg` shows the fallback
 8. The `imgSrc` promise resolves and React attempts to render the `Img` again
 9. Everything settles.
+
+The key is the step where react finds **a brand new suspense boundary**. This is
+accomplished by using the `key` prop!
+
+👨‍💼 Thank you Olivia!
+
+Great, so now we need you to add a suspense boundary with a `key` prop. It
+generally makes sense to put the `Suspense` boundary inside the `ErrorBoundary`
+(in case the fallback fails the error boundary can handle that as well). In
+addition we can put the `key` prop on the `ErrorBoundary` instead of the
+Suspense boundary as well (since the `ErrorBoundary` is the parent of the
+`Suspense` boundary).
+
+So let's give that a shot!
