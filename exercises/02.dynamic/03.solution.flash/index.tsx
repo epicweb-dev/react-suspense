@@ -2,26 +2,25 @@ import { Suspense, use, useState, useTransition } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useSpinDelay } from 'spin-delay'
-import { getImageUrlForShip, getShip } from './utils'
+import { getImageUrlForShip, getShip } from './utils.tsx'
 
 function App() {
 	const [shipName, setShipName] = useState('Dreadnought')
 	const [isTransitionPending, startTransition] = useTransition()
-	const isPending = useSpinDelay(isTransitionPending)
+	const isPending = useSpinDelay(isTransitionPending, {
+		delay: 300,
+		minDuration: 350,
+	})
 
-	function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+	function handleShipSelection(newShipName: string) {
 		startTransition(() => {
-			setShipName(e.currentTarget.textContent!)
+			setShipName(newShipName)
 		})
 	}
 
 	return (
 		<div className="app-wrapper">
-			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<button onClick={handleClick}>Interceptor</button>
-				<button onClick={handleClick}>Dreadnought</button>
-				<button onClick={handleClick}>Galaxy Cruiser</button>
-			</div>
+			<ShipButtons shipName={shipName} onShipSelect={handleShipSelection} />
 			<div className="app">
 				<div className="details" style={{ opacity: isPending ? 0.6 : 1 }}>
 					<ErrorBoundary fallback={<ShipError shipName={shipName} />}>
@@ -35,8 +34,34 @@ function App() {
 	)
 }
 
+function ShipButtons({
+	shipName,
+	onShipSelect,
+}: {
+	shipName: string
+	onShipSelect: (shipName: string) => void
+}) {
+	const ships = ['Dreadnought', 'Interceptor', 'Galaxy Cruiser']
+
+	return (
+		<div className="ship-buttons">
+			{ships.map(ship => (
+				<button
+					key={ship}
+					onClick={() => onShipSelect(ship)}
+					className={shipName === ship ? 'active' : ''}
+				>
+					{ship}
+				</button>
+			))}
+		</div>
+	)
+}
+
 function ShipDetails({ shipName }: { shipName: string }) {
-	const ship = use(getShip(shipName))
+	// 🦉 you can change this delay to control how long loading the resource takes:
+	const delay = 10
+	const ship = use(getShip(shipName, delay))
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">

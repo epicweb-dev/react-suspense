@@ -1,1 +1,88 @@
 # Suspense img
+
+You can suspend more than just `fetch` requests with Suspense and the `use`
+hook. Anything async can be suspended, including images.
+
+But, why would you want to suspend on images? Well, let's look at an example:
+
+```html
+<img src="/some/image.jpg" />
+```
+
+If we were to change the `src` of the image, the browser would start loading the
+new image and only replace the old image when the new one has finished
+downloading. This is probably what you want (you wouldn't want to get a flicker
+of no image at all while the new image is loading).
+
+The trouble is, what if in addition to rendering an updated image, there's
+updated content as well? The user would see the old image displayed alongside
+the new content until the new image is loaded. This is easier to visualize, so
+take this for example:
+
+<video controls autoplay loop muted>
+	<source
+		src="https://www.dropbox.com/scl/fi/k8dnd1u92kd9obf348uq6/bad-img-loading.mp4?rlkey=aois484ivmdjne5n7diorc7xy&raw=1"
+		type="video/mp4"
+	/>
+</video>
+
+In the video above, the network speed has been artificially slowed down to a 3G
+network speed and the cache has also been cleared. As a result, once a different
+space ship is selected, the data request for the new ship takes about 2 seconds.
+Once the data has loaded, React re-renders the UI with the new data, including
+the `img` `src` attribute. However, the browser leaves the old `src` attribute
+in place to avoid a flicker of no image at all while the new image is loading.
+
+The new image takes almost 10 seconds to download, all the while, the old image
+is still being displayed. This could be confusing to users and not a great user
+experience. It would be better for us to have more control over that experience.
+
+All you need to do to make this work with suspense is have some mechanism to
+load the image in an async function. When the promise resolves, you know the
+image is ready to be resolved. We can actually take advantage of the browser's
+built-in caching mechanism to make this work by assuming that if we request the
+image twice, the second request will be faster because the image is cached.
+
+So all we need to do is create an image, set it's `src`, and set the `onload`
+and `onerror` event handlers to resolve or reject a promise. Here's an example:
+
+```tsx
+function preloadImage(src: string) {
+	return new Promise<string>(async (resolve, reject) => {
+		const img = new Image()
+		img.src = src
+		img.onload = () => resolve(src)
+		img.onerror = reject
+	})
+}
+```
+
+Now, you can call that function to get a promise that resolves when the image
+has been loaded (and presumably is in the browser cache assuming cache headers
+are set properly). So you can use that for a custom `Img` component to suspend
+on the image.
+
+There are other things to consider here because now you're preventing the data
+from being displayed until the image is ready which may not be what you want
+either. But React gives us the ability to control this as well, by adding a
+`Suspense` boundary around the `Img` component and adding a `key` prop to the
+`Suspense` boundary (or a parent) to force it to render the `fallback` for just
+the image which will allow us to display the data while the image is loading.
+
+Ultimately leading us to this improved experience:
+
+<video controls autoplay loop muted>
+	<source
+		src="https://www.dropbox.com/scl/fi/bur28nw0s3tgl7qy39vpm/better-img-loading.mp4?rlkey=y6rq0crkfirf6zd29e2hpb77o&raw=1"
+		type="video/mp4"
+	/>
+</video>
+
+In the video above, all the same network conditions are in effect, but now once
+the data finishes loading, the old image is replaced by a fallback image (which
+was already loaded earlier on the initial page load and is in the cache) and the
+new image is displayed once it's ready.
+
+This resolves the confusion and leads to a better user experience.
+
+And it's all thanks to React's ability to suspend on any kid of async operation.

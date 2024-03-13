@@ -5,7 +5,7 @@ import {
 	getShip,
 	// 💰 you're gonna want this
 	// type Ship
-} from './utils'
+} from './utils.tsx'
 
 const shipName = 'Dreadnought'
 

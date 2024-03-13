@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import * as ReactDOM from 'react-dom/client'
-import { getImageUrlForShip, getShip, type Ship } from './utils'
+import { getImageUrlForShip, getShip, type Ship } from './utils.tsx'
 
 const shipName = 'Dreadnought'
 

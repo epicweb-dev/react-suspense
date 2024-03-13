@@ -1,4 +1,4 @@
-import { type Ship, type ShipSearch } from './api.server'
+import { type Ship, type ShipSearch } from './api.server.ts'
 
 export type { Ship, ShipSearch }
 

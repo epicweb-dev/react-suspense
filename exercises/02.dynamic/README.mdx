@@ -1,1 +1,125 @@
 # Dynamic Promises
+
+## Promise caching
+
+Fetching data in our components is great, but this would be a problem:
+
+```tsx
+async function fetchUser() {
+	const response = await fetch('/api/user')
+	const user = await response.json()
+}
+
+function NumberInfo() {
+	const [count, setCount] = React.useState(0)
+	const userInfo = use(fetchUser)
+	const increment = () => setCount(c => c + 1)
+	return (
+		<div>
+			Hi {userInfo.name}! You have clicked {count} times.
+			<button onClick={increment}>Increment again!</button>
+		</div>
+	)
+}
+```
+
+The problem is every time you click the button, `fetchUser` will be called again
+triggering a new fetch request for the user which is not only inefficient, but
+it would trigger the `NumberInfo` component to suspend which would render the
+suspense boundary and result in a pretty janky experience even if your user
+endpoint was fast and the user had a fast network. This is not a good user
+experience.
+
+The solution to this is to add caching to our `fetchUser` function. That way, if
+the `fetchUser` function is called again, we can return the same promise that
+was returned previously:
+
+```tsx
+let userPromise
+function fetchUser() {
+	userPromise = userPromise ?? fetchUserImpl()
+	return userPromise
+}
+
+// "impl" is short for "implementation"
+async function fetchUserImpl() {
+	const response = await fetch('/api/user')
+	const user = await response.json()
+	return user
+}
+```
+
+By returning the same promise, React will keep track of that specific promise
+and it knows whether it's already resolved and needs to suspend or not.
+
+Of course, this is a simple example. Caching like this normally involves a lot
+more thought. For example, what if we could fetch a user by their ID? We
+couldn't just have a `userPromise` anymore, we'd now have to have a mapping from
+the user's ID to the promise that fetches that user:
+
+```tsx lines=1,3,4
+const userPromiseCache = new Map<string, Promise<User>>()
+function fetchUser(id: string) {
+	const userPromise = userPromiseCache.get(id) ?? fetchUserImpl(id)
+	userPromiseCache.set(id, userPromise)
+	return userPromise
+}
+
+async function fetchUserImpl(id) {
+	const response = await fetch(`/api/user/${id}`)
+	const user = await response.json()
+	return user
+}
+```
+
+This does get more complicated when you start thinking about the fact that the
+user data could change and now you have to worry about cache invalidation. But
+the point is that you need to cache your promises to avoid unnecessary
+re-fetching.
+
+📜 Learn more about caching generally from
+[Caching for Cash](https://www.epicweb.dev/talks/caching-for-cash)
+
+## Transitions
+
+Whenever you trigger a state update that results in a suspending component, the
+closest suspense boundary will be found and its `fallback` prop will be rendered
+until the promise resolves. This can be a jarring experience for the user if the
+suspense boundary is far away from the component that triggered the state update
+or the loading state is very different from the resolved state.
+
+To make the transition from loading to resolved state smoother, you can use the
+`useTransition` hook. This hook returns a tuple of two values: a boolean and a
+function. The boolean is `true` when the promise is still pending and `false`
+when the promise has resolved. The function is a callback that you can use to
+trigger the state update that will result in the promise being fetched.
+
+```tsx lines=2,7-9,13
+function SomeComponent() {
+	const [someState, setSomeState] = useState(null)
+	const [isPending, startTransition] = useTransition()
+	const someResolvedValue = use(fetchSomeData(someState))
+
+	function handleChange(someValue) {
+		startTransition(() => {
+			setSomeState(someValue)
+		})
+	}
+	return (
+		<div>
+			{isPending ? <LoadingSpinner /> : <div>{someResolvedValue}</div>}
+			<button onClick={() => handleChange('some value')}>Change state</button>
+		</div>
+	)
+}
+```
+
+The `isPending` variable there will be `true` while the suspending component is
+waiting for the promise to resolve and `false` when the promise has resolved and
+the component is ready to be rendered. This allows you to show a loading state
+on the existing UI rather than using the suspense boundary fallback UI. It often
+results in a much smoother user experience.
+
+📜 Check out
+[the `useTransition` documentation](https://react.dev/reference/react/useTransition)
+for more on this.

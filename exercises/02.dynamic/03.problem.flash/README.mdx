@@ -1,1 +1,50 @@
 # Pending Flash
+
+👨‍💼 When the user's on a reasonably fast connection, getting the ship data
+doesn't take very long and as a result the loading state doesn't show up for all
+that long. This is great, except it results in a flash of the loading state
+while the ship takes ~50ms to load. It's jarring for the user and it would be
+better if we could avoid it.
+
+We thought about adding a CSS delay of 300ms on the opacity transition, but that
+would just mean the flash of loading state happens for people for whom the data
+loading takes 350ms or so. Just moving the problem 🤷‍♂️
+
+What we really need is something that can give us the following experience:
+
+- If the loading takes less than 300ms, don't show a loading spinner at all.
+- If the loading takes longer than 300ms, show a loading spinner for at least
+  350ms. Even if the loading is shorter than 300ms + 350ms.
+
+This way, if the user has a reasonably fast connection, they won't see a loading
+state at all, and if they have a medium fast connection, they'll be guaranteed
+to not get a flash of loading state because the loading state will show up for
+at least 350ms.
+
+Luckily, there's a simple package that does exactly this:
+[`spin-delay`](https://npm.im/spin-delay). Here's an example:
+
+```tsx lines=1,8
+import { useSpinDelay } from 'spin-delay'
+
+function MyComponent() {
+	const data = use(somePromise)
+	const [isPending, startTransition] = useTransition()
+
+	// options are optional, and default to these values
+	const showSpinner = useSpinDelay(isPending, { delay: 500, minDuration: 200 })
+
+	if (showSpinner) {
+		return <Spinner />
+	}
+
+	// ...
+}
+```
+
+So let's add this with a `delay` of `300` and a `minDuration` of `350` to the
+`Ship` component.
+
+To test this experience out, you can update the `getShip` call with a second
+argument which is a `delay` that will ensure the request takes at least that
+amount of time (it's not super precise, but it should give you an idea).

@@ -1,1 +1,24 @@
 # Promise Cache
+
+🧝‍♂️ I've made a <PrevDiffLink>couple of changes</PrevDiffLink>. I moved the
+`getShip` call into the component itself so we can dynamically change which ship
+we're looking at. I also added some buttons to allow us to do this from the UI.
+
+But we've got a problem, and I've added a counter button to the UI so you can
+reproduce the problem. Every time you click it, we're suspending again 😱 This
+is because we don't have caching on our `getShip` function so every render
+triggers a new fetch call.
+
+👨‍💼 Yeah, this is far from optimal for our application. Could you add a little
+cache for our `getShip` function so when it's called with the same ship name it
+doesn't request the ship again and suspend?
+
+When you're finished, you should be able to click the counter button as many
+times as you like without suspending. Additionally, because of the cache, once
+you've fetched the details for a ship, you should be able to switch back and
+forth and it should be instant.
+
+<callout-info>
+	If you want to reset the cache while you're working on this, simply refresh
+	the page. We're not going to get into cache invalidation in this workshop.
+</callout-info>

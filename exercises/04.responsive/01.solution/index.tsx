@@ -2,14 +2,17 @@ import { Suspense, use, useDeferredValue, useState, useTransition } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useSpinDelay } from 'spin-delay'
-import { getImageUrlForShip, getShip, imgSrc, searchShips } from './utils'
+import { getImageUrlForShip, getShip, imgSrc, searchShips } from './utils.tsx'
 
 const shipFallbackSrc = '/img/fallback-ship.png'
 
 function App() {
 	const [shipName, setShipName] = useState('Dreadnought')
 	const [isTransitionPending, startTransition] = useTransition()
-	const isPending = useSpinDelay(isTransitionPending)
+	const isPending = useSpinDelay(isTransitionPending, {
+		delay: 300,
+		minDuration: 350,
+	})
 	return (
 		<div className="app-wrapper">
 			<div className="app">

@@ -1,24 +1,20 @@
 import { Suspense, use, useState } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip } from './utils'
+import { getImageUrlForShip, getShip } from './utils.tsx'
 
 function App() {
 	const [shipName, setShipName] = useState('Dreadnought')
 	// 🐨 call useTransition here
 
-	function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+	function handleShipSelection(newShipName: string) {
 		// 🐨 wrap setShipName in startTransition
-		setShipName(e.currentTarget.textContent!)
+		setShipName(newShipName)
 	}
 
 	return (
 		<div className="app-wrapper">
-			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<button onClick={handleClick}>Interceptor</button>
-				<button onClick={handleClick}>Dreadnought</button>
-				<button onClick={handleClick}>Galaxy Cruiser</button>
-			</div>
+			<ShipButtons shipName={shipName} onShipSelect={handleShipSelection} />
 			<div className="app">
 				{/* 🐨 add inline styles to set the opacity to 0.6 if we're pending */}
 				<div className="details">
@@ -29,6 +25,30 @@ function App() {
 					</ErrorBoundary>
 				</div>
 			</div>
+		</div>
+	)
+}
+
+function ShipButtons({
+	shipName,
+	onShipSelect,
+}: {
+	shipName: string
+	onShipSelect: (shipName: string) => void
+}) {
+	const ships = ['Dreadnought', 'Interceptor', 'Galaxy Cruiser']
+
+	return (
+		<div className="ship-buttons">
+			{ships.map(ship => (
+				<button
+					key={ship}
+					onClick={() => onShipSelect(ship)}
+					className={shipName === ship ? 'active' : ''}
+				>
+					{ship}
+				</button>
+			))}
 		</div>
 	)
 }

@@ -1,1 +1,12 @@
 # useTransition
+
+👨‍💼 Whenever we change the ship, our component suspends. But this is annoying to
+our users who are on reasonably fast internet connections because it means they
+see a loading spinner every time they change the ship when it really would be a
+better experience to have a more subtle pending state when the ship changes.
+
+Our designer just told us to use a `0.6` `opacity` setting while the ship is
+changing (for now). We can use the `useTransition` hook to accomplish this.
+
+So wrap the state update in a transition and add opacity to the details so we
+can give our users a better experience!

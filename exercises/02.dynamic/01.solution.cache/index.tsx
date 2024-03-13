@@ -1,21 +1,22 @@
 import { Suspense, use, useState } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip } from './utils'
+import { getImageUrlForShip, getShip } from './utils.tsx'
 
 function App() {
+	const [count, setCount] = useState(0)
 	const [shipName, setShipName] = useState('Dreadnought')
-	function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
-		setShipName(e.currentTarget.textContent!)
+
+	function handleShipSelection(newShipName: string) {
+		setShipName(newShipName)
 	}
 
 	return (
 		<div className="app-wrapper">
-			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<button onClick={handleClick}>Interceptor</button>
-				<button onClick={handleClick}>Dreadnought</button>
-				<button onClick={handleClick}>Galaxy Cruiser</button>
-			</div>
+			<button onClick={() => setCount(c => c + 1)}>
+				Click to re-render: {count}
+			</button>
+			<ShipButtons shipName={shipName} onShipSelect={handleShipSelection} />
 			<div className="app">
 				<div className="details">
 					<ErrorBoundary fallback={<ShipError shipName={shipName} />}>
@@ -25,6 +26,30 @@ function App() {
 					</ErrorBoundary>
 				</div>
 			</div>
+		</div>
+	)
+}
+
+function ShipButtons({
+	shipName,
+	onShipSelect,
+}: {
+	shipName: string
+	onShipSelect: (shipName: string) => void
+}) {
+	const ships = ['Dreadnought', 'Interceptor', 'Galaxy Cruiser']
+
+	return (
+		<div className="ship-buttons">
+			{ships.map(ship => (
+				<button
+					key={ship}
+					onClick={() => onShipSelect(ship)}
+					className={shipName === ship ? 'active' : ''}
+				>
+					{ship}
+				</button>
+			))}
 		</div>
 	)
 }

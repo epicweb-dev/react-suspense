@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip } from './utils'
+import { getImageUrlForShip, getShip } from './utils.tsx'
 
 type UsePromise<Value> = Promise<Value> & {
 	status: string

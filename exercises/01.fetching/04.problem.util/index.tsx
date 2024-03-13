@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip, type Ship } from './utils'
+import { getImageUrlForShip, getShip, type Ship } from './utils.tsx'
 
 // 💰 this will help your TypeScript be nicer:
 type UsePromise<Value> = Promise<Value> & {

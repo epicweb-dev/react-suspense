@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client'
 // 💰 you're gonna want this
 // (unless you want to implement your own error boundary from scratch! 😅)
 // import { ErrorBoundary } from 'react-error-boundary'
-import { getImageUrlForShip, getShip, type Ship } from './utils'
+import { getImageUrlForShip, getShip, type Ship } from './utils.tsx'
 
 // 🐨 change this to a ship that doesn't exist (like 'Dreadyacht' 😆)
 const shipName = 'Dreadnought'

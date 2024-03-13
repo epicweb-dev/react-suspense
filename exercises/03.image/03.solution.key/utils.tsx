@@ -1,4 +1,4 @@
-import { type Ship } from './api.server'
+import { type Ship } from './api.server.ts'
 
 export type { Ship }
 
