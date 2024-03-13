@@ -1,0 +1,18 @@
+# Img Error Boundary
+
+👨‍💼 Sometimes images fail to load for one reason or another. Maybe the URL had
+a typo in it or maybe the user has a spotty network connection. Right now, when
+the image fails to load, we don't show anything to the user at all. We just go
+to the nearest error boundary and show that.
+
+🧝‍♂️ <PrevDiffLink>I've added</PrevDiffLink> a bit of code to make the image fail
+to load and you'll notice that when that happens, we just fallback to the error
+boundary for the entire component, even though we have some useful information
+that we could show the user.
+
+👨‍💼 What I'd like you to do is create a `ShipImg` component which renders an
+`ErrorBoundary` around an `Img` component. For the fallback, you can simply
+render a regular `<img />` tag and forward the regular props. This will cause
+the browser to display what it normally does when an image fails to load. Maybe
+one day we'll circle back on this and make a special image to display in this
+case, but for now that will do.

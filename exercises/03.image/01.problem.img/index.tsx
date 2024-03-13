@@ -143,7 +143,7 @@ function ShipError({ shipName }: { shipName: string }) {
 }
 
 // 🐨 create an Img component that accepts all the props from an img element
-// 💰 here's the types for your props: React.ImgHTMLAttributes<HTMLImageElement>
+// 💰 here's the types for your props: React.ComponentProps<'img'>
 //   - reassign the src to use(imgSrc(src)) from ./utils (you'll have to create imgSrc)
 // return an img element with all the props passed to it
 

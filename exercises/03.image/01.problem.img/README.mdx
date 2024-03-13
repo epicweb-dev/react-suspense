@@ -1,1 +1,24 @@
 # Img Component
+
+👨‍💼 Our users have noticed this annoying behavior. Here's how you reproduce it:
+
+{/* prettier-ignore */}
+- Set the playground to this exercise
+- <LinkToApp to="/">Open the playground</LinkToApp> (in a separate tab)
+- Open the dev tools
+- Right-click the refresh button and select ["Empty Cache and Hard Reload"](https://stackoverflow.com/questions/14969315/whats-the-difference-between-normal-reload-hard-reload-and-empty-cache-a)
+- [Throttle your network](https://developer.chrome.com/docs/devtools/network/reference#throttling) speed in the dev tools to "Slow 3G"
+- Click a separate ship
+
+You should notice the network loads the data for the ship. While that happens,
+our pending state is shown (great job on that again). Once the data is loaded,
+the component re-renders with the new data (even the `img` `src` gets updated
+properly). However, the `img` is still loading. This is because the browser
+waits for the new image `src` to be loaded before switching to the new image.
+
+Our users are confused by this, and that's what we need you to solve using
+Suspense, the `use` hook, and a `preloadImage` utility.
+
+The emoji will guide you through this one.
+Best to start in <InlineFile file="utils.tsx" />. Lots of this will feel similar
+to what we were doing with the `getShip` regarding the caching stuff!

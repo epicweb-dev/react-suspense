@@ -1,1 +1,88 @@
 # Key prop
+
+👨‍💼 Alrighty, we've got a problem that I've been pushing off, but it's time we
+resolve it. We removed confusion for our users by waiting until the image is
+ready before we display the ship's data, but that means our users have to wait
+until the ship's image loads before they can see the ship's data! Ugh, that's
+annoying. Wouldn't it be cool if we could have the best of all worlds:
+
+- Show the ship's data as soon as it's ready
+- Show the ship's image as soon as it's ready
+- Not show the old ship's image while we're waiting for the new one
+
+Well, we can! But it requires a little extra thought. I'm going to have Olivia
+explain something to you about how suspense boundaries work with
+`useTransition`.
+
+🦉 Thanks Peter. Ok, so here's the deal with Suspense boundaries. When one of
+their children suspends, they render the fallback until the suspended child is
+ready to render. That much should be clear from what we've done so far.
+
+When you add `useTransition` and trigger a "suspending state change" from within
+that transition, this will prevent the Suspense boundary from rendering and
+instead will keep the old UI around and give you a pending state to work with so
+you can show a more contextual pending state. That's what we did in the last
+exercise.
+
+To add to this, even when you're using `useTransition`, the suspense fallback
+will show up on the initial render of the Suspense component. This is why you'll
+see the fallback when you load the page initially.
+
+So here's the deal, we need a way to get both a suspense boundary (for the
+image) and a pending state (for the data) at the same time. We can do this by
+adding a Suspense boundary around the image. But that's not quite enough. We
+also need to have React treat the Suspense boundary around the image as if it's
+brand new for every image we render so it doesn't participate in the transition.
+
+To do this, we need to give the Suspense boundary a unique key. This will make
+React treat it as a new boundary every time the key changes and will keep it out
+of the transition.
+
+To make this more clear, here's a walkthrough of what's happening with our
+app right now:
+
+**Initial Render**
+
+1. We render the app
+2. `ShipDetails` calls `use(getShip(shipName))` which suspends
+3. React renders the suspense boundary
+4. The `getShip` promise resolves and React attempts to render the `ShipDetails`
+   again.
+5. `ShipImg` renders `Img` which calls `use(imgSrc(src))` which suspends
+6. React keeps the suspense boundary around
+7. The `imgSrc` promise resolves and React attempts to render the `Img` again
+8. Everything settles.
+
+This all is operating as we'd like for now. It's the transition we want to
+improve:
+
+**Transition**
+
+1. We call `startTransition` to change the `shipName`
+2. React tries to re-render and `ShipDetails` calls `use(getShip(shipName))`
+   which suspends
+3. React keeps the previous state around and gives us the `isPending` state as
+   `true` so we can show a more contextual pending UI (opacity `0.6`).
+4. The `getShip` promise resolves and React attempts to render the `ShipDetails`
+   again.
+5. `ShipImg` renders `Img` which calls `use(imgSrc(src))` which suspends
+6. React keeps the `isPending` state as-is
+7. The `imgSrc` promise resolves and React attempts to render the `Img` again
+8. Everything settles.
+
+Here's how things will work when you're finished with this exercise:
+
+**Improved Transition**
+
+1. We call `startTransition` to change the `shipName`
+2. React tries to re-render and `ShipDetails` calls `use(getShip(shipName))`
+   which suspends
+3. React keeps the previous state around and gives us the `isPending` state as
+   `true` so we can show a more contextual pending UI (opacity `0.6`).
+4. The `getShip` promise resolves and React attempts to render the `ShipDetails`
+   again.
+5. `ShipImg` renders `Img` which calls `use(imgSrc(src))` which suspends
+6. React finds **a brand new suspense boundary** and renders the fallback
+7. The `ShipDetails` renders fine while `ShipImg` shows the fallback
+8. The `imgSrc` promise resolves and React attempts to render the `Img` again
+9. Everything settles.

@@ -205,7 +205,7 @@ function ShipError({ shipName }: { shipName: string }) {
 	)
 }
 
-function ShipImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
+function ShipImg(props: React.ComponentProps<'img'>) {
 	return (
 		<ErrorBoundary fallback={<img {...props} />} key={props.src}>
 			<Suspense fallback={<img {...props} src={shipFallbackSrc} />}>
@@ -215,10 +215,7 @@ function ShipImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
 	)
 }
 
-function Img({
-	src = '',
-	...props
-}: React.ImgHTMLAttributes<HTMLImageElement>) {
+function Img({ src = '', ...props }: React.ComponentProps<'img'>) {
 	src = use(imgSrc(src))
 	return <img src={src} {...props} />
 }

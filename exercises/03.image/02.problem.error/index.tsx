@@ -63,7 +63,8 @@ function ShipDetails({ shipName }: { shipName: string }) {
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">
-				<ShipImg
+				{/* 🐨 change this to the ShipImg component */}
+				<Img
 					src={getImageUrlForShip(ship.name, { size: 200 })}
 					alt={ship.name}
 				/>
@@ -141,20 +142,12 @@ function ShipError({ shipName }: { shipName: string }) {
 	)
 }
 
-function ShipImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
-	return (
-		<ErrorBoundary fallback={<img {...props} />}>
-			<Suspense fallback={<img {...props} src="/img/fallback-ship.png" />}>
-				<Img {...props} />
-			</Suspense>
-		</ErrorBoundary>
-	)
-}
+// 🐨 create a ShipImg component which accepts all the props of a regular img
+// element (🦺 React.ComponentProps<'img'>) and it should forward all props to
+// the Img component and be wrapped by an ErrorBoundary with the fallback being
+// simply <img {...props} />
 
-function Img({
-	src = '',
-	...props
-}: React.ImgHTMLAttributes<HTMLImageElement>) {
+function Img({ src = '', ...props }: React.ComponentProps<'img'>) {
 	src = use(imgSrc(src))
 	return <img src={src} {...props} />
 }
