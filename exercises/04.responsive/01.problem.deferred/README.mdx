@@ -1,0 +1,26 @@
+# useDeferredValue
+
+🧝‍♂️ I've made a number of changes (<PrevDiffLink>check my work</PrevDiffLink>)
+because we want people to be able to search through a list of ships and select
+the ones they're most interested in.
+
+👨‍💼 Thanks Kellie! So, here's the thing, we have a search endpoint for the filter
+on the left side, and Kellie applied the same pattern for handling that async
+interaction as we did with the ship details, including the `useTransition` for
+showing a pending UI.
+
+But the problem is, during the transition, the input isn't responsive to user
+input. It's really annoying to use as a result. We need the UI to be responsive.
+
+So could you please remove the transition and switch to `useDeferredValue`
+instead? Make sure to keep the pending UI experience, we just want the user to
+be able to interrupt the pending state by typing more into the input.
+
+🦉 Something you might try in this exercise is adding a `console.log` of the
+`search` and the `deferredSearch` and see how React renders your component twice
+when you type in the input (once with the old value and once with the new
+value). You'll actually see quite a few render calls as you type, but this
+should be instructive. If you wish, you might add a delay argument to the
+`searchShips` call (`searchShips(search, 1000)`) to simulate a slow network
+response to more easily see which sets of logs are associated with which
+renders.

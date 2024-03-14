@@ -1,1 +1,40 @@
 # Responsive
+
+Something you'll remember from previous exercises is that when you suspend with
+a `useTransition`, React hangs on to the previous state and gives you a pending
+boolean so you can display the pending state. The problem with this is if you
+want to display the state that triggered the transition. For example, if the
+user is typing in a search box which you're controlling with state, you want to
+keep the `<input />`'s `value` up-to-date with what they're typing, not with
+the previous state while React is waiting for the transition to complete.
+
+So we need a way that allows us to both display some pending state while also
+allowing us to display the state that triggered a component to suspend. This is
+where `useDeferredValue` comes in:
+
+```tsx
+const deferredValue = useDeferredValue(value)
+const isPending = deferredValue !== value
+```
+
+`useDeferredValue` makes React do something kind of funny. It makes React render
+your component twice. Once with the `deferredValue` set to the previous `value`
+and second with the `deferredValue` set to the current `value`. This allows
+React to handle components that suspend and you can know whether to display
+pending UI based on whether the `deferredValue` and `value` differ.
+
+The React docs do a good job explaining how this works, so
+[📜 check the `useDeferredValue` docs](https://react.dev/reference/react/useDeferredValue)
+for details.
+
+This may feel pretty similar to `useTransition`. Both give you the ability to
+handle pending UI for suspending components. `useDeferredValue` is what you'll
+use more often for typical user interactions. `useTransition` will normally be
+handled when the user is navigating or refreshing a whole UI.
+
+It should be noted that this can also be used to keep things snappy if you have
+a component that's particularly slow. You can pass the `deferredValue` to the
+slow component and the rest of the application will be highly responsive to user
+interaction. The slow component will only update when it manages to finish
+rendering with the latest `deferredValue`. This works because the background
+renders can be thrown away whenever the `deferredValue` changes.
