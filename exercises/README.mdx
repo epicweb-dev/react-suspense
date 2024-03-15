@@ -9,10 +9,19 @@ asynchronous behavior. Primarily we'll be focusing on data fetching and assets
 like images, but you can apply this to any asynchronous behavior in your
 application.
 
-The core of everything we'll be doing revolves around the `Suspense` component
-and the `use` hook. The `Suspense` component enables you to declaratively tell
-React what to render while waiting for something to load. The `use` hook enables
-you to convert something async (a promise) into the resolved value.
+The core of everything we'll be doing revolves around the
+[`Suspense`](https://react.dev/reference/react/Suspense) component and the
+[`use`](https://react.dev/reference/react/use) hook. The `Suspense` component
+enables you to declaratively tell React what to render while waiting for
+something to load. The `use` hook enables you to convert something async (a
+promise) into the resolved value.
+
+<callout-warning>
+	The `use` hook is currently only available in Canary and Experimental releases
+	of React. We have a canary version of React installed in this workshop, but
+	it's good to keep in mind that this is not yet officially released (though it
+	should be soon).
+</callout-warning>
 
 And of course, there's `ErrorBoundary` which is a component that you can use to
 catch errors in your application and display a fallback UI. We'll be following

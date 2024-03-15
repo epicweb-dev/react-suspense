@@ -1,1 +1,336 @@
 # Optimizations
+
+## Waterfalls
+
+React Suspense is a powerful way to colocate data requirements with the UI that
+requires the data. However, there is one drawback to this approach and that
+involves something called "waterfalls."
+
+If you look at the Network tab of your DevTools, you'll find a "waterfall"
+column. This displays the time each request was in flight. When the request
+waterfalls look like a stair-stepping cascade, that leads to a slower user
+experience than if all the requests start at the same time.
+
+<callout-warning class="aside">
+	While "waterfall" describes the visual appearance of the network requests in
+	general (even the fast ones), it is often (confusingly) used to simply
+	describe what I'm calling the "stair-stepping cascade" (the slow kind of
+	waterfall). So, in the future when I say "waterfall" I'm talking about the
+	"stair-stepping cascade" kind unless otherwise noted.
+</callout-warning>
+
+To be clear:
+
+```
+Request A --------> Response A
+                     Request B --------> Response B
+                                          Request C --------> Response C
+```
+
+This is a stair-stepping cascade, alternatively:
+
+```
+Request A --------> Response A
+Request B --------> Response B
+Request C --------> Response C
+```
+
+This is much faster.
+
+<callout-info>
+	Of course, sometimes you can't avoid a little waterfalling if the data you
+	need depends on other data to be retrieved first (if that's the case, then fix
+	your API to not have this limitation).
+</callout-info>
+
+Due to the design of Suspense, you can easily create waterfalls by mistake. For
+example:
+
+```tsx
+function ProfileDetails({ username }: { username: string }) {
+	const favoritesCount = use(getFavoritesCount(username))
+	const friends = use(getFriends(username))
+	return <div>{/* some profile details */}</div>
+}
+```
+
+The trouble with this is the `use(getFavoritesCount(username))` will cause the
+`ProfileDetails` will suspend until the `getFavoritesCount` request is resolved.
+Only then will the `getFriends` request be made. This is a waterfall.
+
+To solve this problem is pretty simple, though maybe not obvious at first. You
+just need to make sure to trigger both requests before `use` is called:
+
+```tsx
+function ProfileDetails({ username }: { username: string }) {
+	const favoritesCountPromise = getFavoritesCount(username)
+	const friendsPromise = getFriends(username)
+	const favoritesCount = use(favoritesCountPromise)
+	const friends = use(friendsPromise)
+
+	return <div>{/* some profile details */}</div>
+}
+```
+
+This way, both requests are made at the same time and the `ProfileDetails`
+component will remain suspended when both are resolved (the order of the `use`
+calls doesn't matter in this case).
+
+That's simple enough (you could even make a custom Lint rule to enforce you
+always do this correctly), but there's an even trickier place where this can
+happen.
+
+What if you were to nest these components?
+
+```tsx
+function ProfilePage({ username }: { username: string }) {
+	const userAvatar = use(getUserAvatar(username))
+	return (
+		<div>
+			<Avatar url={userAvatar} />
+			<ProfileDetails username={username} />
+			<hr />
+			<ProfilePosts username={username} />
+		</div>
+	)
+}
+
+function ProfileDetails({ username }: { username: string }) {
+	const favoritesCountPromise = getFavoritesCount(username)
+	const friendsPromise = getFriends(username)
+	const favoritesCount = use(favoritesCountPromise)
+	const friends = use(friendsPromise)
+
+	return <div>{/* some profile details */}</div>
+}
+```
+
+Can you find the waterfall? It's not as obvious as the previous example, but
+it's there. The `ProfilePage` component will suspend until `userAvatarPromise`
+is resolved. Only then will the `ProfileDetails` component trigger the
+`favoritesCountPromise` and `friendsPromise` requests.
+
+This is a problem because the `ProfileDetails` component is not even visible to
+the user until the `ProfilePage` component is resolved. This is a waterfall.
+
+To solve this problem, you need to trigger the requests in the parent component
+and pass the promises down to the child components:
+
+```tsx
+function ProfilePage({ username }: { username: string }) {
+	const userAvatarPromise = getUserAvatar(username)
+	const postPromise = getPosts(username)
+	const favoritesCountPromise = getFavoritesCount(username)
+	const friendsPromise = getFriends(username)
+
+	const userAvatar = use(userAvatarPromise)
+
+	return (
+		<div>
+			<Avatar url={userAvatar} />
+			<ProfileDetails
+				favoritesCountPromise={favoritesCountPromise}
+				friendsPromise={friendsPromise}
+			/>
+			<hr />
+			<ProfilePosts postPromise={postPromise} />
+		</div>
+	)
+}
+
+function ProfileDetails({
+	favoritesCountPromise,
+	friendsPromise,
+}: {
+	favoritesCountPromise: ReturnType<typeof getFavoritesCount>
+	friendsPromise: ReturnType<typeof getFriends>
+}) {
+	const favoritesCount = use(favoritesCountPromise)
+	const friends = use(friendsPromise)
+
+	return <div>{/* some profile details */}</div>
+}
+```
+
+Sheesh, that's annoying!! I thought the whole point was to be able to colocate
+our data requirements with the code that requires it. That's what's so cool
+about the `use` hook and the `Suspense` model!
+
+Well, because of the promise caching we added before, you can actually get away
+with keeping things as they were before and simply adding a call to the cached
+function in the parent component instead of adding promise props everywhere:
+
+```tsx lines=19-21 add=2-5
+function ProfilePage({ username }: { username: string }) {
+	// preload some necessary data
+	getFavoritesCount(username)
+	getFriends(username)
+	getPosts(username)
+
+	const userAvatar = use(getUserAvatar(username))
+	return (
+		<div>
+			<Avatar url={userAvatar} />
+			<ProfileDetails username={username} />
+			<hr />
+			<ProfilePosts username={username} />
+		</div>
+	)
+}
+
+function ProfileDetails({ username }: { username: string }) {
+	// these will get the cached promise that was created by the parent above
+	const favoritesCountPromise = getFavoritesCount(username)
+	const friendsPromise = getFriends(username)
+	const favoritesCount = use(favoritesCountPromise)
+	const friends = use(friendsPromise)
+
+	return <div>{/* some profile details */}</div>
+}
+```
+
+What's annoying about this is that you have to remember to call the function
+before you render the component. This is a bit of a leaky abstraction. You could
+make it a tiny bit better with a utility function you tack onto the
+`ProfileDetails` if you want:
+
+```tsx lines=2-4,18-20 add=27-32
+function ProfilePage({ username }: { username: string }) {
+	// preload some necessary data
+	ProfileDetails.loadData(username)
+	ProfilePosts.loadData(username)
+
+	const userAvatar = use(getUserAvatar(username))
+	return (
+		<div>
+			<Avatar url={userAvatar} />
+			<ProfileDetails username={username} />
+			<hr />
+			<ProfilePosts username={username} />
+		</div>
+	)
+}
+
+function ProfileDetails({ username }: { username: string }) {
+	// these will get the cached promise that was created by the parent above
+	const { favoritesCountPromise, friendsPromise } =
+		ProfileDetails.loadData(username)
+	const favoritesCount = use(favoritesCountPromise)
+	const friends = use(friendsPromise)
+
+	return <div>{/* some profile details */}</div>
+}
+
+ProfileDetails.loadData = (username: string) => {
+	return {
+		favoritesCountPromise: getFavoritesCount(username),
+		friendsPromise: getFriends(username),
+	}
+}
+```
+
+But then you'll run into issues if you decide you want to lazy load
+`ProfileDetails`. You'll have to remember to call `ProfileDetails.loadData` in
+the parent component before you render the `ProfileDetails` component.
+
+Alternatively, you could restructure your components to avoid this problem using
+the composition pattern we learned about in the Advanced React Patterns
+workshop:
+
+```tsx
+function ProfilePage({ username }: { username: string }) {
+	const userAvatarPromise = getUserAvatar(username)
+	const postPromise = getPosts(username)
+	const favoritesCountPromise = getFavoritesCount(username)
+	const friendsPromise = getFriends(username)
+
+	const userAvatar = use(userAvatarPromise)
+	const posts = use(postPromise)
+	const favoritesCount = use(favoritesCountPromise)
+	const friends = use(friendsPromise)
+
+	return (
+		<div>
+			<Avatar url={userAvatar} />
+			<ProfileDetails
+				favoritesCount={<FavoritesDisplay>{favoritesCount}</FavoritesDisplay>}
+				friendsList={friends.map(friend => (
+					<Friend key={friend.id} friend={friend} />
+				))}
+			/>
+			<hr />
+			<ProfilePosts
+				postList={posts.map(post => (
+					<Post key={post.id} post={post} />
+				))}
+			/>
+		</div>
+	)
+}
+```
+
+And maybe that's ok, but sometimes that just doesn't feel quite right for the UI
+we're building.
+
+Really, the problem here is that we naturally follow a render-then-fetch pattern
+which is we don't fetch until we render. The pattern we should be following is
+a fetch-as-you-render pattern which is to say you trigger all fetch requests
+before you render anything. You can learn more about this in
+[Render as you fetch (with and without suspense)](https://epicreact.dev/render-as-you-fetch/).
+
+Another thing you'll want to think about in this regard is the fact that often
+we "code-split" our components using lazy loading with `React.lazy` (which we
+cover in the React Performance workshop). Combine this with colocating data
+fetching and you wind up in a situation where you have a waterfall because you
+have to first request the code, then the code runs, then that code requests the
+data.
+
+Ugh, there must be a better way!!
+
+There is 😎
+
+<callout-success class="important">
+	Optimizations like this is where using [Remix](https://remix.run) is a huge
+	win. It's designed to help you avoid waterfalls naturally.
+</callout-success>
+
+And the future deeper integration of Remix with React Server Components will
+make this even more powerful.
+
+Additionally, it's data loading primitives are designed to help you avoid
+waterfalls without even thinking about it.
+
+But if you're using raw suspense as we are in this workshop, you'll need to
+think about these things.
+
+## Cache headers
+
+As often happens with optimizations, some of the best optimizations happen on
+the backend. Your app can be no faster than your slowest query. So finding ways
+to make your queries faster is a huge win.
+
+One way you can speed up your backend is by applying caching at various layers
+of your tech stack. One of these layers is in HTTP and for certain kinds of data
+you can use cache headers to enable the client to cache the data and prevent
+network requests even across page refreshes.
+
+To do this, you set the
+[`Cache-Control`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
+header on your HTTP responses. This header can have a variety of values (called
+"directives") that tell the client how to cache the response. The most common
+directive is `max-age` which tells the client how long it can cache the
+response.
+
+```
+Cache-Control: max-age=3600
+```
+
+This tells the client to cache the response for 3600 seconds (1 hour). This
+means that if the client makes a request for the same resource within 1 hour of
+the first request, it will use the cached response instead of making a network
+request.
+
+As with all caching this comes with tradeoffs. If the data changes frequently,
+you might not want to cache it for very long. If the data is sensitive, you
+might not want to cache it at all (in which case, a server-side cache might be
+more appropriate).

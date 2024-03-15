@@ -17,7 +17,8 @@ export async function loader({
 			return new Response(JSON.stringify(result), {
 				headers: {
 					'content-type': 'application/json',
-					// 🐨 add a cache-control header with a max-age=10
+					// 🐨 add a cache-control header with a max-age=300
+					// to cache this respose for 300 seconds (5 minutes)
 				},
 			})
 		}
@@ -26,7 +27,8 @@ export async function loader({
 			return new Response(JSON.stringify(result), {
 				headers: {
 					'content-type': 'application/json',
-					// 🐨 add a cache-control header with a max-age=10
+					// 🐨 add a cache-control header with a max-age=300
+					// to cache this respose for 300 seconds (5 minutes)
 				},
 			})
 		}

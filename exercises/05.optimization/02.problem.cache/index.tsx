@@ -123,7 +123,7 @@ function SearchResults({
 function ShipDetails({ shipName }: { shipName: string }) {
 	const shipImgSrc = getImageUrlForShip(shipName, { size: 200 })
 	imgSrc(shipImgSrc)
-	const ship = use(getShip(shipName, 5000))
+	const ship = use(getShip(shipName))
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">

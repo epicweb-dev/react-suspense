@@ -1,1 +1,9 @@
-# Parallel Loading
+# Server Cache
+
+👨‍💼 As the user selects different ships, we cache the promise in our `getShip`
+utility. But if they refresh the page, the cache is lost. Our ship data doesn't
+change much so we could have the user's browser cache the ship details for a
+while to make the data persist across page refreshes.
+
+Please add a `Cache-Control` header to <InlineFile file="api.server.ts" />
+for both our API endpoints.
