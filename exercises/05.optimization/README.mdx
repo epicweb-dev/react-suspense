@@ -279,11 +279,10 @@ before you render anything. You can learn more about this in
 [Render as you fetch (with and without suspense)](https://epicreact.dev/render-as-you-fetch/).
 
 Another thing you'll want to think about in this regard is the fact that often
-we "code-split" our components using lazy loading with `React.lazy` (which we
-cover in the React Performance workshop). Combine this with colocating data
-fetching and you wind up in a situation where you have a waterfall because you
-have to first request the code, then the code runs, then that code requests the
-data.
+we "code-split" our components using lazy loading with `lazy` (which we cover in
+the React Performance workshop). Combine this with colocating data fetching and
+you wind up in a situation where you have a waterfall because you have to first
+request the code, then the code runs, then that code requests the data.
 
 Ugh, there must be a better way!!
 

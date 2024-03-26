@@ -11,8 +11,8 @@ async function fetchUser() {
 }
 
 function NumberInfo() {
-	const [count, setCount] = React.useState(0)
-	const userInfo = use(fetchUser)
+	const [count, setCount] = useState(0)
+	const userInfo = use(fetchUser())
 	const increment = () => setCount(c => c + 1)
 	return (
 		<div>
@@ -94,7 +94,7 @@ function. The boolean is `true` when the promise is still pending and `false`
 when the promise has resolved. The function is a callback that you can use to
 trigger the state update that will result in the promise being fetched.
 
-```tsx lines=2,7-9,13
+```tsx lines=3,7-9,13
 function SomeComponent() {
 	const [someState, setSomeState] = useState(null)
 	const [isPending, startTransition] = useTransition()
