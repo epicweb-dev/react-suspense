@@ -5,6 +5,24 @@ our users who are on reasonably fast internet connections because it means they
 see a loading spinner every time they change the ship when it really would be a
 better experience to have a more subtle pending state when the ship changes.
 
+So what we want is to keep the old UI around while the new UI is being worked
+on (and display it in a way that makes it look like it's loading). This is what
+`useTransition` is for! While React keeps the old UI around, it gives us a
+`isPending` state that we can use to show a loading spinner or something else
+while the new UI is loading:
+
+```tsx
+const [isPending, startTransition] = useTransition()
+
+function handleSomeEvent() {
+	startTransition(() => {
+		// This state change triggers a component to suspend, so we wrap it in a
+		// `startTransition` call to keep the old UI around until the new UI is ready.
+		setSomeState(newState)
+	})
+}
+```
+
 Our designer just told us to use a `0.6` `opacity` setting while the ship is
 changing (for now). We can use the `useTransition` hook to accomplish this.
 

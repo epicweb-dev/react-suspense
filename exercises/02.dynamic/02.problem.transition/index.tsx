@@ -5,7 +5,7 @@ import { getImageUrlForShip, getShip } from './utils.tsx'
 
 function App() {
 	const [shipName, setShipName] = useState('Dreadnought')
-	// 🐨 call useTransition here
+	// 🐨 call useTransition here to get the isPending boolean and startTransition function
 
 	function handleShipSelection(newShipName: string) {
 		// 🐨 wrap setShipName in startTransition
