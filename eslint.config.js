@@ -1,15 +1,17 @@
 /** @type {import('@types/eslint').Linter.Config} */
 export default {
+	files: ['**/*.js', '**/*.ts', '**/*.tsx'],
 	languageOptions: { parser: await import('@typescript-eslint/parser') },
 	plugins: {
 		'@typescript-eslint': (await import('@typescript-eslint/eslint-plugin'))
 			.default,
-		import: (await import('eslint-plugin-import')).default,
 		'react-hooks': (await import('eslint-plugin-react-hooks')).default,
+		import: (await import('eslint-plugin-import')).default,
 	},
 	rules: {
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
+
 		'@typescript-eslint/consistent-type-imports': [
 			'warn',
 			{
