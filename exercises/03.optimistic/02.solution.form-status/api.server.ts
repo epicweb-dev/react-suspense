@@ -44,7 +44,6 @@ export async function action({
 	const path = params['*']
 	switch (path) {
 		case 'create-ship': {
-			await new Promise(resolve => setTimeout(resolve, 2000))
 			return createShip(request)
 		}
 	}

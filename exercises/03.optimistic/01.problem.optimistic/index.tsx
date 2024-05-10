@@ -6,6 +6,7 @@ import {
 	// 💰 you're going to want this
 	// type Ship,
 	getShip,
+	createShip,
 } from './utils.tsx'
 
 function App() {
@@ -63,12 +64,7 @@ function CreateForm({
 
 							// 🐨 set the optimistic ship
 
-							await fetch(`api/create-ship`, {
-								method: 'POST',
-								body: formData,
-							}).then(async r => {
-								if (!r.ok) return Promise.reject(new Error(await r.text()))
-							})
+							await createShip(formData, 2000)
 
 							setShipName(formData.get('name') as string)
 						}}

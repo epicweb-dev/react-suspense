@@ -3,6 +3,9 @@ import path from 'node:path'
 import { invariant, invariantResponse } from '@epic-web/invariant'
 import shipData from './ships.json'
 
+const MIN_DELAY = 200
+const MAX_DELAY = 500
+
 export type Ship = (typeof shipData)[number]
 
 const { EPICSHOP_CONTEXT_CWD } = process.env
@@ -19,10 +22,12 @@ const formatDate = (date: Date) =>
 		date.getSeconds(),
 	).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`
 
-const getDelay = (request: Request) =>
-	Number(
-		new URL(request.url).searchParams.get('delay') || Math.random() * 200 + 300,
+function getDelay(request: Request) {
+	return Number(
+		new URL(request.url).searchParams.get('delay') ||
+			Math.random() * (MAX_DELAY - MIN_DELAY) + MIN_DELAY,
 	)
+}
 
 export async function searchShips(request: Request) {
 	const url = new URL(request.url)
@@ -54,6 +59,7 @@ export async function getShip(request: Request) {
 }
 
 export async function createShip(request: Request) {
+	const endTime = Date.now() + getDelay(request)
 	const formData = await request.formData()
 	const name = formData.get('name')
 	const image = formData.get('image')
@@ -84,6 +90,8 @@ export async function createShip(request: Request) {
 	}
 
 	shipData.push(ship)
+
+	await new Promise(resolve => setTimeout(resolve, endTime - Date.now()))
 
 	return new Response('OK', { status: 201 })
 }

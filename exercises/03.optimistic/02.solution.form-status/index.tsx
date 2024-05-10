@@ -3,7 +3,7 @@ import { useFormStatus } from 'react-dom'
 import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
 import { useSpinDelay } from 'spin-delay'
-import { type Ship, getShip } from './utils.tsx'
+import { type Ship, getShip, createShip } from './utils.tsx'
 
 function App() {
 	const [shipName, setShipName] = useState('Dreadnought')
@@ -56,12 +56,7 @@ function CreateForm({
 						action={async formData => {
 							setOptimisticShip(await createOptimisticShip(formData))
 
-							await fetch(`api/create-ship`, {
-								method: 'POST',
-								body: formData,
-							}).then(async r => {
-								if (!r.ok) return Promise.reject(new Error(await r.text()))
-							})
+							await createShip(formData, 2000)
 
 							setShipName(formData.get('name') as string)
 						}}
