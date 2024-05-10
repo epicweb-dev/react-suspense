@@ -28,12 +28,15 @@ async function getShipImpl(name: string, delay?: number) {
 //   - set the imgPromise in the imgCache
 //   - return the imgPromise
 
-// 🐨 create a function called preloadImage which accepts a src string
-// 🐨 return a promise. Its callback should:
-//   - create a new Image
-//   - set the src of the image to the src passed to the function
-//   - set the onload of the image to resolve the promise with the src
-//   - set the onerror of the image to reject the promise
+// 💰 here's a function you can use to wait for the image to be ready to display
+// function preloadImage(src: string) {
+// 	return new Promise<string>(async (resolve, reject) => {
+// 		const img = new Image()
+// 		img.src = src
+// 		img.onload = () => resolve(src)
+// 		img.onerror = reject
+// 	})
+// }
 
 export function getImageUrlForShip(
 	shipName: string,
