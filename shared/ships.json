@@ -3,7 +3,6 @@
     "name": "Infinity Drifter",
     "image": "/img/ships/infinity-drifter.webp",
     "topSpeed": 10,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Laser",
@@ -26,7 +25,6 @@
     "name": "Star Hopper",
     "image": "/img/ships/star-hopper.webp",
     "topSpeed": 8,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Laser",
@@ -44,7 +42,6 @@
     "name": "Galaxy Cruiser",
     "image": "/img/ships/galaxy-cruiser.webp",
     "topSpeed": 6,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Laser",
@@ -57,7 +54,6 @@
     "name": "Planet Hopper",
     "image": "/img/ships/planet-hopper.webp",
     "topSpeed": 4,
-    "hyperdrive": false,
     "weapons": [
       {
         "name": "Laser",
@@ -70,14 +66,12 @@
     "name": "Space Taxi",
     "image": "/img/ships/space-taxi.webp",
     "topSpeed": 2,
-    "hyperdrive": false,
     "weapons": []
   },
   {
     "name": "Star Destroyer",
     "image": "/img/ships/star-destroyer.webp",
     "topSpeed": 12,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Ion Cannon",
@@ -100,7 +94,6 @@
     "name": "Interceptor",
     "image": "/img/ships/interceptor.webp",
     "topSpeed": 9,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Railgun",
@@ -118,7 +111,6 @@
     "name": "Stealth Cruiser",
     "image": "/img/ships/stealth-cruiser.webp",
     "topSpeed": 7,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Cloaking Device",
@@ -136,7 +128,6 @@
     "name": "Battleship",
     "image": "/img/ships/battleship.webp",
     "topSpeed": 10,
-    "hyperdrive": false,
     "weapons": [
       {
         "name": "Cannon",
@@ -154,7 +145,6 @@
     "name": "Dreadnought",
     "image": "/img/ships/dreadnought.webp",
     "topSpeed": 8,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Plasma Cannon",
@@ -172,7 +162,6 @@
     "name": "Cruiser",
     "image": "/img/ships/cruiser.webp",
     "topSpeed": 6,
-    "hyperdrive": false,
     "weapons": [
       {
         "name": "Laser Cannon",
@@ -190,7 +179,6 @@
     "name": "Frigate",
     "image": "/img/ships/frigate.webp",
     "topSpeed": 5,
-    "hyperdrive": false,
     "weapons": [
       {
         "name": "Plasma Cannon",
@@ -208,14 +196,12 @@
     "name": "Scout Ship",
     "image": "/img/ships/scout-ship.webp",
     "topSpeed": 11,
-    "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Bomber",
     "image": "/img/ships/bomber.webp",
     "topSpeed": 8,
-    "hyperdrive": false,
     "weapons": [
       {
         "name": "Bomb Dropper",
@@ -228,14 +214,12 @@
     "name": "Transport Ship",
     "image": "/img/ships/transport-ship.webp",
     "topSpeed": 4,
-    "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Gunship",
     "image": "/img/ships/gunship.webp",
     "topSpeed": 7,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Laser Cannon",
@@ -248,7 +232,6 @@
     "name": "Diplomatic Vessel",
     "image": "/img/ships/diplomatic-vessel.webp",
     "topSpeed": 3,
-    "hyperdrive": true,
     "weapons": [
       {
         "name": "Laser",
@@ -261,28 +244,24 @@
     "name": "Mining Ship",
     "image": "/img/ships/mining-ship.webp",
     "topSpeed": 4,
-    "hyperdrive": false,
     "weapons": []
   },
   {
     "name": "Research Vessel",
     "image": "/img/ships/research-vessel.webp",
     "topSpeed": 3,
-    "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Medical Ship",
     "image": "/img/ships/medical-ship.webp",
     "topSpeed": 2,
-    "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Cargo Ship",
     "image": "/img/ships/cargo-ship.webp",
     "topSpeed": 2,
-    "hyperdrive": true,
     "weapons": []
   }
 ]

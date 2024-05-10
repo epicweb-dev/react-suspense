@@ -50,44 +50,36 @@ function CreateForm({
 	// 🐨 call useOptimistic for message and setMessage (initialize to 'Create')
 	return (
 		<div>
-			<details>
-				<summary>Create a new ship</summary>
-				<ErrorBoundary FallbackComponent={FormErrorFallback}>
-					<form
-						action={async formData => {
-							// 🐨 set the message to "Creating..."
-							setOptimisticShip(await createOptimisticShip(formData))
+			<p>Create a new ship</p>
+			<ErrorBoundary FallbackComponent={FormErrorFallback}>
+				<form
+					action={async formData => {
+						// 🐨 set the message to "Creating..."
+						setOptimisticShip(await createOptimisticShip(formData))
 
-							await createShip(formData, 2000)
+						await createShip(formData, 2000)
 
-							// 🐨 set the message to "Created! Loading..."
+						// 🐨 set the message to "Created! Loading..."
 
-							setShipName(formData.get('name') as string)
-						}}
-					>
-						<div>
-							<label htmlFor="shipName">Ship Name</label>
-							<input id="shipName" type="text" name="name" />
-						</div>
-						<div>
-							<label htmlFor="topSpeed">Top Speed</label>
-							<input id="topSpeed" type="number" name="topSpeed" />
-						</div>
-						<div>
-							<label htmlFor="image">Image</label>
-							<input id="image" type="file" name="image" accept="image/*" />
-						</div>
-						<div>
-							<label>
-								<input name="hyperdrive" type="checkbox" />
-								Hyperdrive
-							</label>
-						</div>
-						{/* 🐨 pass the message as children */}
-						<CreateButton />
-					</form>
-				</ErrorBoundary>
-			</details>
+						setShipName(formData.get('name') as string)
+					}}
+				>
+					<div>
+						<label htmlFor="shipName">Ship Name</label>
+						<input id="shipName" type="text" name="name" />
+					</div>
+					<div>
+						<label htmlFor="topSpeed">Top Speed</label>
+						<input id="topSpeed" type="number" name="topSpeed" />
+					</div>
+					<div>
+						<label htmlFor="image">Image</label>
+						<input id="image" type="file" name="image" accept="image/*" />
+					</div>
+					{/* 🐨 pass the message as children */}
+					<CreateButton />
+				</form>
+			</ErrorBoundary>
 		</div>
 	)
 }
@@ -108,7 +100,6 @@ async function createOptimisticShip(formData: FormData) {
 	return {
 		name: formData.get('name') as string,
 		topSpeed: Number(formData.get('topSpeed')),
-		hyperdrive: formData.get('hyperdrive') === 'on',
 		image: await fileToDataUrl(formData.get('image') as File),
 		weapons: [],
 		fetchedAt: '...',

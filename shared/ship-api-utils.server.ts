@@ -64,16 +64,11 @@ export async function createShip(request: Request) {
 	const name = formData.get('name')
 	const image = formData.get('image')
 	const topSpeed = Number(formData.get('topSpeed'))
-	const hyperdrive = formData.get('hyperdrive') === 'on'
 	invariantResponse(typeof name === 'string' && name, 'Name incorrect type')
 	invariantResponse(image instanceof File, 'Image incorrect type')
 	invariantResponse(
 		typeof topSpeed === 'number' && topSpeed,
 		'Top speed incorrect type',
-	)
-	invariantResponse(
-		typeof hyperdrive === 'boolean',
-		'Hyperdrive incorrect type',
 	)
 
 	const filePath = atRoot('public', 'img', 'custom-ships', image.name)
@@ -85,7 +80,6 @@ export async function createShip(request: Request) {
 		name,
 		image: `/img/custom-ships/${image.name}`,
 		topSpeed,
-		hyperdrive,
 		weapons: [],
 	}
 
