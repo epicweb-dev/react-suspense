@@ -1,7 +1,7 @@
 [
   {
     "name": "Infinity Drifter",
-    "image": "/ships/infinity-drifter.webp",
+    "image": "/img/ships/infinity-drifter.webp",
     "topSpeed": 10,
     "hyperdrive": true,
     "weapons": [
@@ -24,7 +24,7 @@
   },
   {
     "name": "Star Hopper",
-    "image": "/ships/star-hopper.webp",
+    "image": "/img/ships/star-hopper.webp",
     "topSpeed": 8,
     "hyperdrive": true,
     "weapons": [
@@ -42,7 +42,7 @@
   },
   {
     "name": "Galaxy Cruiser",
-    "image": "/ships/galaxy-cruiser.webp",
+    "image": "/img/ships/galaxy-cruiser.webp",
     "topSpeed": 6,
     "hyperdrive": true,
     "weapons": [
@@ -55,7 +55,7 @@
   },
   {
     "name": "Planet Hopper",
-    "image": "/ships/planet-hopper.webp",
+    "image": "/img/ships/planet-hopper.webp",
     "topSpeed": 4,
     "hyperdrive": false,
     "weapons": [
@@ -68,14 +68,14 @@
   },
   {
     "name": "Space Taxi",
-    "image": "/ships/space-taxi.webp",
+    "image": "/img/ships/space-taxi.webp",
     "topSpeed": 2,
     "hyperdrive": false,
     "weapons": []
   },
   {
     "name": "Star Destroyer",
-    "image": "/ships/star-destroyer.webp",
+    "image": "/img/ships/star-destroyer.webp",
     "topSpeed": 12,
     "hyperdrive": true,
     "weapons": [
@@ -98,7 +98,7 @@
   },
   {
     "name": "Interceptor",
-    "image": "/ships/interceptor.webp",
+    "image": "/img/ships/interceptor.webp",
     "topSpeed": 9,
     "hyperdrive": true,
     "weapons": [
@@ -116,7 +116,7 @@
   },
   {
     "name": "Stealth Cruiser",
-    "image": "/ships/stealth-cruiser.webp",
+    "image": "/img/ships/stealth-cruiser.webp",
     "topSpeed": 7,
     "hyperdrive": true,
     "weapons": [
@@ -134,7 +134,7 @@
   },
   {
     "name": "Battleship",
-    "image": "/ships/battleship.webp",
+    "image": "/img/ships/battleship.webp",
     "topSpeed": 10,
     "hyperdrive": false,
     "weapons": [
@@ -152,7 +152,7 @@
   },
   {
     "name": "Dreadnought",
-    "image": "/ships/dreadnought.webp",
+    "image": "/img/ships/dreadnought.webp",
     "topSpeed": 8,
     "hyperdrive": true,
     "weapons": [
@@ -170,7 +170,7 @@
   },
   {
     "name": "Cruiser",
-    "image": "/ships/cruiser.webp",
+    "image": "/img/ships/cruiser.webp",
     "topSpeed": 6,
     "hyperdrive": false,
     "weapons": [
@@ -188,7 +188,7 @@
   },
   {
     "name": "Frigate",
-    "image": "/ships/frigate.webp",
+    "image": "/img/ships/frigate.webp",
     "topSpeed": 5,
     "hyperdrive": false,
     "weapons": [
@@ -206,14 +206,14 @@
   },
   {
     "name": "Scout Ship",
-    "image": "/ships/scout-ship.webp",
+    "image": "/img/ships/scout-ship.webp",
     "topSpeed": 11,
     "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Bomber",
-    "image": "/ships/bomber.webp",
+    "image": "/img/ships/bomber.webp",
     "topSpeed": 8,
     "hyperdrive": false,
     "weapons": [
@@ -226,14 +226,14 @@
   },
   {
     "name": "Transport Ship",
-    "image": "/ships/transport-ship.webp",
+    "image": "/img/ships/transport-ship.webp",
     "topSpeed": 4,
     "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Gunship",
-    "image": "/ships/gunship.webp",
+    "image": "/img/ships/gunship.webp",
     "topSpeed": 7,
     "hyperdrive": true,
     "weapons": [
@@ -246,7 +246,7 @@
   },
   {
     "name": "Diplomatic Vessel",
-    "image": "/ships/diplomatic-vessel.webp",
+    "image": "/img/ships/diplomatic-vessel.webp",
     "topSpeed": 3,
     "hyperdrive": true,
     "weapons": [
@@ -259,28 +259,28 @@
   },
   {
     "name": "Mining Ship",
-    "image": "/ships/mining-ship.webp",
+    "image": "/img/ships/mining-ship.webp",
     "topSpeed": 4,
     "hyperdrive": false,
     "weapons": []
   },
   {
     "name": "Research Vessel",
-    "image": "/ships/research-vessel.webp",
+    "image": "/img/ships/research-vessel.webp",
     "topSpeed": 3,
     "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Medical Ship",
-    "image": "/ships/medical-ship.webp",
+    "image": "/img/ships/medical-ship.webp",
     "topSpeed": 2,
     "hyperdrive": true,
     "weapons": []
   },
   {
     "name": "Cargo Ship",
-    "image": "/ships/cargo-ship.webp",
+    "image": "/img/ships/cargo-ship.webp",
     "topSpeed": 2,
     "hyperdrive": true,
     "weapons": []
