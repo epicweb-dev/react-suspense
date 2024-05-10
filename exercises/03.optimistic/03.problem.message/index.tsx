@@ -66,15 +66,21 @@ function CreateForm({
 				>
 					<div>
 						<label htmlFor="shipName">Ship Name</label>
-						<input id="shipName" type="text" name="name" />
+						<input id="shipName" type="text" name="name" required />
 					</div>
 					<div>
 						<label htmlFor="topSpeed">Top Speed</label>
-						<input id="topSpeed" type="number" name="topSpeed" />
+						<input id="topSpeed" type="number" name="topSpeed" required />
 					</div>
 					<div>
 						<label htmlFor="image">Image</label>
-						<input id="image" type="file" name="image" accept="image/*" />
+						<input
+							id="image"
+							type="file"
+							name="image"
+							accept="image/*"
+							required
+						/>
 					</div>
 					{/* 🐨 pass the message as children */}
 					<CreateButton />

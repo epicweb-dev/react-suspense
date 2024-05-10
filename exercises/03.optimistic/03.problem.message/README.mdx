@@ -5,7 +5,23 @@ actually has one more step: loading the newly created ship.
 
 We want to update the message of our submit button to indicate which step we're
 on in the process. But updating state during a transition (like that in our form
-action) isn't possible. So we need to use `useOptimistic`.
+action) isn't possible. So we need to use `useOptimistic`. Here's an example of
+how you might do this:
+
+```tsx
+<form
+	action={async formData => {
+		setMessage('Creating order...')
+		const order = await createOrder(formData)
+		setMessage('Creating payment...')
+		const payment = await createPayment(formData, order)
+		setMessage('Almost done!')
+		await sendThankYou(order, payment)
+	}}
+>
+	{/* ...*/}
+</form>
+```
 
 So please add a `useOptimistic` for a "message" variable which we'll use to
 update the submit button message. You can initialize it to "Create" and then
