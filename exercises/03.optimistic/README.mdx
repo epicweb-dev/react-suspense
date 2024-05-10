@@ -1,1 +1,99 @@
 # Optimistic UI
+
+The idea of "Optimistic UI" is based on the belief that most of the time the
+things your users do will be successful. So if they check off a todo, we can
+instantly mark it as complete in the client while the request is made to make
+the change because most of the time it will be successful. This makes the UI
+feel much faster.
+
+Learn more about the concept of Optimistic UI from the end of my talk here:
+
+<VideoEmbed
+	title="Kent Dodds - Bringing Back Progressive Enhancement - RenderATL 2022"
+	url="https://www.youtube.com/embed/EzLGleT1yrY"
+/>
+
+## `useOptimistic`
+
+Transitions (like those you get from `useTransition`) prevent the UI from
+changing when the component is suspended. But sometimes you want to show a
+different UI while the component is suspended (and even change that UI multiple
+times while it's in the suspended state).
+
+This is where `useOptimistic` comes into play. It may even be better to call it
+[`useTransitionState`](https://twitter.com/ryanflorence/status/1788364906900959481)
+instead! In any case, the idea is that `useOptimistic` is like a `useState` hook
+which will actually change the UI even while it's suspended. It's often used
+to implement Optimistic UI which is why it's called `useOptimistic`.
+
+Form Actions are automatically wrapped in `startTransition` for us so if you
+have a form action for which you would like to implement optimistic UI (which
+requires updating state), then you need to use `useOptimistic` to get around the
+suspended nature of the transition. Here's an example of how it's used with a
+Form Action:
+
+```tsx lines=2,7,14
+function Todo({ todo }: { todo: TodoItem }) {
+	const [isComplete, setIsComplete] = useOptimistic(todo.isComplete)
+
+	return (
+		<form
+			action={async () => {
+				setIsComplete(!isComplete)
+				await updateTodo(todo.id, !isComplete)
+			}}
+		>
+			<label>
+				<input
+					type="checkbox"
+					checked={isComplete}
+					className="todos-checkbox"
+				/>
+				{todo.text}
+			</label>
+		</form>
+	)
+}
+```
+
+The `isComplete` is based on the `todo.isComplete`, but during the transition,
+we can change it to `!isComplete`. Once the transition is finished (whether it
+was successful or errored out, it will fall back to the value of
+`todo.isComplete`).
+
+And the interesting thing about this is we can update optimistic state as many
+times as we would like during the course of a transition, which means if you
+have a multi-step action, you could update a message to let the user know what
+step in the process you're running in all with the nice declarative model of
+suspense and transitions.
+
+## `useFormStatus`
+
+Another part of giving users feedback of their form submission is showing them
+the status. `useFormStatus` can be used by any components that are underneath
+a `form` element.
+
+<callout-success>
+	Think of the `form` element as a context provider and the `useFormStatus` hook
+	as a context consumer.
+</callout-success>
+
+So you can make a submit button that has access to the current status of its
+parent form and display a pending state while the form action is in progress:
+
+```tsx
+function SubmitButton() {
+	const formStatus = useFormStatus()
+	return (
+		<button type="submit">
+			{formStatus.pending ? 'Creating...' : 'Create'}
+		</button>
+	)
+}
+```
+
+The `formStatus` has a number of other useful properties that can be used to
+help implement optimistic UI as well (like the data that's being submitted).
+
+- [📜 `useOptimistic`](https://react.dev/reference/react/useOptimistic)
+- [📜 `useFormStatus`](https://react.dev/reference/react-dom/hooks/useFormStatus)

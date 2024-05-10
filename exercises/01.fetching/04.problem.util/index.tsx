@@ -5,9 +5,9 @@ import { getImageUrlForShip, getShip, type Ship } from './utils.tsx'
 
 // 💰 this will help your TypeScript be nicer:
 type UsePromise<Value> = Promise<Value> & {
-	status: string
+	status: 'pending' | 'fulfilled' | 'rejected'
 	value: Value
-	reason: any
+	reason: unknown
 }
 
 // 🐨 create a function called "use" which accepts a promise and here's what it should do:

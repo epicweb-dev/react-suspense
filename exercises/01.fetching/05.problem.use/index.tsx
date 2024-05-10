@@ -8,9 +8,9 @@ import { getImageUrlForShip, getShip } from './utils.tsx'
 
 // 💣 delete this
 type UsePromise<Value> = Promise<Value> & {
-	status: string
+	status: 'pending' | 'fulfilled' | 'rejected'
 	value: Value
-	reason: any
+	reason: unknown
 }
 
 // 💣 delete this

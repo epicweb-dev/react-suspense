@@ -4,9 +4,9 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { getImageUrlForShip, getShip } from './utils.tsx'
 
 type UsePromise<Value> = Promise<Value> & {
-	status: string
+	status: 'pending' | 'fulfilled' | 'rejected'
 	value: Value
-	reason: any
+	reason: unknown
 }
 
 function use<Value>(promise: Promise<Value>): Value {
