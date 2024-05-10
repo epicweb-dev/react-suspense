@@ -1,3 +1,32 @@
 # Optimistic UI
 
-👨‍💼 TODO
+🧝‍♂️ I've added a form and some API updates for us to be able to create new ships
+to add to the page. As usual, you can <PrevDiffLink>check my work</PrevDiffLink>
+if you're curious what has changed and if you'd like to implement this yourself
+for some extra practice, feel free to go back to the previous solution and add
+the form and API updates yourself.
+
+👨‍💼 Thanks Kellie! Ok, so right now, the user experience is not great with the
+amount of time it takes to create a ship and then display the newly created
+ship. It definitely would be nice to let the user see as much of their newly
+created ship as possible while we're in the process of saving it and loading it.
+
+What we need is a mechanism for turning the user's submission into a Ship object
+which we can use to display.
+
+🧝‍♂️ Actually, I already implemented this as well, it's called
+`createOptimisticShip` and accepts a `FormData` object. So you can use that.
+You'll notice the `fetchedAt` time is set to '...' because it's not technically
+been fetched yet. This is common for optimistic UI where there's some data you
+can't display until the server response actually comes through. But the rest of
+the data we get is what we want to display.
+
+👨‍💼 Oh awesome. Great so what you need to do is create an optimistic ship which
+we can pass to the `ShipDetails` component to display that while the real data
+is being retrieved.
+
+You'll need to store this up in the `App` component and pass the
+`optimisticShip` and `setOptimisticShip` props down to the `CreateForm` and
+`ShipDetails` components.
+
+Hop to it!
