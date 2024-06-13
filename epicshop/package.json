@@ -3,11 +3,6 @@
   "dependencies": {
     "@epic-web/config": "^1.5.4",
     "@epic-web/workshop-app": "^4.5.0",
-    "@epic-web/invariant": "^1.0.0",
-    "execa": "^8.0.1",
-    "react": "19.0.0-beta-94eed63c49-20240425",
-    "react-dom": "19.0.0-beta-94eed63c49-20240425",
-    "react-error-boundary": "^4.0.13",
-    "spin-delay": "^2.0.0"
+    "execa": "^8.0.1"
   }
 }
