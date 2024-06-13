@@ -18,4 +18,5 @@ RUN npm install --omit=dev
 CMD rm -rf ${EPICSHOP_CONTEXT_CWD} && \
     git clone https://github.com/epicweb-dev/react-suspense ${EPICSHOP_CONTEXT_CWD} && \
     cd ${EPICSHOP_CONTEXT_CWD} && \
+    npm ci && \
     npx epicshop start
