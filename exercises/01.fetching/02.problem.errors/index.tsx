@@ -27,7 +27,7 @@ function App() {
 let ship: Ship
 // 🐨 create an error variable here
 const shipPromise = getShip(shipName).then(
-	result => (ship = result),
+	(result) => (ship = result),
 	// 🐨 add an error handler here to assign the error to
 )
 
@@ -54,7 +54,7 @@ function ShipDetails() {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

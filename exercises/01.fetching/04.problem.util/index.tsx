@@ -45,11 +45,11 @@ let status: 'pending' | 'rejected' | 'fulfilled' = 'pending'
 const shipPromise = getShip(shipName)
 	// 💣 get rid of the .then here
 	.then(
-		result => {
+		(result) => {
 			ship = result
 			status = 'fulfilled'
 		},
-		err => {
+		(err) => {
 			error = err
 			status = 'rejected'
 		},
@@ -80,7 +80,7 @@ function ShipDetails() {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

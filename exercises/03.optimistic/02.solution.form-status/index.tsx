@@ -52,7 +52,7 @@ function CreateForm({
 			<p>Create a new ship</p>
 			<ErrorBoundary FallbackComponent={FormErrorFallback}>
 				<form
-					action={async formData => {
+					action={async (formData) => {
 						setOptimisticShip(await createOptimisticShip(formData))
 
 						await createShip(formData, 2000)
@@ -134,7 +134,7 @@ function ShipButtons({
 
 	return (
 		<div className="ship-buttons">
-			{ships.map(ship => (
+			{ships.map((ship) => (
 				<button
 					key={ship}
 					onClick={() => onShipSelect(ship)}
@@ -173,7 +173,7 @@ function ShipDetails({
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

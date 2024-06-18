@@ -25,11 +25,11 @@ let ship: Ship
 let error: unknown
 // 🐨 create a status variable here
 const shipPromise = getShip(shipName).then(
-	result => {
+	(result) => {
 		ship = result
 		// 🐨 set the status to 'fulfilled'
 	},
-	err => {
+	(err) => {
 		error = err
 		// 🐨 set the status to 'rejected'
 	},
@@ -60,7 +60,7 @@ function ShipDetails() {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

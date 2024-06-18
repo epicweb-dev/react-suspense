@@ -10,7 +10,7 @@ how you might do this:
 
 ```tsx
 <form
-	action={async formData => {
+	action={async (formData) => {
 		setMessage('Creating order...')
 		const order = await createOrder(formData)
 		setMessage('Creating payment...')

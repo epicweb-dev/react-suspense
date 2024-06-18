@@ -13,7 +13,7 @@ function App() {
 
 	return (
 		<div className="app-wrapper">
-			<button onClick={() => setCount(c => c + 1)}>
+			<button onClick={() => setCount((c) => c + 1)}>
 				Click to re-render: {count}
 			</button>
 			<ShipButtons shipName={shipName} onShipSelect={handleShipSelection} />
@@ -41,7 +41,7 @@ function ShipButtons({
 
 	return (
 		<div className="ship-buttons">
-			{ships.map(ship => (
+			{ships.map((ship) => (
 				<button
 					key={ship}
 					onClick={() => onShipSelect(ship)}
@@ -75,7 +75,7 @@ function ShipDetails({ shipName }: { shipName: string }) {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

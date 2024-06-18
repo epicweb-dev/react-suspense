@@ -254,13 +254,13 @@ function ProfilePage({ username }: { username: string }) {
 			<Avatar url={userAvatar} />
 			<ProfileDetails
 				favoritesCount={<FavoritesDisplay>{favoritesCount}</FavoritesDisplay>}
-				friendsList={friends.map(friend => (
+				friendsList={friends.map((friend) => (
 					<Friend key={friend.id} friend={friend} />
 				))}
 			/>
 			<hr />
 			<ProfilePosts
-				postList={posts.map(post => (
+				postList={posts.map((post) => (
 					<Post key={post.id} post={post} />
 				))}
 			/>

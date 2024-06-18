@@ -25,11 +25,11 @@ function use<Value>(promise: Promise<Value>): Value {
 	} else {
 		usePromise.status = 'pending'
 		usePromise.then(
-			result => {
+			(result) => {
 				usePromise.status = 'fulfilled'
 				usePromise.value = result
 			},
-			reason => {
+			(reason) => {
 				usePromise.status = 'rejected'
 				usePromise.reason = reason
 			},
@@ -79,7 +79,7 @@ function ShipDetails() {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

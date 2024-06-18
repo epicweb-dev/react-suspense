@@ -34,11 +34,11 @@ export async function searchShips(request: Request) {
 	const query = url.searchParams.get('query') ?? ''
 	const endTime = Date.now() + getDelay(request)
 	const ships = shipData
-		.filter(ship => ship.name.toLowerCase().includes(query.toLowerCase()))
+		.filter((ship) => ship.name.toLowerCase().includes(query.toLowerCase()))
 		.slice(0, 13)
-	await new Promise(resolve => setTimeout(resolve, endTime - Date.now()))
+	await new Promise((resolve) => setTimeout(resolve, endTime - Date.now()))
 	return {
-		ships: ships.map(ship => ({ name: ship.name })),
+		ships: ships.map((ship) => ({ name: ship.name })),
 		fetchedAt: formatDate(new Date()),
 	}
 }
@@ -49,9 +49,9 @@ export async function getShip(request: Request) {
 	const endTime = Date.now() + getDelay(request)
 	invariantResponse(name, 'No name provided', { status: 400 })
 	const ship = shipData.find(
-		ship => ship.name.toLowerCase() === name.toLowerCase(),
+		(ship) => ship.name.toLowerCase() === name.toLowerCase(),
 	)
-	await new Promise(resolve => setTimeout(resolve, endTime - Date.now()))
+	await new Promise((resolve) => setTimeout(resolve, endTime - Date.now()))
 	invariantResponse(ship, `No ship with the name "${name}"`, {
 		status: 404,
 	})
@@ -85,7 +85,7 @@ export async function createShip(request: Request) {
 
 	shipData.push(ship)
 
-	await new Promise(resolve => setTimeout(resolve, endTime - Date.now()))
+	await new Promise((resolve) => setTimeout(resolve, endTime - Date.now()))
 
 	return new Response('OK', { status: 201 })
 }

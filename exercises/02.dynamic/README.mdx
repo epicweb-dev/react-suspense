@@ -13,7 +13,7 @@ async function fetchUser() {
 function NumberInfo() {
 	const [count, setCount] = useState(0)
 	const userInfo = use(fetchUser())
-	const increment = () => setCount(c => c + 1)
+	const increment = () => setCount((c) => c + 1)
 	return (
 		<div>
 			Hi {userInfo.name}! You have clicked {count} times.

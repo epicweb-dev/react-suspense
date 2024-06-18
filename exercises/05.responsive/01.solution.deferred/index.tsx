@@ -28,7 +28,7 @@ function App() {
 					>
 						<div className="search">
 							<ShipSearch
-								onSelection={selection => {
+								onSelection={(selection) => {
 									startTransition(() => setShipName(selection))
 								}}
 							/>
@@ -66,7 +66,7 @@ function ShipSearch({
 					placeholder="Filter ships..."
 					type="search"
 					value={search}
-					onChange={event => {
+					onChange={(event) => {
 						setSearch(event.currentTarget.value)
 					}}
 				/>
@@ -107,7 +107,7 @@ function SearchResults({
 	onSelection: (shipName: string) => void
 }) {
 	const shipResults = use(searchShips(search))
-	return shipResults.ships.map(ship => (
+	return shipResults.ships.map((ship) => (
 		<li key={ship.name}>
 			<button onClick={() => onSelection(ship.name)}>
 				<ShipImg
@@ -141,7 +141,7 @@ function ShipDetails({ shipName }: { shipName: string }) {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>

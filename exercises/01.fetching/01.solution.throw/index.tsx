@@ -19,7 +19,7 @@ function App() {
 }
 
 let ship: Ship
-const shipPromise = getShip(shipName, 1000).then(result => (ship = result))
+const shipPromise = getShip(shipName, 1000).then((result) => (ship = result))
 
 function ShipDetails() {
 	if (!ship) throw shipPromise
@@ -43,7 +43,7 @@ function ShipDetails() {
 			<section>
 				{ship.weapons.length ? (
 					<ul>
-						{ship.weapons.map(weapon => (
+						{ship.weapons.map((weapon) => (
 							<li key={weapon.name}>
 								<label>{weapon.name}</label>:{' '}
 								<span>
