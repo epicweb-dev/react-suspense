@@ -4,7 +4,14 @@
   "epicshop": {
     "title": "React Suspense 🔀",
     "subtitle": "Simplify your Async UI and improve your User Experience",
-    "githubRoot": "https://github.com/epicweb-dev/react-suspense/blob/main",
+    "githubRepo": "https://github.com/epicweb-dev/react-suspense",
+    "product": {
+      "host": "www.epicreact.dev",
+      "slug": "react-suspense",
+      "displayName": "EpicReact.dev",
+      "displayNameShort": "Epic React",
+      "logo": "/logo.svg"
+    },
     "instructor": {
       "name": "Kent C. Dodds",
       "avatar": "/images/instructor.png",

@@ -13,7 +13,7 @@
 <div align="center">
   <a
     alt="Epic Web logo with the words Deployed Version"
-    href="https://react-suspense.epicweb.dev"
+    href="https://suspense.epicreact.dev"
   >
     <img
       width="300px"
