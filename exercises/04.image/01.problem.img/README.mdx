@@ -8,7 +8,9 @@
 - Set the playground to this exercise
 - <LinkToApp to="/">Open the playground</LinkToApp> (in a separate tab)
 - Open the dev tools
-- Right-click the refresh button and select ["Empty Cache and Hard Reload"](https://stackoverflow.com/questions/14969315/whats-the-difference-between-normal-reload-hard-reload-and-empty-cache-a)
+- Notice that we've added a version query parameter to the images to simulate
+  initial loading. This is why you see a different versions in the URL for
+  each image.
 - [Throttle your network](https://developer.chrome.com/docs/devtools/network/reference#throttling) speed in the dev tools to "Slow 3G"
 - Click a separate ship
 
@@ -24,3 +26,9 @@ Suspense, the `use` hook, and a `preloadImage` utility.
 The emoji will guide you through this one.
 Best to start in <InlineFile file="utils.tsx" />. Lots of this will feel similar
 to what we were doing with the `getShip` regarding the caching stuff!
+
+<callout-warning>
+	🚨 Note, this is extremely difficult to test, so the test may be unreliable.
+	However, if you do throttle the network, then the test will be much more
+	reliable.
+</callout-warning>

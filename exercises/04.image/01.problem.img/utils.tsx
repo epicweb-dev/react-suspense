@@ -38,9 +38,12 @@ async function getShipImpl(name: string, delay?: number) {
 // 	})
 // }
 
+// added the version to prevent caching to make testing easier
+const version = Date.now()
+
 export function getImageUrlForShip(
 	shipName: string,
 	{ size }: { size: number },
 ) {
-	return `/img/ships/${shipName.toLowerCase().replaceAll(' ', '-')}.webp?size=${size}`
+	return `/img/ships/${shipName.toLowerCase().replaceAll(' ', '-')}.webp?size=${size}&v=${version}`
 }
