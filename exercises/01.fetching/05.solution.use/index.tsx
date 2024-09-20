@@ -4,6 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { getImageUrlForShip, getShip } from './utils.tsx'
 
 const shipName = 'Dreadnought'
+// 🚨 If you want to to test out the error state, change this to 'Dreadyacht'
+// const shipName = 'Dreadyacht'
 
 function App() {
 	return (

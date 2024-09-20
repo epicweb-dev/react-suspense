@@ -21,6 +21,8 @@ type UsePromise<Value> = Promise<Value> & {
 //   - then throw usePromise
 
 const shipName = 'Dreadnought'
+// 🚨 If you want to to test out the error state, change this to 'Dreadyacht'
+// const shipName = 'Dreadyacht'
 
 function App() {
 	return (

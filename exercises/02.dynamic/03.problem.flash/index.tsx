@@ -58,8 +58,9 @@ function ShipButtons({
 }
 
 function ShipDetails({ shipName }: { shipName: string }) {
-	// 🦉 you can change this delay to control how long loading the resource takes:
-	const delay = 10
+	// 💯 Set different delays for different ships. Feel free to play around with the values.
+	const delay =
+		shipName === 'Interceptor' ? 200 : shipName === 'Galaxy Cruiser' ? 400 : 10
 	const ship = use(getShip(shipName, delay))
 	return (
 		<div className="ship-info">

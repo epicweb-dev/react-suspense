@@ -3,7 +3,9 @@ import * as ReactDOM from 'react-dom/client'
 import { ErrorBoundary } from 'react-error-boundary'
 import { getImageUrlForShip, getShip, type Ship } from './utils.tsx'
 
-const shipName = 'Dreadyacht'
+const shipName = 'Dreadnought'
+// 🚨 If you want to to test out the error state, change this to 'Dreadyacht'
+// const shipName = 'Dreadyacht'
 
 function App() {
 	return (

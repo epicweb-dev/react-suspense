@@ -39,6 +39,8 @@ function use<Value>(promise: Promise<Value>): Value {
 }
 
 const shipName = 'Dreadnought'
+// 🚨 If you want to to test out the error state, change this to 'Dreadyacht'
+// const shipName = 'Dreadyacht'
 
 function App() {
 	return (

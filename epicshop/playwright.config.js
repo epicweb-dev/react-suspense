@@ -21,6 +21,11 @@ export default defineConfig({
 	use: {
 		baseURL: `http://localhost:${PORT}/`,
 		trace: 'retain-on-failure',
+		// Some errors are expected, e.g. when a ship is not found
+		ignoreHTTPSErrors: true,
+		contextOptions: {
+			ignoreHTTPErrors: true,
+		},
 	},
 
 	projects: [
