@@ -65,20 +65,30 @@ export async function createShip(request: Request) {
 	const image = formData.get('image')
 	const topSpeed = Number(formData.get('topSpeed'))
 	invariantResponse(typeof name === 'string' && name, 'Name incorrect type')
-	invariantResponse(image instanceof File, 'Image incorrect type')
+	invariantResponse(!image || image instanceof File, 'Image incorrect type')
 	invariantResponse(
 		typeof topSpeed === 'number' && topSpeed,
 		'Top speed incorrect type',
 	)
 
-	const filePath = atRoot('public', 'img', 'custom-ships', image.name)
+	// this is mostly for testing purposes. In the real app the image is required
+	let imageName: string | null = null
+	if (image instanceof File && image.name) {
+		imageName = image.name
+		const filePath = atRoot('public', 'img', 'custom-ships', image.name)
 
-	await fs.promises.mkdir(path.dirname(filePath), { recursive: true })
-	await fs.promises.writeFile(filePath, Buffer.from(await image.arrayBuffer()))
+		await fs.promises.mkdir(path.dirname(filePath), { recursive: true })
+		await fs.promises.writeFile(
+			filePath,
+			Buffer.from(await image.arrayBuffer()),
+		)
+	}
 
 	const ship = {
 		name,
-		image: `/img/custom-ships/${image.name}`,
+		image: imageName
+			? `/img/custom-ships/${imageName}`
+			: `/img/ships/battleship.webp`,
 		topSpeed,
 		weapons: [],
 	}
