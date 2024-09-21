@@ -121,7 +121,8 @@ function SearchResults({
 }
 
 function ShipDetails({ shipName }: { shipName: string }) {
-	const ship = use(getShip(shipName))
+	// 🦉 play with the delay to see how it affects the loading experience
+	const ship = use(getShip(shipName, 300))
 	// 🐨 move this above the use call, and swap from ship.name to shipName
 	const shipImgSrc = getImageUrlForShip(ship.name, { size: 200 })
 	// 🐨 call imgSrc with shipImgSrc (make sure it's before the use call!)
