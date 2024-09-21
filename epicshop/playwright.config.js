@@ -26,6 +26,8 @@ export default defineConfig({
 		contextOptions: {
 			ignoreHTTPErrors: true,
 		},
+		// ignore 404 errors for resources
+		bypassCSP: true,
 	},
 
 	projects: [
