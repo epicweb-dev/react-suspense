@@ -106,7 +106,9 @@ function SearchResults({
 	search: string
 	onSelection: (shipName: string) => void
 }) {
-	const shipResults = use(searchShips(search))
+	// 🦉 feel free to adjust the search delay to see how it affects the UI
+	// 🚨 the tests kinda rely on the search delay being longer than the spin-delay
+	const shipResults = use(searchShips(search, 500))
 	return shipResults.ships.map((ship) => (
 		<li key={ship.name}>
 			<button onClick={() => onSelection(ship.name)}>
