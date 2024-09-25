@@ -11,21 +11,26 @@ await testStep('Initial render', async () => {
 let imageLoadStartTime: number | null = null
 let dataFetchStartTime: number | null = null
 
+function isPerformanceResourceTiming(
+	entry: PerformanceEntry,
+): entry is PerformanceResourceTiming {
+	return entry.entryType === 'resource'
+}
+
 const observer = new PerformanceObserver((list) => {
-	list.getEntries().forEach((entry) => {
-		if (entry.entryType === 'resource') {
-			const resourceEntry = entry as PerformanceResourceTiming
+	for (const entry of list.getEntries()) {
+		if (isPerformanceResourceTiming(entry)) {
 			if (
-				resourceEntry.initiatorType === 'img' &&
-				resourceEntry.name.includes('infinity') &&
-				resourceEntry.name.includes('size=200')
+				entry.initiatorType === 'img' &&
+				entry.name.includes('infinity') &&
+				entry.name.includes('size=200')
 			) {
-				imageLoadStartTime = resourceEntry.startTime
-			} else if (resourceEntry.name.includes('api/get-ship')) {
-				dataFetchStartTime = resourceEntry.startTime
+				imageLoadStartTime = entry.startTime
+			} else if (entry.name.includes('api/get-ship')) {
+				dataFetchStartTime = entry.startTime
 			}
 		}
-	})
+	}
 })
 
 observer.observe({ type: 'resource' })

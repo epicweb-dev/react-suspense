@@ -1,5 +1,5 @@
 import { expect, testStep, dtl } from '@epic-web/workshop-utils/test'
-const { screen, waitForElementToBeRemoved } = dtl
+const { screen } = dtl
 
 import './index.tsx'
 
