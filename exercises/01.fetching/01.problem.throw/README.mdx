@@ -9,7 +9,7 @@ gets routed (by the workshop app) through <InlineFile file="api.server.ts" />
 which retrieves the data from `./shared/ship-api-utils.server.ts`.
 
 The problem is that while the `fetch` request is ongoing, the user is just
-staring at a blank white screen. Now we could for sure improve our `index.tsx`
+staring at a blank white screen. Now we could for sure improve the HTML document
 file a bit to have a loading state in HTML until the ship data shows up, but we
 want to be able to manage transitions like this as the user navigates around as
 well. Componentize all the things!
