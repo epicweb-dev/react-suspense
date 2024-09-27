@@ -9,7 +9,7 @@ gets routed (by the workshop app) through <InlineFile file="api.server.ts" />
 which retrieves the data from `./shared/ship-api-utils.server.ts`.
 
 The problem is that while the `fetch` request is ongoing, the user is just
-staring at a blank white screen. Now we could for sure improve our `index.html`
+staring at a blank white screen. Now we could for sure improve the HTML document
 file a bit to have a loading state in HTML until the ship data shows up, but we
 want to be able to manage transitions like this as the user navigates around as
 well. Componentize all the things!
@@ -17,7 +17,7 @@ well. Componentize all the things!
 So for this first step, you're going to need to remove the `await` on the
 `getShip` call and then if the `ship` data hasn't loaded yet, you'll throw the
 `shipPromise`. You can also wrap the `<ShipDetails />` in a `<Suspense>`
-boudnary and render the `<ShipFallback />` component so we have a nicer loading
+boundary and render the `<ShipFallback />` component so we have a nicer loading
 state.
 
 Give that a whirl!
