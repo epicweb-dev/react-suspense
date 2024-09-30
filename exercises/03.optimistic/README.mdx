@@ -60,8 +60,8 @@ function Todo({ todo }: { todo: TodoItem }) {
 
 The `isComplete` is based on the `todo.isComplete`, but during the transition,
 we can change it to `!isComplete`. Once the transition is finished (whether it
-was successful or errored out, it will fall back to the value of
-`todo.isComplete`).
+was successful or errored out), it will fall back to the value of
+`todo.isComplete`.
 
 And the interesting thing about this is we can update optimistic state as many
 times as we would like during the course of a transition, which means if you
