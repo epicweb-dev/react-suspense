@@ -14,6 +14,12 @@
 - [Throttle your network](https://developer.chrome.com/docs/devtools/network/reference#throttling) speed in the dev tools to "Slow 3G"
 - Click a separate ship
 
+<callout-warning>
+	🚨 While you're here, make sure you have `Disable cache` *unchecked* in the
+	Network tab of dev tools. Otherwise, the browser will ignore your preloaded
+	image and try to re-fetch it, bypassing your solution.
+</callout-warning>
+
 You should notice the network loads the data for the ship. While that happens,
 our pending state is shown (great job on that again). Once the data is loaded,
 the component re-renders with the new data (even the `img` `src` gets updated
