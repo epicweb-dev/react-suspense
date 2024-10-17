@@ -12,7 +12,7 @@ function App() {
 		delay: 300,
 		minDuration: 350,
 	})
-	const [optimistiShip, setOptimisticShip] = useOptimistic<Ship | null>(null)
+	const [optimisticShip, setOptimisticShip] = useOptimistic<Ship | null>(null)
 
 	function handleShipSelection(newShipName: string) {
 		startTransition(() => {
@@ -27,7 +27,7 @@ function App() {
 				<div className="details" style={{ opacity: isPending ? 0.6 : 1 }}>
 					<ErrorBoundary fallback={<ShipError shipName={shipName} />}>
 						<Suspense fallback={<ShipFallback shipName={shipName} />}>
-							<ShipDetails shipName={shipName} optimistiShip={optimistiShip} />
+							<ShipDetails shipName={shipName} optimisticShip={optimisticShip} />
 						</Suspense>
 					</ErrorBoundary>
 				</div>
@@ -153,14 +153,14 @@ function ShipButtons({
 
 function ShipDetails({
 	shipName,
-	optimistiShip,
+	optimisticShip,
 }: {
 	shipName: string
-	optimistiShip: Ship | null
+	optimisticShip: Ship | null
 }) {
 	// 🦉 you can change this delay to control how long loading the resource takes:
 	const delay = 2000
-	const ship = optimistiShip ?? use(getShip(shipName, delay))
+	const ship = optimisticShip ?? use(getShip(shipName, delay))
 	return (
 		<div className="ship-info">
 			<div className="ship-info__img-wrapper">
