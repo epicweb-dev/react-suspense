@@ -122,6 +122,8 @@ function SearchResults({
 
 function ShipDetails({ shipName }: { shipName: string }) {
 	const shipImgSrc = getImageUrlForShip(shipName, { size: 200 })
+	// 🦉 using "void" so we don't wait for the promise, but also signal to others
+	// that we're intentionally not waiting for this promise
 	void imgSrc(shipImgSrc)
 	// 🦉 play with the delay to see how it affects the loading experience
 	const ship = use(getShip(shipName, 300))
