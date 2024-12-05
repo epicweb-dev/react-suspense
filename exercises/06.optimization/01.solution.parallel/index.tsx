@@ -122,7 +122,7 @@ function SearchResults({
 
 function ShipDetails({ shipName }: { shipName: string }) {
 	const shipImgSrc = getImageUrlForShip(shipName, { size: 200 })
-	imgSrc(shipImgSrc)
+	void imgSrc(shipImgSrc)
 	// 🦉 play with the delay to see how it affects the loading experience
 	const ship = use(getShip(shipName, 300))
 	return (

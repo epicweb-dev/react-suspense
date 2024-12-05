@@ -122,7 +122,9 @@ function SearchResults({
 
 function ShipDetails({ shipName }: { shipName: string }) {
 	const shipImgSrc = getImageUrlForShip(shipName, { size: 200 })
-	imgSrc(shipImgSrc)
+	// 🦉 using "void" so we don't wait for the promise, but also signal to others
+	// that we're intentionally not waiting for this promise
+	void imgSrc(shipImgSrc)
 	const ship = use(getShip(shipName))
 	return (
 		<div className="ship-info">
