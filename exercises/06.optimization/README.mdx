@@ -57,7 +57,7 @@ function ProfileDetails({ username }: { username: string }) {
 ```
 
 The trouble with this is the `use(getFavoritesCount(username))` will cause the
-`ProfileDetails` will suspend until the `getFavoritesCount` request is resolved.
+`ProfileDetails` to suspend until the `getFavoritesCount` request is resolved.
 Only then will the `getFriends` request be made. This is a waterfall.
 
 To solve this problem is pretty simple, though maybe not obvious at first. You
