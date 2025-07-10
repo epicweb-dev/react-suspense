@@ -47,7 +47,7 @@
   "dependencies": {
     "@epic-web/config": "^1.16.3",
     "@epic-web/invariant": "^1.0.0",
-    "@epic-web/workshop-utils": "^6.6.1",
+    "@epic-web/workshop-utils": "^6.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^4.1.2",
