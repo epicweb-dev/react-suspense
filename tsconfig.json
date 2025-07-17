@@ -1,6 +1,6 @@
 {
 	"include": ["**/*.ts", "**/*.tsx"],
-	"extends": ["@epic-web/config/typescript"],
+	"extends": ["./node_modules/@epic-web/config/typescript.json"],
 	"compilerOptions": {
 		"paths": {
 			"#shared/*": ["./shared/*"]
