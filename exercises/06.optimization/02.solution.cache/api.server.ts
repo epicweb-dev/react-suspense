@@ -17,7 +17,7 @@ export async function loader({
 			return new Response(JSON.stringify(result), {
 				headers: {
 					'content-type': 'application/json',
-					'cache-control': 'max-age=10',
+					'cache-control': 'max-age=300',
 				},
 			})
 		}
@@ -26,7 +26,7 @@ export async function loader({
 			return new Response(JSON.stringify(result), {
 				headers: {
 					'content-type': 'application/json',
-					'cache-control': 'max-age=10',
+					'cache-control': 'max-age=300',
 				},
 			})
 		}
